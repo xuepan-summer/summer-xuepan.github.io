@@ -3,26 +3,26 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://example.org/posts/</loc>
+    <loc>http://xuepan.xyz/posts/</loc>
     <lastmod>2020-06-07T11:56:45+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/</loc>
+    <loc>http://xuepan.xyz/</loc>
     <lastmod>2020-06-07T11:56:45+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</loc>
+    <loc>http://xuepan.xyz/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2020-06-07T11:56:45+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/categories/</loc>
+    <loc>http://xuepan.xyz/categories/</loc>
   </url>
   
   <url>
-    <loc>http://example.org/tags/</loc>
+    <loc>http://xuepan.xyz/tags/</loc>
   </url>
   
 </urlset>
