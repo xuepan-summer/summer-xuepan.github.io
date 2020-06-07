@@ -6,10 +6,37 @@
     <description>Recent content in Posts on Summer&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-Hans</language>
-    <lastBuildDate>Sun, 07 Jun 2020 11:56:45 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2020 14:39:18 +0800</lastBuildDate>
     
 	<atom:link href="http://xuepan.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hugo搭建个人博客</title>
+      <link>http://xuepan.xyz/posts/hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Sun, 07 Jun 2020 14:39:18 +0800</pubDate>
+      
+      <guid>http://xuepan.xyz/posts/hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
+      <description>1.安装hugo
+Windows:
+ 下载windows相应版本的压缩包（对应32位/64位）并解压 将hugo.exe放到D:\softwares\hugo\hugo.exe 将D:\softwares\hugo加到PATH中 重启终端，运行hugo version查看版本验证安装成功  Mac:
+  brew install hugo
+  hugo version 验证安装成功
+执行这两行代码即可
+  2.参照文档搭建博客
+  进入hugo官网 https://gohugo.io/ ，点击 Quick Start，则有搭建的全部步骤
+在搭建之前，先打开一个目录，例如进入到D盘，然后cmder(即：在此处打开命令窗口)
+  直接从官网步骤的第二步开始抄代码，一直到第七步
+【2】create new site
+hugo new site xxx.github.io-generator
+xxx要小写，是自己的github用户名，则会在当前目录创建这个网站
+  code xxx.github.io-generator/
+则会在VSCode里打开该目录
+  【3】add a theme 打开终端，继续照抄代码
+  【4】add some content 创建文章，自己命名即可
+  可以找到该md文件，直接写博客了，修改draft:true为draft:false
+  【5】Start the Hugo server 可以看到网站地址了，ctrl+鼠标左键点进去就可以看到自己写的博客</description>
+    </item>
     
     <item>
       <title>我的第一篇博客</title>

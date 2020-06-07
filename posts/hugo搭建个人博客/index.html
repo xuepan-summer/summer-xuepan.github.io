@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Hugo搭建个人博客 | Summer&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="Hugo搭建个人博客" />
+<meta property="og:description" content="1.安装hugo
+Windows:
+ 下载windows相应版本的压缩包（对应32位/64位）并解压 将hugo.exe放到D:\softwares\hugo\hugo.exe 将D:\softwares\hugo加到PATH中 重启终端，运行hugo version查看版本验证安装成功  Mac:
+  brew install hugo
+  hugo version 验证安装成功
+执行这两行代码即可
+  2.参照文档搭建博客
+  进入hugo官网 https://gohugo.io/ ，点击 Quick Start，则有搭建的全部步骤
+在搭建之前，先打开一个目录，例如进入到D盘，然后cmder(即：在此处打开命令窗口)
+  直接从官网步骤的第二步开始抄代码，一直到第七步
+【2】create new site
+hugo new site xxx.github.io-generator
+xxx要小写，是自己的github用户名，则会在当前目录创建这个网站
+  code xxx.github.io-generator/
+则会在VSCode里打开该目录
+  【3】add a theme 打开终端，继续照抄代码
+  【4】add some content 创建文章，自己命名即可
+  可以找到该md文件，直接写博客了，修改draft:true为draft:false
+  【5】Start the Hugo server 可以看到网站地址了，ctrl&#43;鼠标左键点进去就可以看到自己写的博客" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xuepan.xyz/posts/hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" />
+<meta property="article:published_time" content="2020-06-07T14:39:18+08:00" />
+<meta property="article:modified_time" content="2020-06-07T14:39:18+08:00" />
+<meta itemprop="name" content="Hugo搭建个人博客">
+<meta itemprop="description" content="1.安装hugo
+Windows:
+ 下载windows相应版本的压缩包（对应32位/64位）并解压 将hugo.exe放到D:\softwares\hugo\hugo.exe 将D:\softwares\hugo加到PATH中 重启终端，运行hugo version查看版本验证安装成功  Mac:
+  brew install hugo
+  hugo version 验证安装成功
+执行这两行代码即可
+  2.参照文档搭建博客
+  进入hugo官网 https://gohugo.io/ ，点击 Quick Start，则有搭建的全部步骤
+在搭建之前，先打开一个目录，例如进入到D盘，然后cmder(即：在此处打开命令窗口)
+  直接从官网步骤的第二步开始抄代码，一直到第七步
+【2】create new site
+hugo new site xxx.github.io-generator
+xxx要小写，是自己的github用户名，则会在当前目录创建这个网站
+  code xxx.github.io-generator/
+则会在VSCode里打开该目录
+  【3】add a theme 打开终端，继续照抄代码
+  【4】add some content 创建文章，自己命名即可
+  可以找到该md文件，直接写博客了，修改draft:true为draft:false
+  【5】Start the Hugo server 可以看到网站地址了，ctrl&#43;鼠标左键点进去就可以看到自己写的博客">
+<meta itemprop="datePublished" content="2020-06-07T14:39:18&#43;08:00" />
+<meta itemprop="dateModified" content="2020-06-07T14:39:18&#43;08:00" />
+<meta itemprop="wordCount" content="65">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hugo搭建个人博客"/>
+<meta name="twitter:description" content="1.安装hugo
+Windows:
+ 下载windows相应版本的压缩包（对应32位/64位）并解压 将hugo.exe放到D:\softwares\hugo\hugo.exe 将D:\softwares\hugo加到PATH中 重启终端，运行hugo version查看版本验证安装成功  Mac:
+  brew install hugo
+  hugo version 验证安装成功
+执行这两行代码即可
+  2.参照文档搭建博客
+  进入hugo官网 https://gohugo.io/ ，点击 Quick Start，则有搭建的全部步骤
+在搭建之前，先打开一个目录，例如进入到D盘，然后cmder(即：在此处打开命令窗口)
+  直接从官网步骤的第二步开始抄代码，一直到第七步
+【2】create new site
+hugo new site xxx.github.io-generator
+xxx要小写，是自己的github用户名，则会在当前目录创建这个网站
+  code xxx.github.io-generator/
+则会在VSCode里打开该目录
+  【3】add a theme 打开终端，继续照抄代码
+  【4】add some content 创建文章，自己命名即可
+  可以找到该md文件，直接写博客了，修改draft:true为draft:false
+  【5】Start the Hugo server 可以看到网站地址了，ctrl&#43;鼠标左键点进去就可以看到自己写的博客"/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        Summer&#39;s Blog
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=http://xuepan.xyz/posts/hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=http://xuepan.xyz/posts/hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/&amp;text=Hugo%e6%90%ad%e5%bb%ba%e4%b8%aa%e4%ba%ba%e5%8d%9a%e5%ae%a2" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://xuepan.xyz/posts/hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/&amp;title=Hugo%e6%90%ad%e5%bb%ba%e4%b8%aa%e4%ba%ba%e5%8d%9a%e5%ae%a2" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Hugo搭建个人博客</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-06-07T14:39:18&#43;08:00">June 7, 2020</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>1.安装hugo</p>
+<p>Windows:</p>
+<ul>
+<li>下载windows相应版本的压缩包（对应32位/64位）并解压</li>
+<li>将hugo.exe放到D:\softwares\hugo\hugo.exe</li>
+<li>将D:\softwares\hugo加到PATH中</li>
+<li>重启终端，运行hugo version查看版本验证安装成功</li>
+</ul>
+<p>Mac:</p>
+<ul>
+<li>
+<p>brew install hugo</p>
+</li>
+<li>
+<p>hugo version 验证安装成功</p>
+<p>执行这两行代码即可</p>
+</li>
+</ul>
+<p>2.参照文档搭建博客</p>
+<ul>
+<li>
+<p>进入hugo官网 <a href="https://gohugo.io/">https://gohugo.io/</a> ，点击 Quick Start，则有搭建的全部步骤</p>
+<p>在搭建之前，先打开一个目录，例如进入到D盘，然后cmder(即：在此处打开命令窗口)</p>
+</li>
+<li>
+<p>直接从官网步骤的第二步开始抄代码，一直到第七步</p>
+<p>【2】create new site</p>
+<p><code>hugo new site xxx.github.io-generator</code></p>
+<p>xxx要小写，是自己的github用户名，则会在当前目录创建这个网站</p>
+</li>
+<li>
+<p><code>code xxx.github.io-generator/</code></p>
+<p>则会在VSCode里打开该目录</p>
+</li>
+<li>
+<p>【3】add a theme
+打开终端，继续照抄代码</p>
+</li>
+<li>
+<p>【4】add some content 创建文章，自己命名即可</p>
+</li>
+<li>
+<p>可以找到该md文件，直接写博客了，<strong>修改draft:true为draft:false</strong></p>
+</li>
+<li>
+<p>【5】Start the Hugo server
+可以看到网站地址了，ctrl+鼠标左键点进去就可以看到自己写的博客</p>
+</li>
+<li>
+<p>【6】Customize the Theme
+配置主题，在VSCode里ctrl+P搜config.toml文件在哪，
+语言改成zh-Hans，即简体中文，title也可以改一下</p>
+</li>
+<li>
+<p>【7】Build static pages
+新开一个终端，<strong>刚刚的不要关</strong>，运行hugo。则创建一个新的目录public，这就是博客站点</p>
+</li>
+<li>
+<p>hugo server -D 可以预览草稿</p>
+<p>hugo server 预览非草稿</p>
+<p>至此，本地就可以看到自己用hugo搭建的博客了</p>
+</li>
+</ul>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://xuepan.xyz/" >
+    &copy;  Summer's Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
