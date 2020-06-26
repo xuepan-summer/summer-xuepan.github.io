@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://xuepan.xyz/posts/" />
-<meta property="og:updated_time" content="2020-06-08T09:31:16+08:00" />
+<meta property="og:updated_time" content="2020-06-26T17:52:27+08:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -96,6 +96,48 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="http://xuepan.xyz/posts/java%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8Emaven/" class="link black dim">
+        Java的包管理与Maven
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      1.JVM（java虚拟机）的作用：
+只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
+2.传递性依赖：类依赖其他类
+maven的包管理解决了传递性依赖和包冲突：
+1）传递性依赖的解决：
+maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
+2）包冲突的解决：
+【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包
+【2】包冲突的表现：
+AbstractMethodError
+NoClassDefFoundError
+ClassNotFoundException
+LinkageError
+NoSuchMethodError
+【3】看包依赖的方法
+法1：看右侧maven的dependencies
+法2：命令行里执行mvn dependency:tree 看到的是maven解决冲突之后的结构
+【4】 解决冲突的原则：
+选择距离项目最近的jar包
+当距离项目一样近时，选前者
+【5】实例：
+因为此时既依赖了0.1版本的C包，又依赖了0.2版本的C包，所以产生了包冲突
+所以maven在解决包冲突的时候，选择了较近的0.1版本的C包，而舍弃了高版本
+当高版本的jar包里有我们需要的方法时，此时就会报错，要想采用高版本的jar包，有以下几种方式：
+① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-a&lt;/artifactId&gt; &lt;version&gt;0.4&lt;/version&gt; &lt;scope&gt;compile&lt;/scope&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
+&lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; ③ 采用IDEA的Maven Helper插件
+打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，选中要排除的那个,然后右键exclude
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
