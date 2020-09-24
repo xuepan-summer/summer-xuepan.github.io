@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://xuepan.xyz/posts/" />
-<meta property="og:updated_time" content="2020-07-29T14:45:08+08:00" />
+<meta property="og:updated_time" content="2020-09-24T15:15:11+08:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -96,6 +96,73 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%89/" class="link black dim">
+        实现生产者消费者(三)：BlockingQueue
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
+现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
+采用BlockingQueue方法  BlockingQueue是接口，顾名思义，就是阻塞队列，队列中有空位才插入元素，队列中有元素才移除元素。
+offer() &amp; put()
+boolean offer(E e);若可以成功添加，返回true，否则返回false &ndash;&gt;非阻塞
+boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException;
+设定等待时间，如果指定时间内，还不能往队列中加入元素，则返回false &ndash;&gt;阻塞
+void put(E e) throws InterruptedException;是阻塞的，如果队列内无空位，则一直等待，直到有空位才往队列中插入元素 &ndash;&gt;阻塞
+poll() &amp; take()
+E poll(long timeout, TimeUnit unit) throws InterruptedException;取出队首元素，可取出就直接返回，否则等待，超时还未取出则失败
+E take() throws InterruptedException;取出队首元素，阻塞等待直到可取出
+JDK文档的注释中有相关使用范例代码，如下所示：
+class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%BA%8C/" class="link black dim">
+        实现生产者消费者(二)：Lock &amp; Condition
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
+现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
+采用Lock &amp; Condition方法  Lock是接口，里面有lock()方法和unlock()方法，除此之外，还有tryLock()方法、newCondition()方法等。相比于synchronized更加灵活，因为synchronized默认在出作用域的时候释放资源，相当于解锁。所以Lock可以更加灵活地控制何时上锁，何时解锁。
+Condition也是接口，主要是await()方法和signal()/signalAll()方法。signal()方法会唤醒一个正在等待该Condition的线程，而signalAll()方法会唤醒所有正在等待该Condition的线程。
+JDK文档的注释中有相关使用范例代码，如下所示：
+class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.lock(); try { while (count == items.length) notFull.await(); items[putptr] = x; if (++putptr == items.length) putptr = 0; ++count; notEmpty.signal(); } finally { lock.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/" class="link black dim">
+        实现生产者消费者(一)：wait() &amp; notify()
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
+现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
+采用Object.wait() &amp; notify()/notifyAll()方法  wait()表示让该线程等待
+notify()/notifyAll()
+Wakes up a single thread that is waiting on this object's monitor. If any threads are waiting on this object, one of them is chosen to be awakened. The choice is arbitrary and occurs at the discretion of the implementation. A thread waits on an object's monitor by calling one of the {@code wait} methods. notify()会随机唤醒一个等待该资源的线程
+Wakes up all threads that are waiting on this object's monitor.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -212,8 +279,7 @@ TreeMap是基于红黑树实现的
       1.JVM（java虚拟机）的作用：
 只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
 2.传递性依赖：类依赖其他类
-maven的包管理解决了传递性依赖和包冲突：
-1）传递性依赖的解决：
+maven的包管理解决了传递性依赖和包冲突： 实现生产者-消费者(一)：Object.wait() &amp; notify()notifyAll() 1）传递性依赖的解决：
 maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
 2）包冲突的解决：
 【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包
@@ -234,8 +300,8 @@ NoSuchMethodError
 所以maven在解决包冲突的时候，选择了较近的0.1版本的C包，而舍弃了高版本
 当高版本的jar包里有我们需要的方法时，此时就会报错，要想采用高版本的jar包，有以下几种方式：
 ① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies
-&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-a&lt;/artifactId&gt; &lt;version&gt;0.4&lt;/version&gt; &lt;scope&gt;compile&lt;/scope&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
-&lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; ③ 采用IDEA的Maven Helper插件
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;version&gt;0.2&lt;/version&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-d&lt;/artifactId&gt; &lt;version&gt;0.1&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; ③ 采用IDEA的Maven Helper插件
 打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，选中要排除的那个,然后右键exclude
     </div>
   </div>

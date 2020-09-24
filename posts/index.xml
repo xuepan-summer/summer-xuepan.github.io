@@ -6,10 +6,59 @@
     <description>Recent content in Posts on Summer&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-Hans</language>
-    <lastBuildDate>Wed, 29 Jul 2020 14:45:08 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 24 Sep 2020 15:15:11 +0800</lastBuildDate>
     
 	<atom:link href="http://xuepan.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>实现生产者消费者(三)：BlockingQueue</title>
+      <link>http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%89/</link>
+      <pubDate>Thu, 24 Sep 2020 15:15:11 +0800</pubDate>
+      
+      <guid>http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%89/</guid>
+      <description>生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
+现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
+采用BlockingQueue方法  BlockingQueue是接口，顾名思义，就是阻塞队列，队列中有空位才插入元素，队列中有元素才移除元素。
+offer() &amp;amp; put()
+boolean offer(E e);若可以成功添加，返回true，否则返回false &amp;ndash;&amp;gt;非阻塞
+boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException;
+设定等待时间，如果指定时间内，还不能往队列中加入元素，则返回false &amp;ndash;&amp;gt;阻塞
+void put(E e) throws InterruptedException;是阻塞的，如果队列内无空位，则一直等待，直到有空位才往队列中插入元素 &amp;ndash;&amp;gt;阻塞
+poll() &amp;amp; take()
+E poll(long timeout, TimeUnit unit) throws InterruptedException;取出队首元素，可取出就直接返回，否则等待，超时还未取出则失败
+E take() throws InterruptedException;取出队首元素，阻塞等待直到可取出
+JDK文档的注释中有相关使用范例代码，如下所示：
+class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.</description>
+    </item>
+    
+    <item>
+      <title>实现生产者消费者(二)：Lock &amp; Condition</title>
+      <link>http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%BA%8C/</link>
+      <pubDate>Thu, 24 Sep 2020 15:03:37 +0800</pubDate>
+      
+      <guid>http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%BA%8C/</guid>
+      <description>生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
+现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
+采用Lock &amp;amp; Condition方法  Lock是接口，里面有lock()方法和unlock()方法，除此之外，还有tryLock()方法、newCondition()方法等。相比于synchronized更加灵活，因为synchronized默认在出作用域的时候释放资源，相当于解锁。所以Lock可以更加灵活地控制何时上锁，何时解锁。
+Condition也是接口，主要是await()方法和signal()/signalAll()方法。signal()方法会唤醒一个正在等待该Condition的线程，而signalAll()方法会唤醒所有正在等待该Condition的线程。
+JDK文档的注释中有相关使用范例代码，如下所示：
+class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.lock(); try { while (count == items.length) notFull.await(); items[putptr] = x; if (++putptr == items.length) putptr = 0; ++count; notEmpty.signal(); } finally { lock.</description>
+    </item>
+    
+    <item>
+      <title>实现生产者消费者(一)：wait() &amp; notify()</title>
+      <link>http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/</link>
+      <pubDate>Thu, 24 Sep 2020 14:41:23 +0800</pubDate>
+      
+      <guid>http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/</guid>
+      <description>生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
+现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
+采用Object.wait() &amp;amp; notify()/notifyAll()方法  wait()表示让该线程等待
+notify()/notifyAll()
+Wakes up a single thread that is waiting on this object&#39;s monitor. If any threads are waiting on this object, one of them is chosen to be awakened. The choice is arbitrary and occurs at the discretion of the implementation. A thread waits on an object&#39;s monitor by calling one of the {@code wait} methods. notify()会随机唤醒一个等待该资源的线程
+Wakes up all threads that are waiting on this object&#39;s monitor.</description>
+    </item>
     
     <item>
       <title>多线程</title>
@@ -105,8 +154,7 @@ TreeMap是基于红黑树实现的</description>
       <description>1.JVM（java虚拟机）的作用：
 只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
 2.传递性依赖：类依赖其他类
-maven的包管理解决了传递性依赖和包冲突：
-1）传递性依赖的解决：
+maven的包管理解决了传递性依赖和包冲突： 实现生产者-消费者(一)：Object.wait() &amp;amp; notify()notifyAll() 1）传递性依赖的解决：
 maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
 2）包冲突的解决：
 【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包
@@ -127,8 +175,8 @@ NoSuchMethodError
 所以maven在解决包冲突的时候，选择了较近的0.1版本的C包，而舍弃了高版本
 当高版本的jar包里有我们需要的方法时，此时就会报错，要想采用高版本的jar包，有以下几种方式：
 ① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies
-&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.github.hcsp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;test-library-a&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;0.4&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;compile&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; ② 排除掉0.1版本的C包
-&amp;lt;exclusions&amp;gt; &amp;lt;exclusion&amp;gt; &amp;lt;groupId&amp;gt;com.github.hcsp&amp;lt;groupId&amp;gt; &amp;lt;artifactId&amp;gt;test-library-c&amp;lt;/artifactId&amp;gt; &amp;lt;/exclusion&amp;gt; &amp;lt;/exclusions&amp;gt; ③ 采用IDEA的Maven Helper插件
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.github.hcsp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;test-library-c&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;0.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; ② 排除掉0.1版本的C包
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.github.hcsp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;test-library-d&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;0.1&amp;lt;/version&amp;gt; &amp;lt;exclusions&amp;gt; &amp;lt;exclusion&amp;gt; &amp;lt;groupId&amp;gt;com.github.hcsp&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;test-library-c&amp;lt;/artifactId&amp;gt; &amp;lt;/exclusion&amp;gt; &amp;lt;/exclusions&amp;gt; &amp;lt;/dependency&amp;gt; ③ 采用IDEA的Maven Helper插件
 打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，选中要排除的那个,然后右键exclude</description>
     </item>
     

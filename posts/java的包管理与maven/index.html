@@ -30,8 +30,7 @@
 <meta property="og:description" content="1.JVM（java虚拟机）的作用：
 只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
 2.传递性依赖：类依赖其他类
-maven的包管理解决了传递性依赖和包冲突：
-1）传递性依赖的解决：
+maven的包管理解决了传递性依赖和包冲突： 实现生产者-消费者(一)：Object.wait() &amp; notify()notifyAll() 1）传递性依赖的解决：
 maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
 2）包冲突的解决：
 【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包
@@ -52,8 +51,8 @@ NoSuchMethodError
 所以maven在解决包冲突的时候，选择了较近的0.1版本的C包，而舍弃了高版本
 当高版本的jar包里有我们需要的方法时，此时就会报错，要想采用高版本的jar包，有以下几种方式：
 ① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies
-&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-a&lt;/artifactId&gt; &lt;version&gt;0.4&lt;/version&gt; &lt;scope&gt;compile&lt;/scope&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
-&lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; ③ 采用IDEA的Maven Helper插件
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;version&gt;0.2&lt;/version&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-d&lt;/artifactId&gt; &lt;version&gt;0.1&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; ③ 采用IDEA的Maven Helper插件
 打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，选中要排除的那个,然后右键exclude" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://xuepan.xyz/posts/java%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8Emaven/" />
@@ -63,8 +62,7 @@ NoSuchMethodError
 <meta itemprop="description" content="1.JVM（java虚拟机）的作用：
 只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
 2.传递性依赖：类依赖其他类
-maven的包管理解决了传递性依赖和包冲突：
-1）传递性依赖的解决：
+maven的包管理解决了传递性依赖和包冲突： 实现生产者-消费者(一)：Object.wait() &amp; notify()notifyAll() 1）传递性依赖的解决：
 maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
 2）包冲突的解决：
 【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包
@@ -85,12 +83,12 @@ NoSuchMethodError
 所以maven在解决包冲突的时候，选择了较近的0.1版本的C包，而舍弃了高版本
 当高版本的jar包里有我们需要的方法时，此时就会报错，要想采用高版本的jar包，有以下几种方式：
 ① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies
-&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-a&lt;/artifactId&gt; &lt;version&gt;0.4&lt;/version&gt; &lt;scope&gt;compile&lt;/scope&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
-&lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; ③ 采用IDEA的Maven Helper插件
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;version&gt;0.2&lt;/version&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-d&lt;/artifactId&gt; &lt;version&gt;0.1&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; ③ 采用IDEA的Maven Helper插件
 打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，选中要排除的那个,然后右键exclude">
 <meta itemprop="datePublished" content="2020-06-26T17:52:27&#43;08:00" />
 <meta itemprop="dateModified" content="2020-06-26T17:52:27&#43;08:00" />
-<meta itemprop="wordCount" content="49">
+<meta itemprop="wordCount" content="56">
 
 
 
@@ -99,8 +97,7 @@ NoSuchMethodError
 <meta name="twitter:description" content="1.JVM（java虚拟机）的作用：
 只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
 2.传递性依赖：类依赖其他类
-maven的包管理解决了传递性依赖和包冲突：
-1）传递性依赖的解决：
+maven的包管理解决了传递性依赖和包冲突： 实现生产者-消费者(一)：Object.wait() &amp; notify()notifyAll() 1）传递性依赖的解决：
 maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
 2）包冲突的解决：
 【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包
@@ -121,8 +118,8 @@ NoSuchMethodError
 所以maven在解决包冲突的时候，选择了较近的0.1版本的C包，而舍弃了高版本
 当高版本的jar包里有我们需要的方法时，此时就会报错，要想采用高版本的jar包，有以下几种方式：
 ① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies
-&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-a&lt;/artifactId&gt; &lt;version&gt;0.4&lt;/version&gt; &lt;scope&gt;compile&lt;/scope&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
-&lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; ③ 采用IDEA的Maven Helper插件
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;version&gt;0.2&lt;/version&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-d&lt;/artifactId&gt; &lt;version&gt;0.1&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; ③ 采用IDEA的Maven Helper插件
 打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，选中要排除的那个,然后右键exclude"/>
 
 	
@@ -222,8 +219,9 @@ NoSuchMethodError
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>1.JVM（java虚拟机）的作用：</p>
 <p>只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。</p>
 <p>2.传递性依赖：类依赖其他类</p>
-<p>maven的包管理解决了传递性依赖和包冲突：</p>
-<p>1）传递性依赖的解决：</p>
+<p>maven的包管理解决了传递性依赖和包冲突：
+实现生产者-消费者(一)：Object.wait() &amp; notify()notifyAll()
+1）传递性依赖的解决：</p>
 <p>maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来</p>
 <p>2）包冲突的解决：</p>
 <p>【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包</p>
@@ -250,17 +248,21 @@ NoSuchMethodError
 <p>① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;dependency&gt;</span>    
     <span style="color:#f92672">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#f92672">&lt;/groupId&gt;</span>    
-    <span style="color:#f92672">&lt;artifactId&gt;</span>test-library-a<span style="color:#f92672">&lt;/artifactId&gt;</span>    
-    <span style="color:#f92672">&lt;version&gt;</span>0.4<span style="color:#f92672">&lt;/version&gt;</span>    
-    <span style="color:#f92672">&lt;scope&gt;</span>compile<span style="color:#f92672">&lt;/scope&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>test-library-c<span style="color:#f92672">&lt;/artifactId&gt;</span>    
+    <span style="color:#f92672">&lt;version&gt;</span>0.2<span style="color:#f92672">&lt;/version&gt;</span>    
 <span style="color:#f92672">&lt;/dependency&gt;</span>
 </code></pre></div><p>② 排除掉0.1版本的C包</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;exclusions&gt;</span>
-    <span style="color:#f92672">&lt;exclusion&gt;</span>    
-        <span style="color:#f92672">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#f92672">&lt;groupId&gt;</span>    
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;dependency&gt;</span>
+    <span style="color:#f92672">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>test-library-d<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>0.1<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;exclusions&gt;</span>
+        <span style="color:#f92672">&lt;exclusion&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#f92672">&lt;/groupId&gt;</span>
             <span style="color:#f92672">&lt;artifactId&gt;</span>test-library-c<span style="color:#f92672">&lt;/artifactId&gt;</span>
-    <span style="color:#f92672">&lt;/exclusion&gt;</span>
-<span style="color:#f92672">&lt;/exclusions&gt;</span>
+        <span style="color:#f92672">&lt;/exclusion&gt;</span>
+    <span style="color:#f92672">&lt;/exclusions&gt;</span>
+<span style="color:#f92672">&lt;/dependency&gt;</span>
 </code></pre></div><p>③ 采用IDEA的Maven Helper插件</p>
 <p>打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，<strong>选中要排除的那个</strong>,然后右键exclude</p>
 <ul class="pa0">
