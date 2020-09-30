@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://xuepan.xyz/" />
-<meta property="og:updated_time" content="2020-09-24T15:15:11+08:00" />
+<meta property="og:updated_time" content="2020-09-30T16:23:51+08:00" />
 <meta itemprop="name" content="Summer&#39;s Blog">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Summer&#39;s Blog"/>
@@ -127,6 +127,43 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="http://xuepan.xyz/posts/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/" class="color-inherit dim link">
+            Linux常用命令总结
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          平时工作中有时候会用到一些常用的Linux命令，所以打算整理一下，便于翻阅，后续再补充
+  目录切换命令
+ pwd 查看当前路径    cd 目录名 切换到指定目录下
+【cd命令系列】  cd ../ 切换到上级目录
+  cd / 切换到根目录（所有用户共享的目录）
+  cd ~ 切换到用户主目录，root用户相当于cd /root；普通用户相当于cd /home/当前用户名
+  cd - 切换到上一个所在目录（此目录之前所在目录）
+      目录或文件操作命令
+  ls 显示不隐藏的文件或文件夹
+  ls -a 显示当前目录下所有文件及文件夹，包括隐藏的.和..
+  ls -l 显示不隐藏的文件与文件夹的详细信息 =&gt;即 ll
+  mkdir 目录名 创建目录
+  touch 文件名 新建文件
+【mv命令系列】  mv 旧文件 新文件 对文件重命名
+        </div>
+          <a href="http://xuepan.xyz/posts/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%89/" class="color-inherit dim link">
             实现生产者消费者(三)：BlockingQueue
             </a>
@@ -184,41 +221,18 @@ class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition not
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/" class="color-inherit dim link">
-            实现生产者消费者(一)：wait() &amp; notify()
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
-现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
-采用Object.wait() &amp; notify()/notifyAll()方法  wait()表示让该线程等待
-notify()/notifyAll()
-Wakes up a single thread that is waiting on this object's monitor. If any threads are waiting on this object, one of them is chosen to be awakened. The choice is arbitrary and occurs at the discretion of the implementation. A thread waits on an object's monitor by calling one of the {@code wait} methods. notify()会随机唤醒一个等待该资源的线程
-Wakes up all threads that are waiting on this object's monitor.
-        </div>
-          <a href="http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="http://xuepan.xyz/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/" class="link black dim">
+              实现生产者消费者(一)：wait() &amp; notify()
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://xuepan.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="link black dim">
@@ -235,12 +249,6 @@ Wakes up all threads that are waiting on this object's monitor.
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://xuepan.xyz/posts/collection%E4%BD%93%E7%B3%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E7%B1%BB%E5%8F%8A%E5%85%B6%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="link black dim">
               Collection体系的常用类及其背后的数据结构
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="http://xuepan.xyz/posts/java%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8Emaven/" class="link black dim">
-              Java的包管理与Maven
             </a>
           </h2>
         
