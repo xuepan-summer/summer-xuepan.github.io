@@ -1,306 +1,56 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<html>
+<head>
+    <title>多线程</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://xuepan-summer.github.io/summer-xuepan.github.io/assets/css/main.css"/>
+    <noscript><link rel="stylesheet" href="https://xuepan-summer.github.io/summer-xuepan.github.io/assets/css/noscript.css"/></noscript>
+    <style>
+        :root{--site-background : url("https://xuepan-summer.github.io/summer-xuepan.github.io/images/bg.jpg")};
+    </style> 
     
-    <title>多线程 | Summer&#39;s Blog</title>
-    <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.69.2" />
-    
-    
-      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-    
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
 
-    
-    
-      <link href="/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
-    
+<body class="is-preload">
 
     
-
-    
-      
-
-    
-
-    
-    
-    <meta property="og:title" content="多线程" />
-<meta property="og:description" content="为什么需要多线程？    硬件需要：
-CPU与其他设备的速度不同步，CPU很快，等执行完之后就进行等待，而且现在CPU大多是多核的，速度更快了。希望可以让CPU使用更加充分。
-  程序需要：
-java的执行模型是同步/阻塞的：默认是单线程，在执行的过程中，执行完第一行再执行第二行，一步一步来。假如第一行是执行一个很慢的方法，那么就会等这个方法执行结束再继续，这样就需要等待很久。
-    多线程的过程
-默认执行main线程，假如新开了线程a并start，那么就增加了一个执行流，main线程和线程a都有其私有的方法栈。
-  start &amp; run 的区别
-  start相当于main线程（老板）给新线程（工人）分配完了之后就让工人自己去干活了，自己继续去做自己的事情。
-  run相当于main线程（老板）给新线程（工人）分配了活并进行监工，等工人干完活之后再去做自己的事情。
-如果让新线程执行run方法的话，和没有分多线程是一样的效果！！！只有start才可以并发执行！
-    多线程会产生什么问题？
-同一份代码，不同人乱序运行，如果不是原子操作（某一时刻只能被一个线程操作），那么就会时好时坏，有时就会出错
-例子：i 初始值为0，线程a和线程b都执行同一方法中的i&#43;&#43;操作
-理想正确场景：线程a执行时 i 加1，变成1；线程b执行时 i 再加1，变成2（即使顺序调换，先线程b再线程a，结果也还是2）
-实际报错场景：i&#43;&#43;分为三步：
-(1) 取出 i 的值
-(2) i 的值加 1
-(3) 将叠加之后的值给 i
-假设线程a先占用了CPU，取出 i 的初始值0，然后 i 加1变成了1。但是！此时线程a占用CPU的时间到了，所以轮到了线程b，由于线程a还没将数据赋值给 i ，所以 i 的值还是0，线程2成功在其基础上加1并赋值给 i ，那么 i 就变成了1。接下来又轮到了线程a，线程a直接将刚刚叠加之后的结果1赋值给 i 。最终结果就变成了 1 而不是2。 如下图所示。" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://xuepan.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" />
-<meta property="article:published_time" content="2020-07-29T14:45:08+08:00" />
-<meta property="article:modified_time" content="2020-07-29T14:45:08+08:00" />
-<meta itemprop="name" content="多线程">
-<meta itemprop="description" content="为什么需要多线程？    硬件需要：
-CPU与其他设备的速度不同步，CPU很快，等执行完之后就进行等待，而且现在CPU大多是多核的，速度更快了。希望可以让CPU使用更加充分。
-  程序需要：
-java的执行模型是同步/阻塞的：默认是单线程，在执行的过程中，执行完第一行再执行第二行，一步一步来。假如第一行是执行一个很慢的方法，那么就会等这个方法执行结束再继续，这样就需要等待很久。
-    多线程的过程
-默认执行main线程，假如新开了线程a并start，那么就增加了一个执行流，main线程和线程a都有其私有的方法栈。
-  start &amp; run 的区别
-  start相当于main线程（老板）给新线程（工人）分配完了之后就让工人自己去干活了，自己继续去做自己的事情。
-  run相当于main线程（老板）给新线程（工人）分配了活并进行监工，等工人干完活之后再去做自己的事情。
-如果让新线程执行run方法的话，和没有分多线程是一样的效果！！！只有start才可以并发执行！
-    多线程会产生什么问题？
-同一份代码，不同人乱序运行，如果不是原子操作（某一时刻只能被一个线程操作），那么就会时好时坏，有时就会出错
-例子：i 初始值为0，线程a和线程b都执行同一方法中的i&#43;&#43;操作
-理想正确场景：线程a执行时 i 加1，变成1；线程b执行时 i 再加1，变成2（即使顺序调换，先线程b再线程a，结果也还是2）
-实际报错场景：i&#43;&#43;分为三步：
-(1) 取出 i 的值
-(2) i 的值加 1
-(3) 将叠加之后的值给 i
-假设线程a先占用了CPU，取出 i 的初始值0，然后 i 加1变成了1。但是！此时线程a占用CPU的时间到了，所以轮到了线程b，由于线程a还没将数据赋值给 i ，所以 i 的值还是0，线程2成功在其基础上加1并赋值给 i ，那么 i 就变成了1。接下来又轮到了线程a，线程a直接将刚刚叠加之后的结果1赋值给 i 。最终结果就变成了 1 而不是2。 如下图所示。">
-<meta itemprop="datePublished" content="2020-07-29T14:45:08&#43;08:00" />
-<meta itemprop="dateModified" content="2020-07-29T14:45:08&#43;08:00" />
-<meta itemprop="wordCount" content="62">
-
-
-
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="多线程"/>
-<meta name="twitter:description" content="为什么需要多线程？    硬件需要：
-CPU与其他设备的速度不同步，CPU很快，等执行完之后就进行等待，而且现在CPU大多是多核的，速度更快了。希望可以让CPU使用更加充分。
-  程序需要：
-java的执行模型是同步/阻塞的：默认是单线程，在执行的过程中，执行完第一行再执行第二行，一步一步来。假如第一行是执行一个很慢的方法，那么就会等这个方法执行结束再继续，这样就需要等待很久。
-    多线程的过程
-默认执行main线程，假如新开了线程a并start，那么就增加了一个执行流，main线程和线程a都有其私有的方法栈。
-  start &amp; run 的区别
-  start相当于main线程（老板）给新线程（工人）分配完了之后就让工人自己去干活了，自己继续去做自己的事情。
-  run相当于main线程（老板）给新线程（工人）分配了活并进行监工，等工人干完活之后再去做自己的事情。
-如果让新线程执行run方法的话，和没有分多线程是一样的效果！！！只有start才可以并发执行！
-    多线程会产生什么问题？
-同一份代码，不同人乱序运行，如果不是原子操作（某一时刻只能被一个线程操作），那么就会时好时坏，有时就会出错
-例子：i 初始值为0，线程a和线程b都执行同一方法中的i&#43;&#43;操作
-理想正确场景：线程a执行时 i 加1，变成1；线程b执行时 i 再加1，变成2（即使顺序调换，先线程b再线程a，结果也还是2）
-实际报错场景：i&#43;&#43;分为三步：
-(1) 取出 i 的值
-(2) i 的值加 1
-(3) 将叠加之后的值给 i
-假设线程a先占用了CPU，取出 i 的初始值0，然后 i 加1变成了1。但是！此时线程a占用CPU的时间到了，所以轮到了线程b，由于线程a还没将数据赋值给 i ，所以 i 的值还是0，线程2成功在其基础上加1并赋值给 i ，那么 i 就变成了1。接下来又轮到了线程a，线程a直接将刚刚叠加之后的结果1赋值给 i 。最终结果就变成了 1 而不是2。 如下图所示。"/>
-
-	
-  </head>
-
-  <body class="ma0 avenir bg-near-white">
-
-    
-   
-  
-
-  <header>
-    <div class="bg-black">
-      <nav class="pv3 ph3 ph4-ns" role="navigation">
-  <div class="flex-l justify-between items-center center">
-    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
-      
-        Summer&#39;s Blog
-      
-    </a>
-    <div class="flex-l items-center">
-      
-
-      
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-  </div>
-</nav>
-
-    </div>
-  </header>
-
-
-
-    <main class="pb7" role="main">
-      
-  
-  <article class="flex-l flex-wrap justify-between mw8 center ph3">
-    <header class="mt4 w-100">
-      <aside class="instapaper_ignoref b helvetica tracked">
-          
-        POSTS
-      </aside>
-      
-
-
-
-
-  <div id="sharing" class="mt3">
-
-    
-    <a href="https://www.facebook.com/sharer.php?u=http://xuepan.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="facebook no-underline" aria-label="share on Facebook">
-      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
-
-    </a>
-
-    
-    
-    <a href="https://twitter.com/share?url=http://xuepan.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/&amp;text=%e5%a4%9a%e7%ba%bf%e7%a8%8b" class="twitter no-underline" aria-label="share on Twitter">
-      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
-
-    </a>
-
-    
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://xuepan.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/&amp;title=%e5%a4%9a%e7%ba%bf%e7%a8%8b" class="linkedin no-underline" aria-label="share on LinkedIn">
-      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
-</svg>
-
-    </a>
-  </div>
-
-
-      <h1 class="f1 athelas mt3 mb1">多线程</h1>
-      
-      
-      <time class="f6 mv4 dib tracked" datetime="2020-07-29T14:45:08&#43;08:00">July 29, 2020</time>
-
-      
-      
-    </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><ul>
-<li><strong>为什么需要多线程？</strong></li>
-</ul>
-<ol>
-<li>
-<p>硬件需要：</p>
-<p>CPU与其他设备的速度不同步，CPU很快，等执行完之后就进行等待，而且现在CPU大多是多核的，速度更快了。希望可以让CPU使用更加充分。</p>
-</li>
-<li>
-<p>程序需要：</p>
-<p>java的执行模型是同步/阻塞的：默认是单线程，在执行的过程中，执行完第一行再执行第二行，一步一步来。假如第一行是执行一个很慢的方法，那么就会等这个方法执行结束再继续，这样就需要等待很久。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p><strong>多线程的过程</strong></p>
-<p>默认执行main线程，假如新开了线程a并start，那么就增加了一个执行流，main线程和线程a都有其私有的方法栈。</p>
-</li>
-<li>
-<p><strong>start &amp; run 的区别</strong></p>
-<ul>
-<li>
-<p>start相当于main线程（老板）给新线程（工人）分配完了之后就让工人自己去干活了，自己继续去做自己的事情。</p>
-</li>
-<li>
-<p>run相当于main线程（老板）给新线程（工人）分配了活并进行监工，等工人干完活之后再去做自己的事情。</p>
-<p><strong>如果让新线程执行run方法的话，和没有分多线程是一样的效果！！！只有start才可以并发执行！</strong></p>
-</li>
-</ul>
-</li>
-<li>
-<p><strong>多线程会产生什么问题？</strong></p>
-<p>同一份代码，不同人乱序运行，如果不是原子操作（某一时刻只能被一个线程操作），那么就会时好时坏，有时就会出错</p>
-<p>例子：i 初始值为0，线程a和线程b都执行同一方法中的i++操作</p>
-<p><!-- raw HTML omitted -->理想正确场景：<!-- raw HTML omitted --></p>
-<p>线程a执行时 i 加1，变成1；线程b执行时 i 再加1，变成2（即使顺序调换，先线程b再线程a，结果也还是2）</p>
-<p><!-- raw HTML omitted -->实际报错场景：<!-- raw HTML omitted --></p>
-<p>i++分为三步：</p>
-<p>(1) 取出 i 的值</p>
-<p>(2) i 的值加 1</p>
-<p>(3) 将叠加之后的值给 i</p>
-<p>假设线程a先占用了CPU，取出 i 的初始值0，然后 i 加1变成了1。但是！此时线程a占用CPU的时间到了，所以轮到了线程b，由于线程a还没将数据赋值给 i ，所以 i 的值还是0，线程2成功在其基础上加1并赋值给 i ，那么 i 就变成了1。接下来又轮到了线程a，线程a直接将刚刚叠加之后的结果1赋值给 i 。<strong>最终结果就变成了 1 而不是2。</strong> 如下图所示。</p>
-</li>
-</ul>
-<p><img src="/images/MultiThread.png" alt=""></p>
-<ul>
-<li>
-<p><strong>什么时候使用多线程？</strong></p>
-<p>一般分两种应用：</p>
-<ul>
-<li>
-<p>CPU密集型应用  对于这种应用，多线程的效果略打折扣，因为CPU本来就处于繁忙状态，多线程的目的是充分使用CPU，提高CPU利用率。</p>
-</li>
-<li>
-<p>IO密集型应用</p>
-<p>包括网络IO（通常包括数据库）和文件IO</p>
-<p>网络IO，例如平时访问数据库，本质就是通过DATABASE URL，从本地去访问数据库，整个过程也要经过网络IO，所以可以多线程处理其他的事情。</p>
-<p>文件IO，例如下载文件，由于网络传输很慢，所以CPU可以先发送HTTP请求，然后多线程去做其他的事情，得到收到响应之后再继续。</p>
-</li>
-</ul>
-</li>
-</ul>
-<ul class="pa0">
-  
-</ul>
-<div class="mt6 instapaper_ignoref">
-      
-      
-      </div>
-    </div>
-
-    <aside class="w-30-l mt6-l">
-
-
-
-
-</aside>
-
-  </article>
-
-    </main>
-    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
-  <div class="flex justify-between">
-  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://xuepan.xyz/" >
-    &copy;  Summer's Blog 2020 
-  </a>
-    <div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-  </div>
+        <div id="wrapper">
+
+            
+                <header id="header">
+                    <div class="logo">
+                        <span class="icon fa-gem"></span>
+                    </div>
+                    <div class="content">
+                        <div class="inner">
+                            <h1><a href="/summer-xuepan.github.io/">Go Home</a></h1>
+                            <p>
+                                Nothing to see here
+                            </p>
+                        </div>
+                    </div>
+                </header>
+
+                
+<footer id="footer">
+    <p class="copyright">&copy; Design: <a href="https://github.com/d-asnaghi">d-asnaghi</a> and <a href="https://html5up.net">HTML5 UP</a>.</p>
 </footer>
 
+        </div>
+
     
+    <div id="bg"></div>
 
-  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+</body>
 
 
-  </body>
+    
+    <script src=https://xuepan-summer.github.io/summer-xuepan.github.io/assets/js/jquery.min.js></script>
+    <script src=https://xuepan-summer.github.io/summer-xuepan.github.io/assets/js/browser.min.js></script>
+    <script src=https://xuepan-summer.github.io/summer-xuepan.github.io/assets/js/breakpoints.min.js></script>
+    <script src=https://xuepan-summer.github.io/summer-xuepan.github.io/assets/js/util.js></script>
+    <script src=https://xuepan-summer.github.io/summer-xuepan.github.io/assets/js/main.js></script>
+
 </html>
