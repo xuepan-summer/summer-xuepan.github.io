@@ -1,56 +1,317 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Java的包管理与Maven</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="https://xuepan-summer.github.io/summer-xuepan.github.io/assets/css/main.css"/>
-    <noscript><link rel="stylesheet" href="https://xuepan-summer.github.io/summer-xuepan.github.io/assets/css/noscript.css"/></noscript>
-    <style>
-        :root{--site-background : url("https://xuepan-summer.github.io/summer-xuepan.github.io/images/bg.jpg")};
-    </style> 
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-</head>
-
-<body class="is-preload">
+    <title>Java的包管理与Maven | Summer&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
 
     
-        <div id="wrapper">
+    
+      <link href="/summer-xuepan.github.io/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
+    
 
-            
-                <header id="header">
-                    <div class="logo">
-                        <span class="icon fa-gem"></span>
-                    </div>
-                    <div class="content">
-                        <div class="inner">
-                            <h1><a href="/summer-xuepan.github.io/">Go Home</a></h1>
-                            <p>
-                                Nothing to see here
-                            </p>
-                        </div>
-                    </div>
-                </header>
+    
 
-                
-<footer id="footer">
-    <p class="copyright">&copy; Design: <a href="https://github.com/d-asnaghi">d-asnaghi</a> and <a href="https://html5up.net">HTML5 UP</a>.</p>
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="Java的包管理与Maven" />
+<meta property="og:description" content="1.JVM（java虚拟机）的作用：
+只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
+2.传递性依赖：类依赖其他类
+maven的包管理解决了传递性依赖和包冲突： 实现生产者-消费者(一)：Object.wait() &amp; notify()notifyAll() 1）传递性依赖的解决：
+maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
+2）包冲突的解决：
+【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包
+【2】包冲突的表现：
+AbstractMethodError
+NoClassDefFoundError
+ClassNotFoundException
+LinkageError
+NoSuchMethodError
+【3】看包依赖的方法
+法1：看右侧maven的dependencies
+法2：命令行里执行mvn dependency:tree 看到的是maven解决冲突之后的结构
+【4】 解决冲突的原则：
+选择距离项目最近的jar包
+当距离项目一样近时，选前者
+【5】实例：
+因为此时既依赖了0.1版本的C包，又依赖了0.2版本的C包，所以产生了包冲突
+所以maven在解决包冲突的时候，选择了较近的0.1版本的C包，而舍弃了高版本
+当高版本的jar包里有我们需要的方法时，此时就会报错，要想采用高版本的jar包，有以下几种方式：
+① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;version&gt;0.2&lt;/version&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-d&lt;/artifactId&gt; &lt;version&gt;0.1&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; ③ 采用IDEA的Maven Helper插件
+打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，选中要排除的那个,然后右键exclude" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/java%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8Emaven/" />
+<meta property="article:published_time" content="2020-06-26T17:52:27+08:00" />
+<meta property="article:modified_time" content="2020-06-26T17:52:27+08:00" />
+<meta itemprop="name" content="Java的包管理与Maven">
+<meta itemprop="description" content="1.JVM（java虚拟机）的作用：
+只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
+2.传递性依赖：类依赖其他类
+maven的包管理解决了传递性依赖和包冲突： 实现生产者-消费者(一)：Object.wait() &amp; notify()notifyAll() 1）传递性依赖的解决：
+maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
+2）包冲突的解决：
+【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包
+【2】包冲突的表现：
+AbstractMethodError
+NoClassDefFoundError
+ClassNotFoundException
+LinkageError
+NoSuchMethodError
+【3】看包依赖的方法
+法1：看右侧maven的dependencies
+法2：命令行里执行mvn dependency:tree 看到的是maven解决冲突之后的结构
+【4】 解决冲突的原则：
+选择距离项目最近的jar包
+当距离项目一样近时，选前者
+【5】实例：
+因为此时既依赖了0.1版本的C包，又依赖了0.2版本的C包，所以产生了包冲突
+所以maven在解决包冲突的时候，选择了较近的0.1版本的C包，而舍弃了高版本
+当高版本的jar包里有我们需要的方法时，此时就会报错，要想采用高版本的jar包，有以下几种方式：
+① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;version&gt;0.2&lt;/version&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-d&lt;/artifactId&gt; &lt;version&gt;0.1&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; ③ 采用IDEA的Maven Helper插件
+打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，选中要排除的那个,然后右键exclude">
+<meta itemprop="datePublished" content="2020-06-26T17:52:27&#43;08:00" />
+<meta itemprop="dateModified" content="2020-06-26T17:52:27&#43;08:00" />
+<meta itemprop="wordCount" content="56">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java的包管理与Maven"/>
+<meta name="twitter:description" content="1.JVM（java虚拟机）的作用：
+只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
+2.传递性依赖：类依赖其他类
+maven的包管理解决了传递性依赖和包冲突： 实现生产者-消费者(一)：Object.wait() &amp; notify()notifyAll() 1）传递性依赖的解决：
+maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
+2）包冲突的解决：
+【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包
+【2】包冲突的表现：
+AbstractMethodError
+NoClassDefFoundError
+ClassNotFoundException
+LinkageError
+NoSuchMethodError
+【3】看包依赖的方法
+法1：看右侧maven的dependencies
+法2：命令行里执行mvn dependency:tree 看到的是maven解决冲突之后的结构
+【4】 解决冲突的原则：
+选择距离项目最近的jar包
+当距离项目一样近时，选前者
+【5】实例：
+因为此时既依赖了0.1版本的C包，又依赖了0.2版本的C包，所以产生了包冲突
+所以maven在解决包冲突的时候，选择了较近的0.1版本的C包，而舍弃了高版本
+当高版本的jar包里有我们需要的方法时，此时就会报错，要想采用高版本的jar包，有以下几种方式：
+① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;version&gt;0.2&lt;/version&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-d&lt;/artifactId&gt; &lt;version&gt;0.1&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; ③ 采用IDEA的Maven Helper插件
+打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，选中要排除的那个,然后右键exclude"/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/summer-xuepan.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        Summer&#39;s Blog
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://xuepan-summer.github.io/summer-xuepan.github.io/posts/java%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8Emaven/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://xuepan-summer.github.io/summer-xuepan.github.io/posts/java%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8Emaven/&amp;text=Java%e7%9a%84%e5%8c%85%e7%ae%a1%e7%90%86%e4%b8%8eMaven" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xuepan-summer.github.io/summer-xuepan.github.io/posts/java%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8Emaven/&amp;title=Java%e7%9a%84%e5%8c%85%e7%ae%a1%e7%90%86%e4%b8%8eMaven" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Java的包管理与Maven</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-06-26T17:52:27&#43;08:00">June 26, 2020</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>1.JVM（java虚拟机）的作用：</p>
+<p>只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。</p>
+<p>2.传递性依赖：类依赖其他类</p>
+<p>maven的包管理解决了传递性依赖和包冲突：
+实现生产者-消费者(一)：Object.wait() &amp; notify()notifyAll()
+1）传递性依赖的解决：</p>
+<p>maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来</p>
+<p>2）包冲突的解决：</p>
+<p>【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包</p>
+<p>【2】包冲突的表现：</p>
+<p><strong>AbstractMethodError</strong></p>
+<p><strong>NoClassDefFoundError</strong></p>
+<p><strong>ClassNotFoundException</strong></p>
+<p><strong>LinkageError</strong></p>
+<p><strong>NoSuchMethodError</strong></p>
+<p>【3】看包依赖的方法</p>
+<p>法1：看右侧maven的dependencies</p>
+<p><img src="/images/way1_dependencies.png" alt=""></p>
+<p>法2：命令行里执行mvn dependency:tree 看到的是maven解决冲突之后的结构</p>
+<p><img src="/images/way2.png" alt=""></p>
+<p>【4】
+解决冲突的原则：</p>
+<p>选择距离项目最近的jar包</p>
+<p>当距离项目一样近时，选前者</p>
+<p>【5】实例：</p>
+<p><img src="/images/instance.png" alt=""></p>
+<p>因为此时既依赖了0.1版本的C包，又依赖了0.2版本的C包，所以产生了包冲突</p>
+<p>所以maven在解决包冲突的时候，选择了较近的0.1版本的C包，而舍弃了高版本</p>
+<p>当高版本的jar包里有我们需要的方法时，此时就会报错，要想采用高版本的jar包，有以下几种方式：</p>
+<p>① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;dependency&gt;</span>    
+    <span style="color:#f92672">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#f92672">&lt;/groupId&gt;</span>    
+    <span style="color:#f92672">&lt;artifactId&gt;</span>test-library-c<span style="color:#f92672">&lt;/artifactId&gt;</span>    
+    <span style="color:#f92672">&lt;version&gt;</span>0.2<span style="color:#f92672">&lt;/version&gt;</span>    
+<span style="color:#f92672">&lt;/dependency&gt;</span>
+</code></pre></div><p>② 排除掉0.1版本的C包</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;dependency&gt;</span>
+    <span style="color:#f92672">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>test-library-d<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>0.1<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;exclusions&gt;</span>
+        <span style="color:#f92672">&lt;exclusion&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>com.github.hcsp<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>test-library-c<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;/exclusion&gt;</span>
+    <span style="color:#f92672">&lt;/exclusions&gt;</span>
+<span style="color:#f92672">&lt;/dependency&gt;</span>
+</code></pre></div><p>③ 采用IDEA的Maven Helper插件</p>
+<p>打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，<strong>选中要排除的那个</strong>,然后右键exclude</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://xuepan-summer.github.io/summer-xuepan.github.io/" >
+    &copy;  Summer's Blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
 </footer>
 
-        </div>
-
     
-    <div id="bg"></div>
 
-</body>
+  <script src="/summer-xuepan.github.io/dist/js/app.3fc0f988d21662902933.js"></script>
 
 
-    
-    <script src=https://xuepan-summer.github.io/summer-xuepan.github.io/assets/js/jquery.min.js></script>
-    <script src=https://xuepan-summer.github.io/summer-xuepan.github.io/assets/js/browser.min.js></script>
-    <script src=https://xuepan-summer.github.io/summer-xuepan.github.io/assets/js/breakpoints.min.js></script>
-    <script src=https://xuepan-summer.github.io/summer-xuepan.github.io/assets/js/util.js></script>
-    <script src=https://xuepan-summer.github.io/summer-xuepan.github.io/assets/js/main.js></script>
-
+  </body>
 </html>

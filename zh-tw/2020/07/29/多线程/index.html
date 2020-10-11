@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta name="generator" content="Hugo 0.69.2" />
+  <meta charset="utf-8">
+  <title>多线程 · Summer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="为什么需要多线程？ 硬件需要： CPU与其他设备的速度不同步，CPU很快，等执行完之后就进行等待，而且现在CPU大多是多核的，速度更快了。希望可" />
+
+  <meta name="keywords" content="Hugo, theme, den" />
+
+<link rel="canonical" href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/2020/07/29/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" />
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://xuepan-summer.github.io/summer-xuepan.github.io/css/den.css">
+
+
+
+
+<meta property="og:title" content="多线程" />
+<meta property="og:description" content="为什么需要多线程？ 硬件需要： CPU与其他设备的速度不同步，CPU很快，等执行完之后就进行等待，而且现在CPU大多是多核的，速度更快了。希望可" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/2020/07/29/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" />
+<meta property="article:published_time" content="2020-07-29T14:45:08+08:00" />
+<meta property="article:modified_time" content="2020-07-29T14:45:08+08:00" />
+<meta itemprop="name" content="多线程">
+<meta itemprop="description" content="为什么需要多线程？ 硬件需要： CPU与其他设备的速度不同步，CPU很快，等执行完之后就进行等待，而且现在CPU大多是多核的，速度更快了。希望可">
+<meta itemprop="datePublished" content="2020-07-29T14:45:08&#43;08:00" />
+<meta itemprop="dateModified" content="2020-07-29T14:45:08&#43;08:00" />
+<meta itemprop="wordCount" content="1002">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="多线程"/>
+<meta name="twitter:description" content="为什么需要多线程？ 硬件需要： CPU与其他设备的速度不同步，CPU很快，等执行完之后就进行等待，而且现在CPU大多是多核的，速度更快了。希望可"/>
+</head>
+<body>
+  
+  <div class="header-container" style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://xuepan-summer.github.io/summer-xuepan.github.io/images/background.jpg'); background-position: center; background-size: cover;">
+  <div class="container">
+  <nav class="header-nav navbar navbar-expand-md navbar-dark light-dark">
+    <div class="header-logo navbar-brand">
+      
+        <a class="float-left" href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/">
+      
+        
+        <img class="mr20 header-logo-image" src="https://xuepan-summer.github.io/summer-xuepan.github.io/images/globe.svg" alt="logo">
+        
+        
+          Den
+         
+      </a>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="nav-menu collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            
+              
+                <a class="nav-link" href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/category/notes/">筆記</a>
+              
+            
+          </li>
+        
+          <li class="nav-item">
+            
+              
+                <a class="nav-link" href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/category/demos/">展示</a>
+              
+            
+          </li>
+        
+        
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://xuepan-summer.github.io/summer-xuepan.github.io/en/"><i class="fas fa-globe"></i> English</a>
+            </li>
+          
+          
+          
+          
+        
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div class="container header-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="header-content">
+        <h1 class="header-title">多线程</h1>
+        <p class="header-date">
+        2020-07-29
+        <div class="header-underline"></div>
+        
+        
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+  <main>
+<div class="container content">
+  <article>
+  <ul>
+<li><strong>为什么需要多线程？</strong></li>
+</ul>
+<ol>
+<li>
+<p>硬件需要：</p>
+<p>CPU与其他设备的速度不同步，CPU很快，等执行完之后就进行等待，而且现在CPU大多是多核的，速度更快了。希望可以让CPU使用更加充分。</p>
+</li>
+<li>
+<p>程序需要：</p>
+<p>java的执行模型是同步/阻塞的：默认是单线程，在执行的过程中，执行完第一行再执行第二行，一步一步来。假如第一行是执行一个很慢的方法，那么就会等这个方法执行结束再继续，这样就需要等待很久。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>多线程的过程</strong></p>
+<p>默认执行main线程，假如新开了线程a并start，那么就增加了一个执行流，main线程和线程a都有其私有的方法栈。</p>
+</li>
+<li>
+<p><strong>start &amp; run 的区别</strong></p>
+<ul>
+<li>
+<p>start相当于main线程（老板）给新线程（工人）分配完了之后就让工人自己去干活了，自己继续去做自己的事情。</p>
+</li>
+<li>
+<p>run相当于main线程（老板）给新线程（工人）分配了活并进行监工，等工人干完活之后再去做自己的事情。</p>
+<p><strong>如果让新线程执行run方法的话，和没有分多线程是一样的效果！！！只有start才可以并发执行！</strong></p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>多线程会产生什么问题？</strong></p>
+<p>同一份代码，不同人乱序运行，如果不是原子操作（某一时刻只能被一个线程操作），那么就会时好时坏，有时就会出错</p>
+<p>例子：i 初始值为0，线程a和线程b都执行同一方法中的i++操作</p>
+<p><!-- raw HTML omitted -->理想正确场景：<!-- raw HTML omitted --></p>
+<p>线程a执行时 i 加1，变成1；线程b执行时 i 再加1，变成2（即使顺序调换，先线程b再线程a，结果也还是2）</p>
+<p><!-- raw HTML omitted -->实际报错场景：<!-- raw HTML omitted --></p>
+<p>i++分为三步：</p>
+<p>(1) 取出 i 的值</p>
+<p>(2) i 的值加 1</p>
+<p>(3) 将叠加之后的值给 i</p>
+<p>假设线程a先占用了CPU，取出 i 的初始值0，然后 i 加1变成了1。但是！此时线程a占用CPU的时间到了，所以轮到了线程b，由于线程a还没将数据赋值给 i ，所以 i 的值还是0，线程2成功在其基础上加1并赋值给 i ，那么 i 就变成了1。接下来又轮到了线程a，线程a直接将刚刚叠加之后的结果1赋值给 i 。<strong>最终结果就变成了 1 而不是2。</strong> 如下图所示。</p>
+</li>
+</ul>
+<p><img src="/images/MultiThread.png" alt=""></p>
+<ul>
+<li>
+<p><strong>什么时候使用多线程？</strong></p>
+<p>一般分两种应用：</p>
+<ul>
+<li>
+<p>CPU密集型应用  对于这种应用，多线程的效果略打折扣，因为CPU本来就处于繁忙状态，多线程的目的是充分使用CPU，提高CPU利用率。</p>
+</li>
+<li>
+<p>IO密集型应用</p>
+<p>包括网络IO（通常包括数据库）和文件IO</p>
+<p>网络IO，例如平时访问数据库，本质就是通过DATABASE URL，从本地去访问数据库，整个过程也要经过网络IO，所以可以多线程处理其他的事情。</p>
+<p>文件IO，例如下载文件，由于网络传输很慢，所以CPU可以先发送HTTP请求，然后多线程去做其他的事情，得到收到响应之后再继续。</p>
+</li>
+</ul>
+</li>
+</ul>
+
+  </article>
+
+  
+  
+    
+  
+  
+
+
+</div>
+
+  </main><div class="footer gradient-2">
+  <div class="container footer-container ">
+    <div class="row">
+      <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+        <div class="footer-title">網站地圖</div>
+        <ul class="list-unstyled">
+            
+              
+                <li><a href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/tags/">標籤</a></li>
+              
+              
+                <li><a href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/categories/">分類</a></li>
+              
+            
+            
+            
+            <li><a rel="alternate" type="application/rss&#43;xml" href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/index.xml"><i class="fas fa-rss-square"></i> RSS 訂閱</a></li>
+            
+            
+            
+        </ul>
+      </div>
+      <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+        
+        <div class="footer-title">社群</div>
+        <ul class="list-unstyled">
+          
+          <li><a href="https://github.com/shaform/hugo-theme-den/" rel="noopener" target="_blank">GitHub</a></li>
+          
+        </ul>
+        
+      </div>
+      <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+        
+        <div class="footer-title">連結</div>
+        <ul class="list-unstyled">
+          
+          <li><a href="https://github.com/shaform/hugo-theme-den/" rel="noopener" target="_blank">關於我</a></li>
+          
+        </ul>
+        
+      </div> 
+      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <p class="pull-right text-right">
+          <small><em>Proudly powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo</a></em></small><br/>
+          <small><em>Theme - <a href="https://github.com/shaform/hugo-theme-den" rel="noopener" target="_blank">Den</a></em></small><br/>
+          <small>
+            &copy; 
+            Jane Doe
+            
+              2017 -
+            2020
+          </small>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta name="generator" content="Hugo 0.69.2" />
+  <meta charset="utf-8">
+  <title>Collection体系的常用类及其背后的数据结构 · Summer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="集合有两个基本接口：Collection和Map List是一个有序集合，Set里不包含重复元素，Queue是队列，遵循FIFO原则（Firs" />
+
+  <meta name="keywords" content="Hugo, theme, den" />
+
+<link rel="canonical" href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/2020/06/28/collection%E4%BD%93%E7%B3%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E7%B1%BB%E5%8F%8A%E5%85%B6%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" />
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://xuepan-summer.github.io/summer-xuepan.github.io/css/den.css">
+
+
+
+
+<meta property="og:title" content="Collection体系的常用类及其背后的数据结构" />
+<meta property="og:description" content="集合有两个基本接口：Collection和Map List是一个有序集合，Set里不包含重复元素，Queue是队列，遵循FIFO原则（Firs" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/2020/06/28/collection%E4%BD%93%E7%B3%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E7%B1%BB%E5%8F%8A%E5%85%B6%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" />
+<meta property="article:published_time" content="2020-06-28T16:20:17+08:00" />
+<meta property="article:modified_time" content="2020-06-28T16:20:17+08:00" />
+<meta itemprop="name" content="Collection体系的常用类及其背后的数据结构">
+<meta itemprop="description" content="集合有两个基本接口：Collection和Map List是一个有序集合，Set里不包含重复元素，Queue是队列，遵循FIFO原则（Firs">
+<meta itemprop="datePublished" content="2020-06-28T16:20:17&#43;08:00" />
+<meta itemprop="dateModified" content="2020-06-28T16:20:17&#43;08:00" />
+<meta itemprop="wordCount" content="590">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Collection体系的常用类及其背后的数据结构"/>
+<meta name="twitter:description" content="集合有两个基本接口：Collection和Map List是一个有序集合，Set里不包含重复元素，Queue是队列，遵循FIFO原则（Firs"/>
+</head>
+<body>
+  
+  <div class="header-container" style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://xuepan-summer.github.io/summer-xuepan.github.io/images/background.jpg'); background-position: center; background-size: cover;">
+  <div class="container">
+  <nav class="header-nav navbar navbar-expand-md navbar-dark light-dark">
+    <div class="header-logo navbar-brand">
+      
+        <a class="float-left" href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/">
+      
+        
+        <img class="mr20 header-logo-image" src="https://xuepan-summer.github.io/summer-xuepan.github.io/images/globe.svg" alt="logo">
+        
+        
+          Den
+         
+      </a>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="nav-menu collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            
+              
+                <a class="nav-link" href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/category/notes/">筆記</a>
+              
+            
+          </li>
+        
+          <li class="nav-item">
+            
+              
+                <a class="nav-link" href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/category/demos/">展示</a>
+              
+            
+          </li>
+        
+        
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://xuepan-summer.github.io/summer-xuepan.github.io/en/"><i class="fas fa-globe"></i> English</a>
+            </li>
+          
+          
+          
+          
+        
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div class="container header-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="header-content">
+        <h1 class="header-title">Collection体系的常用类及其背后的数据结构</h1>
+        <p class="header-date">
+        2020-06-28
+        <div class="header-underline"></div>
+        
+        
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+  <main>
+<div class="container content">
+  <article>
+  <p><img src="/images/collection.png" alt=""></p>
+<p>集合有两个基本接口：Collection和Map</p>
+<p>List是一个有序集合，Set里不包含重复元素，Queue是队列，遵循FIFO原则（First In First Out）</p>
+<p><strong>List</strong></p>
+<p>常用方法：</p>
+<p>add()：增加元素</p>
+<p>retainAll()：保留参数里的所有元素</p>
+<p>containsAll()：是否包含参数这个集合里的所有元素</p>
+<p>toArray()：转换成数组</p>
+<p>1.ArrayList</p>
+<p>2.LinkedList</p>
+<p>3.Vector&amp;Stack</p>
+<p>现已不使用</p>
+<p><!-- raw HTML omitted -->ArrayList &amp; LinkedList：<!-- raw HTML omitted --></p>
+<p>1.实现方式：ArrayList 基于数组来实现，LinkedList基于双向链表来实现</p>
+<p>2.内存占用：LinkedList比ArrayList 更占内存，因为还需要存储两个引用（指向前面的元素和后面的元素）</p>
+<p><strong>3.随机访问速度：ArrayList 更快</strong></p>
+<p><strong>Set</strong></p>
+<p>1.EnumSet</p>
+<p>该Set里的元素必须都是指定枚举类型的枚举值</p>
+<p>2.HashSet</p>
+<p>3.TreeSet</p>
+<p><!-- raw HTML omitted -->HashSet &amp; TreeSet<!-- raw HTML omitted --></p>
+<p>HashSet是二叉树实现的，加入的元素<strong>不一定</strong>和加入的顺序保持一致，这一点就和ArrayList不一样</p>
+<p>TreeSet是SortedSet接口的唯一实现，元素是有序的，可以采用默认的排序方法，也可以自定义排序方法</p>
+<p><strong>Queue</strong></p>
+<p>1.Deque</p>
+<p>双端队列，两端均可增加可减少元素</p>
+<p>2.PriorityQueue</p>
+<p>有优先级的队列，按关键字进行排序，插入元素的时候会自动找到合适位置插入</p>
+<p><strong>Map</strong></p>
+<p>1.HashMap</p>
+<p>HashMap的实现没有被同步，所以它是线程不安全的，ConcurrentHashMap是线程安全的</p>
+<p>HashMap在resize扩容的时候会造成死循环</p>
+<p>2.TreeMap</p>
+<p>TreeMap是基于红黑树实现的</p>
+
+  </article>
+
+  
+  
+    
+  
+  
+
+
+</div>
+
+  </main><div class="footer gradient-2">
+  <div class="container footer-container ">
+    <div class="row">
+      <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+        <div class="footer-title">網站地圖</div>
+        <ul class="list-unstyled">
+            
+              
+                <li><a href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/tags/">標籤</a></li>
+              
+              
+                <li><a href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/categories/">分類</a></li>
+              
+            
+            
+            
+            <li><a rel="alternate" type="application/rss&#43;xml" href="https://xuepan-summer.github.io/summer-xuepan.github.io/zh-tw/index.xml"><i class="fas fa-rss-square"></i> RSS 訂閱</a></li>
+            
+            
+            
+        </ul>
+      </div>
+      <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+        
+        <div class="footer-title">社群</div>
+        <ul class="list-unstyled">
+          
+          <li><a href="https://github.com/shaform/hugo-theme-den/" rel="noopener" target="_blank">GitHub</a></li>
+          
+        </ul>
+        
+      </div>
+      <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+        
+        <div class="footer-title">連結</div>
+        <ul class="list-unstyled">
+          
+          <li><a href="https://github.com/shaform/hugo-theme-den/" rel="noopener" target="_blank">關於我</a></li>
+          
+        </ul>
+        
+      </div> 
+      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <p class="pull-right text-right">
+          <small><em>Proudly powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo</a></em></small><br/>
+          <small><em>Theme - <a href="https://github.com/shaform/hugo-theme-den" rel="noopener" target="_blank">Den</a></em></small><br/>
+          <small>
+            &copy; 
+            Jane Doe
+            
+              2017 -
+            2020
+          </small>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</body>
+</html>
