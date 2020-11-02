@@ -108,13 +108,22 @@
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       学习了Stream之后，打算把Stream如何使用总结一下，便于下次翻阅。
 一、Stream的创建操作、中间操作和终结操作 创建操作产生Stream
-①某collection.stream() ②某stream.of() ③某string.chars() ④IntStream.range() 左闭右开
+①某collection.stream()
+②某stream.of()
+③某string.chars()
+④IntStream.range() 左闭右开
 中间操作仍返回Stream
-①filter() 过滤 ②map() 映射
-eg:map(User::getName)【方法引用】 ③sorted()
+①filter() 过滤
+②map() 映射
+eg:map(User::getName)【方法引用】
+③sorted()
 eg:sorted(Comparator.comparing(某字段).thenComparing(某字段))
 终结操作返回非Stream，包括void
-forEach() count()/max()/min() findFirst()/findAny anyMatch()/noneMatch() collect()※ 是最常用的
+①forEach()
+②count()/max()/min()
+③findFirst()/findAny
+④anyMatch()/noneMatch()
+collect()※ 是最常用的
 Collectors.toList/toSet/toCollection
 eg:Collectors.toCollection(TreeSet::new)
 Collectors.groupingBy() 分组

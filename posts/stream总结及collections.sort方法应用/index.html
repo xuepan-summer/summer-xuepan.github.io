@@ -29,13 +29,22 @@
     <meta property="og:title" content="Stream总结 &amp; Collections.sort()应用" />
 <meta property="og:description" content="学习了Stream之后，打算把Stream如何使用总结一下，便于下次翻阅。
 一、Stream的创建操作、中间操作和终结操作 创建操作产生Stream
-①某collection.stream() ②某stream.of() ③某string.chars() ④IntStream.range() 左闭右开
+①某collection.stream()
+②某stream.of()
+③某string.chars()
+④IntStream.range() 左闭右开
 中间操作仍返回Stream
-①filter() 过滤 ②map() 映射
-eg:map(User::getName)【方法引用】 ③sorted()
+①filter() 过滤
+②map() 映射
+eg:map(User::getName)【方法引用】
+③sorted()
 eg:sorted(Comparator.comparing(某字段).thenComparing(某字段))
 终结操作返回非Stream，包括void
-forEach() count()/max()/min() findFirst()/findAny anyMatch()/noneMatch() collect()※ 是最常用的
+①forEach()
+②count()/max()/min()
+③findFirst()/findAny
+④anyMatch()/noneMatch()
+collect()※ 是最常用的
 Collectors.toList/toSet/toCollection
 eg:Collectors.toCollection(TreeSet::new)
 Collectors.groupingBy() 分组
@@ -61,13 +70,22 @@ Collections.sort(list,Comparator)
 <meta itemprop="name" content="Stream总结 &amp; Collections.sort()应用">
 <meta itemprop="description" content="学习了Stream之后，打算把Stream如何使用总结一下，便于下次翻阅。
 一、Stream的创建操作、中间操作和终结操作 创建操作产生Stream
-①某collection.stream() ②某stream.of() ③某string.chars() ④IntStream.range() 左闭右开
+①某collection.stream()
+②某stream.of()
+③某string.chars()
+④IntStream.range() 左闭右开
 中间操作仍返回Stream
-①filter() 过滤 ②map() 映射
-eg:map(User::getName)【方法引用】 ③sorted()
+①filter() 过滤
+②map() 映射
+eg:map(User::getName)【方法引用】
+③sorted()
 eg:sorted(Comparator.comparing(某字段).thenComparing(某字段))
 终结操作返回非Stream，包括void
-forEach() count()/max()/min() findFirst()/findAny anyMatch()/noneMatch() collect()※ 是最常用的
+①forEach()
+②count()/max()/min()
+③findFirst()/findAny
+④anyMatch()/noneMatch()
+collect()※ 是最常用的
 Collectors.toList/toSet/toCollection
 eg:Collectors.toCollection(TreeSet::new)
 Collectors.groupingBy() 分组
@@ -96,13 +114,22 @@ Collections.sort(list,Comparator)
 <meta name="twitter:title" content="Stream总结 &amp; Collections.sort()应用"/>
 <meta name="twitter:description" content="学习了Stream之后，打算把Stream如何使用总结一下，便于下次翻阅。
 一、Stream的创建操作、中间操作和终结操作 创建操作产生Stream
-①某collection.stream() ②某stream.of() ③某string.chars() ④IntStream.range() 左闭右开
+①某collection.stream()
+②某stream.of()
+③某string.chars()
+④IntStream.range() 左闭右开
 中间操作仍返回Stream
-①filter() 过滤 ②map() 映射
-eg:map(User::getName)【方法引用】 ③sorted()
+①filter() 过滤
+②map() 映射
+eg:map(User::getName)【方法引用】
+③sorted()
 eg:sorted(Comparator.comparing(某字段).thenComparing(某字段))
 终结操作返回非Stream，包括void
-forEach() count()/max()/min() findFirst()/findAny anyMatch()/noneMatch() collect()※ 是最常用的
+①forEach()
+②count()/max()/min()
+③findFirst()/findAny
+④anyMatch()/noneMatch()
+collect()※ 是最常用的
 Collectors.toList/toSet/toCollection
 eg:Collectors.toCollection(TreeSet::new)
 Collectors.groupingBy() 分组
@@ -219,22 +246,22 @@ Collections.sort(list,Comparator)
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>学习了Stream之后，打算把Stream如何使用总结一下，便于下次翻阅。</p>
 <h5 id="一stream的创建操作中间操作和终结操作">一、Stream的创建操作、中间操作和终结操作</h5>
 <p><strong>创建操作产生Stream</strong></p>
-<p>①某collection.stream()
-②某stream.of()
-③某string.chars()
-④IntStream.range() 左闭右开</p>
+<p>①某collection.stream()</p>
+<p>②某stream.of()</p>
+<p>③某string.chars()</p>
+<p>④IntStream.range() 左闭右开</p>
 <p><strong>中间操作仍返回Stream</strong></p>
-<p>①filter() 过滤
-②map() 映射</p>
-<p>eg:map(User::getName)【方法引用】
-③sorted()</p>
+<p>①filter() 过滤</p>
+<p>②map() 映射</p>
+<p>eg:map(User::getName)【方法引用】</p>
+<p>③sorted()</p>
 <p>eg:sorted(Comparator.comparing(某字段).thenComparing(某字段))</p>
 <p><strong>终结操作返回非Stream，包括void</strong></p>
-<p>forEach()
-count()/max()/min()
-findFirst()/findAny
-anyMatch()/noneMatch()
-<strong>collect()</strong>※ 是最常用的</p>
+<p>①forEach()</p>
+<p>②count()/max()/min()</p>
+<p>③findFirst()/findAny</p>
+<p>④anyMatch()/noneMatch()</p>
+<p><strong>collect()</strong>※ 是最常用的</p>
 <p>Collectors.toList/toSet/toCollection</p>
 <p>eg:Collectors.toCollection(TreeSet::new)</p>
 <p>Collectors.groupingBy() 分组</p>
