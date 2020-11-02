@@ -60,7 +60,7 @@ JDK文档的注释中有相关使用范例代码，如下所示：
 class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.">
 <meta itemprop="datePublished" content="2020-09-24T15:15:11&#43;08:00" />
 <meta itemprop="dateModified" content="2020-09-24T15:15:11&#43;08:00" />
-<meta itemprop="wordCount" content="429">
+<meta itemprop="wordCount" content="332">
 
 
 
@@ -230,136 +230,90 @@ class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition not
 <p>生产者：</p>
 <p>①生产随机数</p>
 <p>②将数据存到BlockingQueue</p>
-<p>消费者：
-①从队列中取数据</p>
+<p>消费者：</p>
+<p>①从队列中取数据</p>
 <p>②消费数据</p>
-<p>①上锁lock()</p>
-<p>②盘子里没有东西时，生产者开始生产随机数，<!-- raw HTML omitted -->唤醒消费者<!-- raw HTML omitted --></p>
-<p>盘子里有东西时，生产者等待await()</p>
-<p>③解锁unlock()</p>
-<p>消费者：
-①上锁lock()</p>
-<p>②盘子里有东西时，消费者开始消费随机数，<strong>然后将盘子置为空</strong>，<!-- raw HTML omitted -->唤醒生产者<!-- raw HTML omitted --></p>
-<p>盘子里没有东西时，消费者等待await()</p>
-<p>③解锁unlock()</p>
 <p>3.具体代码实现</p>
-<p>（1）首先需要一个盘子，采用Optional类作为盘子，value相当于盘子里的值(生产者生产完一个就放在盘子里，消费者从盘子里拿走)</p>
-<p>Optional类常用的方法有：</p>
-<ul>
-<li>empty()  将内容置空</li>
-<li>isPresent()  里面的内容是否存在</li>
-<li>of(xxx)  返回一个Optional对象，将xxx存在里面</li>
-</ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> java.util.Optional<span style="color:#f92672">;</span>
+<p>ProducerConsumer里有两个内部类，分别是Producer和Consumer</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> com.github.hcsp.multithread<span style="color:#f92672">;</span>
 
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Container</span> <span style="color:#f92672">{</span>    
-    Optional<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> value <span style="color:#f92672">=</span> Optional<span style="color:#f92672">.</span><span style="color:#a6e22e">empty</span><span style="color:#f92672">();</span>
-    <span style="color:#66d9ef">public</span> Optional<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getValue</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>        
-        <span style="color:#66d9ef">return</span> value<span style="color:#f92672">;</span>    
-    <span style="color:#f92672">}</span>    
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setValue</span><span style="color:#f92672">(</span>Optional<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> value<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>        
-        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> value<span style="color:#f92672">;</span>    
-    <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><p>（2）ProducerConsumer里有两个内部类，分别是Producer和Consumer</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> java.util.Optional<span style="color:#f92672">;</span>
 <span style="color:#f92672">import</span> java.util.Random<span style="color:#f92672">;</span>
-<span style="color:#f92672">import</span> java.util.concurrent.locks.Condition<span style="color:#f92672">;</span>
-<span style="color:#f92672">import</span> java.util.concurrent.locks.Lock<span style="color:#f92672">;</span>
-<span style="color:#f92672">import</span> java.util.concurrent.locks.ReentrantLock<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.concurrent.BlockingQueue<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.concurrent.LinkedBlockingQueue<span style="color:#f92672">;</span>
 
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ProducerConsumer</span> <span style="color:#f92672">{</span>    
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ProducerConsumer</span> <span style="color:#f92672">{</span>
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> InterruptedException <span style="color:#f92672">{</span>
-        Container container <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Container<span style="color:#f92672">();</span>
-        <span style="color:#75715e">//定义一个可重入锁
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">final</span> Lock lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ReentrantLock<span style="color:#f92672">();</span>
-        <span style="color:#75715e">//通过lock.newCondition()得到两个Condition对象
-</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">final</span> Condition sender <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">newCondition</span><span style="color:#f92672">();</span>
-        <span style="color:#66d9ef">final</span> Condition receiver <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">newCondition</span><span style="color:#f92672">();</span>     
-        
-        Producer producer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Producer<span style="color:#f92672">(</span>lock<span style="color:#f92672">,</span> sender<span style="color:#f92672">,</span> receiver<span style="color:#f92672">,</span> container<span style="color:#f92672">);</span>
-        Consumer consumer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Consumer<span style="color:#f92672">(</span>lock<span style="color:#f92672">,</span> sender<span style="color:#f92672">,</span> receiver<span style="color:#f92672">,</span> container<span style="color:#f92672">);</span> 
-        
-        producer<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>        
-        consumer<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>        
-        producer<span style="color:#f92672">.</span><span style="color:#a6e22e">join</span><span style="color:#f92672">();</span>        
-        consumer<span style="color:#f92672">.</span><span style="color:#a6e22e">join</span><span style="color:#f92672">();</span>    
-    <span style="color:#f92672">}</span>    
-    
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Producer</span> <span style="color:#66d9ef">extends</span> Thread <span style="color:#f92672">{</span>
-        Lock lock<span style="color:#f92672">;</span>
-        Condition sender<span style="color:#f92672">;</span>
-        Condition receiver<span style="color:#f92672">;</span>
-        Container container<span style="color:#f92672">;</span>
+        <span style="color:#75715e">//定义一个BlockingQueue，只有一个位置
+</span><span style="color:#75715e"></span>        BlockingQueue queue <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedBlockingQueue<span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+        BlockingQueue<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> singalQueue <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedBlockingQueue<span style="color:#f92672">&lt;&gt;();</span>
 
-        <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Producer</span><span style="color:#f92672">(</span>Lock lock<span style="color:#f92672">,</span> Condition sender<span style="color:#f92672">,</span> Condition receiver<span style="color:#f92672">,</span> Container container<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span> <span style="color:#f92672">=</span> lock<span style="color:#f92672">;</span>
-            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sender</span> <span style="color:#f92672">=</span> sender<span style="color:#f92672">;</span>
-            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">receiver</span> <span style="color:#f92672">=</span> receiver<span style="color:#f92672">;</span>
-            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">container</span> <span style="color:#f92672">=</span> container<span style="color:#f92672">;</span>
+        Producer producer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Producer<span style="color:#f92672">(</span>queue<span style="color:#f92672">,</span> singalQueue<span style="color:#f92672">);</span>
+        Consumer consumer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Consumer<span style="color:#f92672">(</span>queue<span style="color:#f92672">,</span> singalQueue<span style="color:#f92672">);</span>
+
+        producer<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+        consumer<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+
+        producer<span style="color:#f92672">.</span><span style="color:#a6e22e">join</span><span style="color:#f92672">();</span>
+        producer<span style="color:#f92672">.</span><span style="color:#a6e22e">join</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Producer</span> <span style="color:#66d9ef">extends</span> Thread <span style="color:#f92672">{</span>
+        BlockingQueue queue<span style="color:#f92672">;</span>
+        BlockingQueue singalQueue<span style="color:#f92672">;</span>
+
+        <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Producer</span><span style="color:#f92672">(</span>BlockingQueue queue<span style="color:#f92672">,</span> BlockingQueue monitor<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">queue</span> <span style="color:#f92672">=</span> queue<span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">singalQueue</span> <span style="color:#f92672">=</span> monitor<span style="color:#f92672">;</span>
         <span style="color:#f92672">}</span>
 
         <span style="color:#a6e22e">@Override</span>
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            Random ran <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Random<span style="color:#f92672">();</span>
             <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 10<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
-                <span style="color:#75715e">//上锁
-</span><span style="color:#75715e"></span>                lock<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
-                <span style="color:#75715e">//容器内无值时，生产者生产随机数
-</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">while</span> <span style="color:#f92672">(!</span>container<span style="color:#f92672">.</span><span style="color:#a6e22e">getValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isPresent</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
-                    <span style="color:#66d9ef">int</span> r <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Random<span style="color:#f92672">().</span><span style="color:#a6e22e">nextInt</span><span style="color:#f92672">();</span>
-                    container<span style="color:#f92672">.</span><span style="color:#a6e22e">setValue</span><span style="color:#f92672">(</span>Optional<span style="color:#f92672">.</span><span style="color:#a6e22e">of</span><span style="color:#f92672">(</span>r<span style="color:#f92672">));</span>
+                <span style="color:#66d9ef">int</span> r <span style="color:#f92672">=</span> ran<span style="color:#f92672">.</span><span style="color:#a6e22e">nextInt</span><span style="color:#f92672">();</span>
+                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                    <span style="color:#75715e">//生产者生产随机数，放入BlockingQueue
+</span><span style="color:#75715e"></span>                    queue<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span>r<span style="color:#f92672">);</span>
                     System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Producing &#34;</span> <span style="color:#f92672">+</span> r<span style="color:#f92672">);</span>
-                    <span style="color:#75715e">//生产完之后唤醒消费者
-</span><span style="color:#75715e"></span>                    receiver<span style="color:#f92672">.</span><span style="color:#a6e22e">signal</span><span style="color:#f92672">();</span>
-                <span style="color:#f92672">}</span>
-                <span style="color:#75715e">//容器内有值时，生产者等待
-</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-                    sender<span style="color:#f92672">.</span><span style="color:#a6e22e">await</span><span style="color:#f92672">();</span>
-                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+<span style="color:#75715e">//                    singalQueue.take();
+</span><span style="color:#75715e"></span>                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
                     e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
                 <span style="color:#f92672">}</span>
-                <span style="color:#75715e">//解锁
-</span><span style="color:#75715e"></span>                lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
             <span style="color:#f92672">}</span>
         <span style="color:#f92672">}</span>
     <span style="color:#f92672">}</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Consumer</span> <span style="color:#66d9ef">extends</span> Thread <span style="color:#f92672">{</span>
-        Lock lock<span style="color:#f92672">;</span>
-        Condition sender<span style="color:#f92672">;</span>
-        Condition receiver<span style="color:#f92672">;</span>
-        Container container<span style="color:#f92672">;</span>
 
-        <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Consumer</span><span style="color:#f92672">(</span>Lock lock<span style="color:#f92672">,</span> Condition sender<span style="color:#f92672">,</span> Condition receiver<span style="color:#f92672">,</span> Container container<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span> <span style="color:#f92672">=</span> lock<span style="color:#f92672">;</span>
-            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sender</span> <span style="color:#f92672">=</span> sender<span style="color:#f92672">;</span>
-            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">receiver</span> <span style="color:#f92672">=</span> receiver<span style="color:#f92672">;</span>
-            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">container</span> <span style="color:#f92672">=</span> container<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Consumer</span> <span style="color:#66d9ef">extends</span> Thread <span style="color:#f92672">{</span>
+        BlockingQueue queue<span style="color:#f92672">;</span>
+        BlockingQueue singalQueue<span style="color:#f92672">;</span>
+
+        <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Consumer</span><span style="color:#f92672">(</span>BlockingQueue queue<span style="color:#f92672">,</span> BlockingQueue monitor<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">queue</span> <span style="color:#f92672">=</span> queue<span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">singalQueue</span> <span style="color:#f92672">=</span> monitor<span style="color:#f92672">;</span>
         <span style="color:#f92672">}</span>
 
         <span style="color:#a6e22e">@Override</span>
         <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
             <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 10<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
-                <span style="color:#75715e">//上锁
-</span><span style="color:#75715e"></span>                lock<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
-                <span style="color:#75715e">//容器内有值时，消费者消费，并将容器置为空
-</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>container<span style="color:#f92672">.</span><span style="color:#a6e22e">getValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isPresent</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
-                    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Consuming &#34;</span> <span style="color:#f92672">+</span> container<span style="color:#f92672">.</span><span style="color:#a6e22e">getValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">get</span><span style="color:#f92672">());</span>
-                    container<span style="color:#f92672">.</span><span style="color:#a6e22e">setValue</span><span style="color:#f92672">(</span>Optional<span style="color:#f92672">.</span><span style="color:#a6e22e">empty</span><span style="color:#f92672">());</span>
-                    <span style="color:#75715e">//唤醒生产者
-</span><span style="color:#75715e"></span>                    sender<span style="color:#f92672">.</span><span style="color:#a6e22e">signal</span><span style="color:#f92672">();</span>
-                <span style="color:#f92672">}</span>
-                <span style="color:#75715e">//容器内无值时，消费者等待
-</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
-                    receiver<span style="color:#f92672">.</span><span style="color:#a6e22e">await</span><span style="color:#f92672">();</span>
-                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Consuming &#34;</span> <span style="color:#f92672">+</span> queue<span style="color:#f92672">.</span><span style="color:#a6e22e">take</span><span style="color:#f92672">());</span>
+<span style="color:#75715e">//                    singalQueue.put(1);
+</span><span style="color:#75715e"></span>                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
                     e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
                 <span style="color:#f92672">}</span>
             <span style="color:#f92672">}</span>
         <span style="color:#f92672">}</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
-</code></pre></div><p>运行结果如下图所示。进行了十次依次进行生产消费随机数的过程。</p>
-<p><img src="/images/ProducerAndConsumer3.png" alt=""></p>
+</code></pre></div><p>4.运行结果</p>
+<p><img src="../img/ProducerAndConsumer3condition.png" alt=""></p>
+<p><strong>5.出现的问题</strong></p>
+<p>从这张图上可以看到有点问题，为什么出现了生产者连续生产两个数据，消费者连续消费两个数据的情况呢？</p>
+<p>因为生产者刚生产完一个数据，还没来得及打印出&quot;Producing XXX&rdquo;，此时消费者就已经消费掉了，因此生产者又开始生产，消费者又开始消费</p>
+<p>为了避免这种问题，我们可以再增加一个BlockingQueue来限制，因此引入了singalQueue</p>
+<p>6.修改后的结果</p>
+<p>加上注释掉的代码，运行结果如下图所示。进行了十次依次进行生产消费随机数的过程。</p>
+<p><img src="../img/ProducerAndConsumer3.png" alt=""></p>
 <ul class="pa0">
   
 </ul>

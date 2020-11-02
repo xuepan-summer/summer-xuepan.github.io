@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/" />
-<meta property="og:updated_time" content="2020-09-30T16:23:51+08:00" />
+<meta property="og:updated_time" content="2020-11-02T17:43:39+08:00" />
 <meta itemprop="name" content="Summer&#39;s Blog">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Summer&#39;s Blog"/>
@@ -127,6 +127,56 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/stream%E6%80%BB%E7%BB%93%E5%8F%8Acollections.sort%E6%96%B9%E6%B3%95%E5%BA%94%E7%94%A8/" class="color-inherit dim link">
+            Stream总结 &amp; Collections.sort()应用
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          学习了Stream之后，打算把Stream如何使用总结一下，便于下次翻阅。
+一、Stream的创建操作、中间操作和终结操作 创建操作产生Stream
+①某collection.stream() ②某stream.of() ③某string.chars() ④IntStream.range() 左闭右开
+中间操作仍返回Stream
+①filter() 过滤 ②map() 映射
+eg:map(User::getName)【方法引用】 ③sorted()
+eg:sorted(Comparator.comparing(某字段).thenComparing(某字段))
+终结操作返回非Stream，包括void
+forEach() count()/max()/min() findFirst()/findAny anyMatch()/noneMatch() collect()※ 是最常用的
+Collectors.toList/toSet/toCollection
+eg:Collectors.toCollection(TreeSet::new)
+Collectors.groupingBy() 分组
+eg:Collectors.groupingBy(Employee::getDepartment)
+Collectors.joining() 连接
+eg:Collectors.joining(&quot;, &ldquo;)
+Collectors.summingInt() 累加求和
+eg:Collectors.summingInt(Employee::getSalary)
+二、Collections.sort()应用 1.包含两种传参方法
+Collections.sort(list)
+Collections.sort(list,Comparator)
+2.java8新特性结合Collections.sort()
+根据User的name对users(User类型的List)进行排序
+有以下三种方法：
+1.Comparator可以写成匿名内部类，实现compare方法
+//1. Collections.sort(users, new Comparator&lt;User&gt;() { @Override public int compare(User user1, User user2) { return user1.getName().compareTo(user2.getName()); } }); 2.Comparator可以写成lambda表达式，如果写return的话需要加分号！
+2.1是加上了参数类型的，参数表的参数类型可以忽略，如2.2所示
+//2.1 复杂 Collections.sort(users, (User user1, User user2) -&gt; { return user1.
+        </div>
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/stream%E6%80%BB%E7%BB%93%E5%8F%8Acollections.sort%E6%96%B9%E6%B3%95%E5%BA%94%E7%94%A8/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/" class="color-inherit dim link">
             Linux常用命令总结
             </a>
@@ -192,41 +242,18 @@ class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition not
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%BA%8C/" class="color-inherit dim link">
-            实现生产者消费者(二)：Lock &amp; Condition
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
-现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
-采用Lock &amp; Condition方法  Lock是接口，里面有lock()方法和unlock()方法，除此之外，还有tryLock()方法、newCondition()方法等。相比于synchronized更加灵活，因为synchronized默认在出作用域的时候释放资源，相当于解锁。所以Lock可以更加灵活地控制何时上锁，何时解锁。
-Condition也是接口，主要是await()方法和signal()/signalAll()方法。signal()方法会唤醒一个正在等待该Condition的线程，而signalAll()方法会唤醒所有正在等待该Condition的线程。
-JDK文档的注释中有相关使用范例代码，如下所示：
-class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.lock(); try { while (count == items.length) notFull.await(); items[putptr] = x; if (++putptr == items.length) putptr = 0; ++count; notEmpty.signal(); } finally { lock.
-        </div>
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%BA%8C/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%BA%8C/" class="link black dim">
+              实现生产者消费者(二)：Lock &amp; Condition
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/" class="link black dim">
@@ -243,12 +270,6 @@ class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition not
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/" class="link black dim">
               深拷贝与浅拷贝
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/collection%E4%BD%93%E7%B3%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E7%B1%BB%E5%8F%8A%E5%85%B6%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="link black dim">
-              Collection体系的常用类及其背后的数据结构
             </a>
           </h2>
         

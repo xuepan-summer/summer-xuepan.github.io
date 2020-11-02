@@ -170,7 +170,7 @@ If any threads are waiting on this object, one of them is chosen to be awakened.
 The awakened threads will not be able to proceed until the current thread relinquishes the lock on this object. The awakened threads will compete in the usual manner with any other threads that might be actively competing to synchronize on this object; for example, the awakened threads enjoy no reliable privilege or disadvantage in* being the next thread to lock this object.
 </code></pre><p>notifyAll()会将所有等待该资源的线程唤醒，然后让它们公平竞争，最终只选择一个线程</p>
 <p>JDK文档中，Object.wait()方法的注释中有相关使用范例代码，如下图所示：</p>
-<p><img src="/images/waitCodeExample.png" alt=""></p>
+<p><img src="../imge/waitCodeExample.png" alt=""></p>
 <p>2.1 synchronized的介绍</p>
 <p>synchronized意为同步，它的使用有三种方法：</p>
 <ol>
@@ -280,7 +280,7 @@ The awakened threads will not be able to proceed until the current thread relinq
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><p>运行结果如下图所示。进行了十次依次进行生产消费随机数的过程。</p>
-<p><img src="/images/ProducerAndConsumer1.png" alt=""></p>
+<p><img src="../img/ProducerAndConsumer1.png" alt=""></p>
 <ul class="pa0">
   
 </ul>

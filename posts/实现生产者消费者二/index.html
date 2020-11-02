@@ -199,13 +199,13 @@ class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition not
         <span style="color:#f92672">}</span>    
     <span style="color:#f92672">}}</span>
 </code></pre></div><p>上述代码结合生产者-消费者问题可得整体思路是：</p>
-<p>生产者：
-①上锁lock()</p>
+<p>生产者：</p>
+<p>①上锁lock()</p>
 <p>②盘子里没有东西时，生产者开始生产随机数，<!-- raw HTML omitted -->唤醒消费者<!-- raw HTML omitted --></p>
 <p>盘子里有东西时，生产者等待await()</p>
 <p>③解锁unlock()</p>
-<p>消费者：
-①上锁lock()</p>
+<p>消费者：</p>
+<p>①上锁lock()</p>
 <p>②盘子里有东西时，消费者开始消费随机数，<strong>然后将盘子置为空</strong>，<!-- raw HTML omitted -->唤醒生产者<!-- raw HTML omitted --></p>
 <p>盘子里没有东西时，消费者等待await()</p>
 <p>③解锁unlock()</p>
@@ -327,7 +327,7 @@ class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition not
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><p>运行结果如下图所示。进行了十次依次进行生产消费随机数的过程。</p>
-<p><img src="/images/ProducerAndConsumer2.png" alt=""></p>
+<p><img src="../img/ProducerAndConsumer2.png" alt=""></p>
 <ul class="pa0">
   
 </ul>

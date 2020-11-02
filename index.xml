@@ -6,10 +6,45 @@
     <description>Recent content on Summer&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-Hans</language>
-    <lastBuildDate>Wed, 30 Sep 2020 16:23:51 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 02 Nov 2020 17:43:39 +0800</lastBuildDate>
     
 	<atom:link href="https://xuepan-summer.github.io/summer-xuepan.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Stream总结 &amp; Collections.sort()应用</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/stream%E6%80%BB%E7%BB%93%E5%8F%8Acollections.sort%E6%96%B9%E6%B3%95%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Mon, 02 Nov 2020 17:43:39 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/stream%E6%80%BB%E7%BB%93%E5%8F%8Acollections.sort%E6%96%B9%E6%B3%95%E5%BA%94%E7%94%A8/</guid>
+      <description>学习了Stream之后，打算把Stream如何使用总结一下，便于下次翻阅。
+一、Stream的创建操作、中间操作和终结操作 创建操作产生Stream
+①某collection.stream() ②某stream.of() ③某string.chars() ④IntStream.range() 左闭右开
+中间操作仍返回Stream
+①filter() 过滤 ②map() 映射
+eg:map(User::getName)【方法引用】 ③sorted()
+eg:sorted(Comparator.comparing(某字段).thenComparing(某字段))
+终结操作返回非Stream，包括void
+forEach() count()/max()/min() findFirst()/findAny anyMatch()/noneMatch() collect()※ 是最常用的
+Collectors.toList/toSet/toCollection
+eg:Collectors.toCollection(TreeSet::new)
+Collectors.groupingBy() 分组
+eg:Collectors.groupingBy(Employee::getDepartment)
+Collectors.joining() 连接
+eg:Collectors.joining(&amp;quot;, &amp;ldquo;)
+Collectors.summingInt() 累加求和
+eg:Collectors.summingInt(Employee::getSalary)
+二、Collections.sort()应用 1.包含两种传参方法
+Collections.sort(list)
+Collections.sort(list,Comparator)
+2.java8新特性结合Collections.sort()
+根据User的name对users(User类型的List)进行排序
+有以下三种方法：
+1.Comparator可以写成匿名内部类，实现compare方法
+//1. Collections.sort(users, new Comparator&amp;lt;User&amp;gt;() { @Override public int compare(User user1, User user2) { return user1.getName().compareTo(user2.getName()); } }); 2.Comparator可以写成lambda表达式，如果写return的话需要加分号！
+2.1是加上了参数类型的，参数表的参数类型可以忽略，如2.2所示
+//2.1 复杂 Collections.sort(users, (User user1, User user2) -&amp;gt; { return user1.</description>
+    </item>
     
     <item>
       <title>Linux常用命令总结</title>

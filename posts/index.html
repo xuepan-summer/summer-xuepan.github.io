@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/" />
-<meta property="og:updated_time" content="2020-09-30T16:23:51+08:00" />
+<meta property="og:updated_time" content="2020-11-02T17:43:39+08:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -96,6 +96,47 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/stream%E6%80%BB%E7%BB%93%E5%8F%8Acollections.sort%E6%96%B9%E6%B3%95%E5%BA%94%E7%94%A8/" class="link black dim">
+        Stream总结 &amp; Collections.sort()应用
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      学习了Stream之后，打算把Stream如何使用总结一下，便于下次翻阅。
+一、Stream的创建操作、中间操作和终结操作 创建操作产生Stream
+①某collection.stream() ②某stream.of() ③某string.chars() ④IntStream.range() 左闭右开
+中间操作仍返回Stream
+①filter() 过滤 ②map() 映射
+eg:map(User::getName)【方法引用】 ③sorted()
+eg:sorted(Comparator.comparing(某字段).thenComparing(某字段))
+终结操作返回非Stream，包括void
+forEach() count()/max()/min() findFirst()/findAny anyMatch()/noneMatch() collect()※ 是最常用的
+Collectors.toList/toSet/toCollection
+eg:Collectors.toCollection(TreeSet::new)
+Collectors.groupingBy() 分组
+eg:Collectors.groupingBy(Employee::getDepartment)
+Collectors.joining() 连接
+eg:Collectors.joining(&quot;, &ldquo;)
+Collectors.summingInt() 累加求和
+eg:Collectors.summingInt(Employee::getSalary)
+二、Collections.sort()应用 1.包含两种传参方法
+Collections.sort(list)
+Collections.sort(list,Comparator)
+2.java8新特性结合Collections.sort()
+根据User的name对users(User类型的List)进行排序
+有以下三种方法：
+1.Comparator可以写成匿名内部类，实现compare方法
+//1. Collections.sort(users, new Comparator&lt;User&gt;() { @Override public int compare(User user1, User user2) { return user1.getName().compareTo(user2.getName()); } }); 2.Comparator可以写成lambda表达式，如果写return的话需要加分号！
+2.1是加上了参数类型的，参数表的参数类型可以忽略，如2.2所示
+//2.1 复杂 Collections.sort(users, (User user1, User user2) -&gt; { return user1.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -346,39 +387,6 @@ NoSuchMethodError
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       private仅本类可用 package private包级私有（默认不写修饰符）仅本包及本类可用 protected 本类、本包、其子类均可用 public没有限制  具体如下图所示：
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="link black dim">
-        Hugo搭建个人博客
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      1.安装hugo
-Windows:
- 下载windows相应版本的压缩包（对应32位/64位）并解压 将hugo.exe放到D:\softwares\hugo\hugo.exe 将D:\softwares\hugo加到PATH中 重启终端，运行hugo version查看版本验证安装成功  Mac:
-  brew install hugo
-  hugo version 验证安装成功
-执行这两行代码即可
-  2.参照文档搭建博客
-  进入hugo官网 https://gohugo.io/ ，点击 Quick Start，则有搭建的全部步骤
-在搭建之前，先打开一个目录，例如进入到D盘，然后cmder(即：在此处打开命令窗口)
-  直接从官网步骤的第二步开始抄代码，一直到第七步
-【2】create new site
-hugo new site xxx.github.io-generator
-xxx要小写，是自己的github用户名，则会在当前目录创建这个网站
-  code xxx.github.io-generator/
-则会在VSCode里打开该目录
-  【3】add a theme 打开终端，继续照抄代码
-  【4】add some content 创建文章，自己命名即可
-  可以找到该md文件，直接写博客了，修改draft:true为draft:false
-  【5】Start the Hugo server 可以看到网站地址了，ctrl+鼠标左键点进去就可以看到自己写的博客
     </div>
   </div>
 </div>
