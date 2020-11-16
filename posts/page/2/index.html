@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/" />
-<meta property="og:updated_time" content="2020-11-02T17:43:39+08:00" />
+<meta property="og:updated_time" content="2020-11-16T18:21:50+08:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -96,6 +96,109 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/collection%E4%BD%93%E7%B3%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E7%B1%BB%E5%8F%8A%E5%85%B6%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="link black dim">
+        Collection体系的常用类及其背后的数据结构
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      集合有两个基本接口：Collection和Map
+List是一个有序集合，Set里不包含重复元素，Queue是队列，遵循FIFO原则（First In First Out）
+List
+常用方法：
+add()：增加元素
+retainAll()：保留参数里的所有元素
+containsAll()：是否包含参数这个集合里的所有元素
+toArray()：转换成数组
+1.ArrayList
+2.LinkedList
+3.Vector&amp;Stack
+现已不使用
+ArrayList &amp; LinkedList：1.实现方式：ArrayList 基于数组来实现，LinkedList基于双向链表来实现
+2.内存占用：LinkedList比ArrayList 更占内存，因为还需要存储两个引用（指向前面的元素和后面的元素）
+3.随机访问速度：ArrayList 更快
+Set
+1.EnumSet
+该Set里的元素必须都是指定枚举类型的枚举值
+2.HashSet
+3.TreeSet
+HashSet &amp; TreeSetHashSet是二叉树实现的，加入的元素不一定和加入的顺序保持一致，这一点就和ArrayList不一样
+TreeSet是SortedSet接口的唯一实现，元素是有序的，可以采用默认的排序方法，也可以自定义排序方法
+Queue
+1.Deque
+双端队列，两端均可增加可减少元素
+2.PriorityQueue
+有优先级的队列，按关键字进行排序，插入元素的时候会自动找到合适位置插入
+Map
+1.HashMap
+HashMap的实现没有被同步，所以它是线程不安全的，ConcurrentHashMap是线程安全的
+HashMap在resize扩容的时候会造成死循环
+2.TreeMap
+TreeMap是基于红黑树实现的
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/java%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8Emaven/" class="link black dim">
+        Java的包管理与Maven
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      1.JVM（java虚拟机）的作用：
+只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
+2.传递性依赖：类依赖其他类
+maven的包管理解决了传递性依赖和包冲突： 实现生产者-消费者(一)：Object.wait() &amp; notify()notifyAll() 1）传递性依赖的解决：
+maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
+2）包冲突的解决：
+【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包
+【2】包冲突的表现：
+AbstractMethodError
+NoClassDefFoundError
+ClassNotFoundException
+LinkageError
+NoSuchMethodError
+【3】看包依赖的方法
+法1：看右侧maven的dependencies
+法2：命令行里执行mvn dependency:tree 看到的是maven解决冲突之后的结构
+【4】 解决冲突的原则：
+选择距离项目最近的jar包
+当距离项目一样近时，选前者
+【5】实例：
+因为此时既依赖了0.1版本的C包，又依赖了0.2版本的C包，所以产生了包冲突
+所以maven在解决包冲突的时候，选择了较近的0.1版本的C包，而舍弃了高版本
+当高版本的jar包里有我们需要的方法时，此时就会报错，要想采用高版本的jar包，有以下几种方式：
+① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;version&gt;0.2&lt;/version&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
+&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-d&lt;/artifactId&gt; &lt;version&gt;0.1&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; ③ 采用IDEA的Maven Helper插件
+打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，选中要排除的那个,然后右键exclude
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E7%B1%BB%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E7%AC%A6publicprotecteddefaultprivate/" class="link black dim">
+        类的访问控制符public、protected、default、private
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      private仅本类可用 package private包级私有（默认不写修饰符）仅本包及本类可用 protected 本类、本包、其子类均可用 public没有限制  具体如下图所示：
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">

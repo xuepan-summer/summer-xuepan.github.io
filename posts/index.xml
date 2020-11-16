@@ -6,10 +6,53 @@
     <description>Recent content in Posts on Summer&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-Hans</language>
-    <lastBuildDate>Mon, 02 Nov 2020 17:43:39 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 16 Nov 2020 18:21:50 +0800</lastBuildDate>
     
 	<atom:link href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Comparale及Comparator对比</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparale%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/</link>
+      <pubDate>Mon, 16 Nov 2020 18:21:50 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparale%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/</guid>
+      <description>comparable接口:
+public interface Comparable { int compareTo(Object other); } public interface Comparable&amp;lt;T&amp;gt; { int compareTo(&amp;lt;T&amp;gt; other); } 实现该接口的类必须要覆写compareTo方法
+comparator接口:
+public interface Comparator&amp;lt;T&amp;gt;{ int compare(T first,T second) } 实现该接口的类必须要覆写compare方法
+if (user1.getAge() &amp;gt; user2.getAge()) { return 1; } if (user1.getAge() &amp;lt; user2.getAge()) { return -1; } return 0; 代码可以简化为：
+return Integer.compare(user1.getAge(), user2.getAge()); Collections.sort(userList, new Comparator&amp;lt;User&amp;gt;() { @Override public int compare(User user1, User user2) { return Integer.compare(user1.getAge(), user2.getAge()); } }); //声明一个匿名内部类，覆写了Comparator接口的compare方法，里面定义了比较的标准 可以简化为：
+Collections.sort(userList, (user1, user2) -&amp;gt; Integer.</description>
+    </item>
+    
+    <item>
+      <title>ArrayList扩容</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/arraylist%E6%89%A9%E5%AE%B9/</link>
+      <pubDate>Mon, 16 Nov 2020 18:17:35 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/arraylist%E6%89%A9%E5%AE%B9/</guid>
+      <description>总结： ArrayList的底层是Object数组，默认容量为10，当往ArrayList里添加数据的时候，才会进行扩容。扩容主要由grow方法实现，扩容为之前的1.5倍左右，然后将之前的数据放到新数组里。
+private static final int DEFAULT_CAPACITY = 10; private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {}; transient Object[] elementData; // non-private to simplify nested class access 一、3种构造方法：
+1.无参构造
+public ArrayList() { this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA; } 默认是一个空Object数组
+2.集合作为参数的构造方法
+public ArrayList(Collection&amp;lt;? extends E&amp;gt; c) { elementData = c.toArray(); if ((size = elementData.length) != 0) { // c.toArray might (incorrectly) not return Object[] (see 6260652)  if (elementData.getClass() != Object[].class) elementData = Arrays.copyOf(elementData, size, Object[].</description>
+    </item>
+    
+    <item>
+      <title>IDEA push失败 Unable to access &#39;https://github.com/XXX/&#39;: Operation timed out ...</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/push%E5%A4%B1%E8%B4%A5/</link>
+      <pubDate>Mon, 16 Nov 2020 18:03:04 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/push%E5%A4%B1%E8%B4%A5/</guid>
+      <description> 出错原因  应该是网速太慢，所以push超时。
+ 操作    （pull的命令行格式是：git pull ）
+在终端Terminal里输入git pull origin master &amp;ndash;allow-unrelated-histories**（注意前面是两个‘-’，后面是一个‘-’）**
+  该命令表示从远程仓库的origin分支拉取到本地的master分支
+&amp;ndash;allow-unrelated-histories的意思是允许合并不相关的历史，所以会进行强行合并
+之后再次push即可，可以使用VCS-&amp;gt;Git-&amp;gt;Push进行push  </description>
+    </item>
     
     <item>
       <title>Stream总结 &amp; Collections.sort()应用</title>
