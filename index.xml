@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>Comparale及Comparator对比</title>
+      <title>Comparable及Comparator对比</title>
       <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparale%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/</link>
       <pubDate>Mon, 16 Nov 2020 18:21:50 +0800</pubDate>
       
@@ -52,6 +52,55 @@ public ArrayList(Collection&amp;lt;? extends E&amp;gt; c) { elementData = c.toAr
   该命令表示从远程仓库的origin分支拉取到本地的master分支
 &amp;ndash;allow-unrelated-histories的意思是允许合并不相关的历史，所以会进行强行合并
 之后再次push即可，可以使用VCS-&amp;gt;Git-&amp;gt;Push进行push  </description>
+    </item>
+    
+    <item>
+      <title>实现生产者消费者(三)：BlockingQueue</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%89/</link>
+      <pubDate>Wed, 11 Nov 2020 15:15:11 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%89/</guid>
+      <description>生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
+现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
+采用BlockingQueue方法  BlockingQueue是接口，顾名思义，就是阻塞队列，队列中有空位才插入元素，队列中有元素才移除元素。
+offer() &amp;amp; put()
+boolean offer(E e);若可以成功添加，返回true，否则返回false &amp;ndash;&amp;gt;非阻塞
+boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException;
+设定等待时间，如果指定时间内，还不能往队列中加入元素，则返回false &amp;ndash;&amp;gt;阻塞
+void put(E e) throws InterruptedException;是阻塞的，如果队列内无空位，则一直等待，直到有空位才往队列中插入元素 &amp;ndash;&amp;gt;阻塞
+poll() &amp;amp; take()
+E poll(long timeout, TimeUnit unit) throws InterruptedException;取出队首元素，可取出就直接返回，否则等待，超时还未取出则失败
+E take() throws InterruptedException;取出队首元素，阻塞等待直到可取出
+JDK文档的注释中有相关使用范例代码，如下所示：
+class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.</description>
+    </item>
+    
+    <item>
+      <title>实现生产者消费者(二)：Lock &amp; Condition</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%BA%8C/</link>
+      <pubDate>Wed, 11 Nov 2020 15:03:37 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%BA%8C/</guid>
+      <description>生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
+现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
+采用Lock &amp;amp; Condition方法  Lock是接口，里面有lock()方法和unlock()方法，除此之外，还有tryLock()方法、newCondition()方法等。相比于synchronized更加灵活，因为synchronized默认在出作用域的时候释放资源，相当于解锁。所以Lock可以更加灵活地控制何时上锁，何时解锁。
+Condition也是接口，主要是await()方法和signal()/signalAll()方法。signal()方法会唤醒一个正在等待该Condition的线程，而signalAll()方法会唤醒所有正在等待该Condition的线程。
+JDK文档的注释中有相关使用范例代码，如下所示：
+class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.lock(); try { while (count == items.length) notFull.await(); items[putptr] = x; if (++putptr == items.length) putptr = 0; ++count; notEmpty.signal(); } finally { lock.</description>
+    </item>
+    
+    <item>
+      <title>实现生产者消费者(一)：wait() &amp; notify()</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/</link>
+      <pubDate>Wed, 11 Nov 2020 14:41:23 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/</guid>
+      <description>生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
+现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
+采用Object.wait() &amp;amp; notify()/notifyAll()方法  wait()表示让该线程等待
+notify()/notifyAll()
+Wakes up a single thread that is waiting on this object&#39;s monitor. If any threads are waiting on this object, one of them is chosen to be awakened. The choice is arbitrary and occurs at the discretion of the implementation. A thread waits on an object&#39;s monitor by calling one of the {@code wait} methods. notify()会随机唤醒一个等待该资源的线程
+Wakes up all threads that are waiting on this object&#39;s monitor.</description>
     </item>
     
     <item>
@@ -118,55 +167,6 @@ Collections.sort(list,Comparator)
   mkdir 目录名 创建目录
   touch 文件名 新建文件
 【mv命令系列】  mv 旧文件 新文件 对文件重命名</description>
-    </item>
-    
-    <item>
-      <title>实现生产者消费者(三)：BlockingQueue</title>
-      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%89/</link>
-      <pubDate>Thu, 24 Sep 2020 15:15:11 +0800</pubDate>
-      
-      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%89/</guid>
-      <description>生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
-现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
-采用BlockingQueue方法  BlockingQueue是接口，顾名思义，就是阻塞队列，队列中有空位才插入元素，队列中有元素才移除元素。
-offer() &amp;amp; put()
-boolean offer(E e);若可以成功添加，返回true，否则返回false &amp;ndash;&amp;gt;非阻塞
-boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException;
-设定等待时间，如果指定时间内，还不能往队列中加入元素，则返回false &amp;ndash;&amp;gt;阻塞
-void put(E e) throws InterruptedException;是阻塞的，如果队列内无空位，则一直等待，直到有空位才往队列中插入元素 &amp;ndash;&amp;gt;阻塞
-poll() &amp;amp; take()
-E poll(long timeout, TimeUnit unit) throws InterruptedException;取出队首元素，可取出就直接返回，否则等待，超时还未取出则失败
-E take() throws InterruptedException;取出队首元素，阻塞等待直到可取出
-JDK文档的注释中有相关使用范例代码，如下所示：
-class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.</description>
-    </item>
-    
-    <item>
-      <title>实现生产者消费者(二)：Lock &amp; Condition</title>
-      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%BA%8C/</link>
-      <pubDate>Thu, 24 Sep 2020 15:03:37 +0800</pubDate>
-      
-      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%BA%8C/</guid>
-      <description>生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
-现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
-采用Lock &amp;amp; Condition方法  Lock是接口，里面有lock()方法和unlock()方法，除此之外，还有tryLock()方法、newCondition()方法等。相比于synchronized更加灵活，因为synchronized默认在出作用域的时候释放资源，相当于解锁。所以Lock可以更加灵活地控制何时上锁，何时解锁。
-Condition也是接口，主要是await()方法和signal()/signalAll()方法。signal()方法会唤醒一个正在等待该Condition的线程，而signalAll()方法会唤醒所有正在等待该Condition的线程。
-JDK文档的注释中有相关使用范例代码，如下所示：
-class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.lock(); try { while (count == items.length) notFull.await(); items[putptr] = x; if (++putptr == items.length) putptr = 0; ++count; notEmpty.signal(); } finally { lock.</description>
-    </item>
-    
-    <item>
-      <title>实现生产者消费者(一)：wait() &amp; notify()</title>
-      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/</link>
-      <pubDate>Thu, 24 Sep 2020 14:41:23 +0800</pubDate>
-      
-      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/</guid>
-      <description>生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
-现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
-采用Object.wait() &amp;amp; notify()/notifyAll()方法  wait()表示让该线程等待
-notify()/notifyAll()
-Wakes up a single thread that is waiting on this object&#39;s monitor. If any threads are waiting on this object, one of them is chosen to be awakened. The choice is arbitrary and occurs at the discretion of the implementation. A thread waits on an object&#39;s monitor by calling one of the {@code wait} methods. notify()会随机唤醒一个等待该资源的线程
-Wakes up all threads that are waiting on this object&#39;s monitor.</description>
     </item>
     
     <item>

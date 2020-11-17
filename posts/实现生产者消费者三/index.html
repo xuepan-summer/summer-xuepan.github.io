@@ -42,8 +42,8 @@ JDK文档的注释中有相关使用范例代码，如下所示：
 class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%89/" />
-<meta property="article:published_time" content="2020-09-24T15:15:11+08:00" />
-<meta property="article:modified_time" content="2020-09-24T15:15:11+08:00" />
+<meta property="article:published_time" content="2020-11-11T15:15:11+08:00" />
+<meta property="article:modified_time" content="2020-11-11T15:15:11+08:00" />
 <meta itemprop="name" content="实现生产者消费者(三)：BlockingQueue">
 <meta itemprop="description" content="生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
 现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
@@ -58,8 +58,8 @@ E poll(long timeout, TimeUnit unit) throws InterruptedException;取出队首元�
 E take() throws InterruptedException;取出队首元素，阻塞等待直到可取出
 JDK文档的注释中有相关使用范例代码，如下所示：
 class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.">
-<meta itemprop="datePublished" content="2020-09-24T15:15:11&#43;08:00" />
-<meta itemprop="dateModified" content="2020-09-24T15:15:11&#43;08:00" />
+<meta itemprop="datePublished" content="2020-11-11T15:15:11&#43;08:00" />
+<meta itemprop="dateModified" content="2020-11-11T15:15:11&#43;08:00" />
 <meta itemprop="wordCount" content="332">
 
 
@@ -169,7 +169,7 @@ class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition not
       <h1 class="f1 athelas mt3 mb1">实现生产者消费者(三)：BlockingQueue</h1>
       
       
-      <time class="f6 mv4 dib tracked" datetime="2020-09-24T15:15:11&#43;08:00">September 24, 2020</time>
+      <time class="f6 mv4 dib tracked" datetime="2020-11-11T15:15:11&#43;08:00">November 11, 2020</time>
 
       
       

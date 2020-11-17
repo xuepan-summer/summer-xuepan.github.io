@@ -35,8 +35,8 @@ Wakes up a single thread that is waiting on this object&#39;s monitor. If any th
 Wakes up all threads that are waiting on this object&#39;s monitor." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/" />
-<meta property="article:published_time" content="2020-09-24T14:41:23+08:00" />
-<meta property="article:modified_time" content="2020-09-24T14:41:23+08:00" />
+<meta property="article:published_time" content="2020-11-11T14:41:23+08:00" />
+<meta property="article:modified_time" content="2020-11-11T14:41:23+08:00" />
 <meta itemprop="name" content="实现生产者消费者(一)：wait() &amp; notify()">
 <meta itemprop="description" content="生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
 现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
@@ -44,8 +44,8 @@ Wakes up all threads that are waiting on this object&#39;s monitor." />
 notify()/notifyAll()
 Wakes up a single thread that is waiting on this object&#39;s monitor. If any threads are waiting on this object, one of them is chosen to be awakened. The choice is arbitrary and occurs at the discretion of the implementation. A thread waits on an object&#39;s monitor by calling one of the {@code wait} methods. notify()会随机唤醒一个等待该资源的线程
 Wakes up all threads that are waiting on this object&#39;s monitor.">
-<meta itemprop="datePublished" content="2020-09-24T14:41:23&#43;08:00" />
-<meta itemprop="dateModified" content="2020-09-24T14:41:23&#43;08:00" />
+<meta itemprop="datePublished" content="2020-11-11T14:41:23&#43;08:00" />
+<meta itemprop="dateModified" content="2020-11-11T14:41:23&#43;08:00" />
 <meta itemprop="wordCount" content="399">
 
 
@@ -148,7 +148,7 @@ Wakes up all threads that are waiting on this object&#39;s monitor."/>
       <h1 class="f1 athelas mt3 mb1">实现生产者消费者(一)：wait() &amp; notify()</h1>
       
       
-      <time class="f6 mv4 dib tracked" datetime="2020-09-24T14:41:23&#43;08:00">September 24, 2020</time>
+      <time class="f6 mv4 dib tracked" datetime="2020-11-11T14:41:23&#43;08:00">November 11, 2020</time>
 
       
       
@@ -170,7 +170,7 @@ If any threads are waiting on this object, one of them is chosen to be awakened.
 The awakened threads will not be able to proceed until the current thread relinquishes the lock on this object. The awakened threads will compete in the usual manner with any other threads that might be actively competing to synchronize on this object; for example, the awakened threads enjoy no reliable privilege or disadvantage in* being the next thread to lock this object.
 </code></pre><p>notifyAll()会将所有等待该资源的线程唤醒，然后让它们公平竞争，最终只选择一个线程</p>
 <p>JDK文档中，Object.wait()方法的注释中有相关使用范例代码，如下图所示：</p>
-<p><img src="../imge/waitCodeExample.png" alt=""></p>
+<p><img src="../img/waitCodeExample.png" alt=""></p>
 <p>2.1 synchronized的介绍</p>
 <p>synchronized意为同步，它的使用有三种方法：</p>
 <ol>
