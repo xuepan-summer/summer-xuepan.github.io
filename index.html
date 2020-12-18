@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/" />
-<meta property="og:updated_time" content="2020-11-16T18:21:50+08:00" />
+<meta property="og:updated_time" content="2020-12-18T10:10:34+08:00" />
 <meta itemprop="name" content="Summer&#39;s Blog">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Summer&#39;s Blog"/>
@@ -127,7 +127,69 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparale%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/" class="color-inherit dim link">
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8Boracle%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" class="color-inherit dim link">
+            命令查看oracle事务隔离级别
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          出于好奇，想看一下目前项目里oracle使用事务隔离级别是否是默认的，所以用命令验证了一下： 注：创建完之后先别commit，直接select即可选出数据
+运行结果说明项目里目前没有修改oracle的事务隔离级别，仍然是默认的READ COMMITED读已提交
+        </div>
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8Boracle%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%B5%85%E8%B0%88%E4%BA%8B%E5%8A%A1/" class="color-inherit dim link">
+            浅谈事务
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          浅谈事务(transaction)  事务的概念：  事务是DBMS（可靠数据库管理系统）中最基本的单位，通俗来讲就是要做的事情。包括四大特性（ACID）：Atomicity 原子性、Consistency 一致性、Isolation 隔离性、Durability持久性。
+ 事务四大特性：   原子性：事务是不可分割的整体，事务里的操作要么都实现要么都不实现，体现了原子性。  eg：甲给乙转钱，乙收钱，要么整个过程成功（甲扣钱，乙收钱），要么整个过程不成功（甲未扣钱，乙未收钱）。
+ 一致性：甲给乙转的钱和乙收到的钱是一致的。整个过程是维持平衡的。
+  隔离性：事务之间是隔离的，即使不同事务处理相同的数据，也要有修改隔离。（即修改也是相互独立的）
+  持久性：事务一旦提交，将持久保存在数据库中。
+   事务高并发产生问题：    脏读(Dirty Read)：事务B读到了事务A已修改但未提交的数据。如果事务A提交失败，那么这B就读到了脏数据。
+  不可重复读(Unrepeatable Read)：一个事务多次查询同一数据，结果不一致。因为受到了其他事务的干扰。
+  幻读(Phantom Read)：例如事务A将1改成2，事务B插入了数据1，那么还是可以选出来值为1的数据
+三者区别
+① 脏读&amp;不可重复读：脏读是因为修改未提交，但不可重复读是因为有别的事务插手，读取了其他事务提交的数据，所以数据不一致
+② 不可重复读&amp;幻读：不可重复读针对同一数据项，幻读针对一批数据整体（比如数据条数）
+针对以上问题，隔离性就起了作用，如何使事务之间隔离起来，互不影响？因此产生了事务隔离级别。
+   事务隔离级别：  ×表示不会出现，√表示可能会出现
+   事务隔离级别 脏读 不可重复读 幻读     Read uncommitted √ √ √   Read committed × √ √   Repeatable read × × √   Serializable × × ×    ① Read uncommitted (读未提交)：最低的事务隔离级别，一个事务还没提交时，它做的变更就能被别的事务看到。
+        </div>
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%B5%85%E8%B0%88%E4%BA%8B%E5%8A%A1/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparable%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/" class="color-inherit dim link">
             Comparable及Comparator对比
             </a>
         </h1>
@@ -140,65 +202,7 @@ if (user1.getAge() &gt; user2.getAge()) { return 1; } if (user1.getAge() &lt; us
 return Integer.compare(user1.getAge(), user2.getAge()); Collections.sort(userList, new Comparator&lt;User&gt;() { @Override public int compare(User user1, User user2) { return Integer.compare(user1.getAge(), user2.getAge()); } }); //声明一个匿名内部类，覆写了Comparator接口的compare方法，里面定义了比较的标准 可以简化为：
 Collections.sort(userList, (user1, user2) -&gt; Integer.
         </div>
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparale%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/arraylist%E6%89%A9%E5%AE%B9/" class="color-inherit dim link">
-            ArrayList扩容
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          总结： ArrayList的底层是Object数组，默认容量为10，当往ArrayList里添加数据的时候，才会进行扩容。扩容主要由grow方法实现，扩容为之前的1.5倍左右，然后将之前的数据放到新数组里。
-private static final int DEFAULT_CAPACITY = 10; private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {}; transient Object[] elementData; // non-private to simplify nested class access 一、3种构造方法：
-1.无参构造
-public ArrayList() { this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA; } 默认是一个空Object数组
-2.集合作为参数的构造方法
-public ArrayList(Collection&lt;? extends E&gt; c) { elementData = c.toArray(); if ((size = elementData.length) != 0) { // c.toArray might (incorrectly) not return Object[] (see 6260652)  if (elementData.getClass() != Object[].class) elementData = Arrays.copyOf(elementData, size, Object[].
-        </div>
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/arraylist%E6%89%A9%E5%AE%B9/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/push%E5%A4%B1%E8%B4%A5/" class="color-inherit dim link">
-            IDEA push失败 Unable to access &#39;https://github.com/XXX/&#39;: Operation timed out ...
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-           出错原因  应该是网速太慢，所以push超时。
- 操作    （pull的命令行格式是：git pull ）
-在终端Terminal里输入git pull origin master &ndash;allow-unrelated-histories**（注意前面是两个‘-’，后面是一个‘-’）**
-  该命令表示从远程仓库的origin分支拉取到本地的master分支
-&ndash;allow-unrelated-histories的意思是允许合并不相关的历史，所以会进行强行合并
-之后再次push即可，可以使用VCS-&gt;Git-&gt;Push进行push  
-        </div>
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/push%E5%A4%B1%E8%B4%A5/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparable%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
         
       </div>
     </div>
@@ -215,6 +219,18 @@ public ArrayList(Collection&lt;? extends E&gt; c) { elementData = c.toArray(); i
         
         
           <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/arraylist%E6%89%A9%E5%AE%B9/" class="link black dim">
+              ArrayList扩容
+            </a>
+          </h2>
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/push%E5%A4%B1%E8%B4%A5/" class="link black dim">
+              IDEA push失败 Unable to access &#39;https://github.com/XXX/&#39;: Operation timed out ...
+            </a>
+          </h2>
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
             <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%89/" class="link black dim">
               实现生产者消费者(三)：BlockingQueue
             </a>
@@ -223,18 +239,6 @@ public ArrayList(Collection&lt;? extends E&gt; c) { elementData = c.toArray(); i
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%BA%8C/" class="link black dim">
               实现生产者消费者(二)：Lock &amp; Condition
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/" class="link black dim">
-              实现生产者消费者(一)：wait() &amp; notify()
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/stream%E6%80%BB%E7%BB%93%E5%8F%8Acollections.sort%E6%96%B9%E6%B3%95%E5%BA%94%E7%94%A8/" class="link black dim">
-              Stream总结 &amp; Collections.sort()应用
             </a>
           </h2>
         

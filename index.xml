@@ -6,17 +6,49 @@
     <description>Recent content on Summer&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-Hans</language>
-    <lastBuildDate>Mon, 16 Nov 2020 18:21:50 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 18 Dec 2020 10:10:34 +0800</lastBuildDate>
     
 	<atom:link href="https://xuepan-summer.github.io/summer-xuepan.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>命令查看oracle事务隔离级别</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8Boracle%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</link>
+      <pubDate>Fri, 18 Dec 2020 10:10:34 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8Boracle%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</guid>
+      <description>出于好奇，想看一下目前项目里oracle使用事务隔离级别是否是默认的，所以用命令验证了一下： 注：创建完之后先别commit，直接select即可选出数据
+运行结果说明项目里目前没有修改oracle的事务隔离级别，仍然是默认的READ COMMITED读已提交</description>
+    </item>
+    
+    <item>
+      <title>浅谈事务</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%B5%85%E8%B0%88%E4%BA%8B%E5%8A%A1/</link>
+      <pubDate>Tue, 17 Nov 2020 14:43:30 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%B5%85%E8%B0%88%E4%BA%8B%E5%8A%A1/</guid>
+      <description>浅谈事务(transaction)  事务的概念：  事务是DBMS（可靠数据库管理系统）中最基本的单位，通俗来讲就是要做的事情。包括四大特性（ACID）：Atomicity 原子性、Consistency 一致性、Isolation 隔离性、Durability持久性。
+ 事务四大特性：   原子性：事务是不可分割的整体，事务里的操作要么都实现要么都不实现，体现了原子性。  eg：甲给乙转钱，乙收钱，要么整个过程成功（甲扣钱，乙收钱），要么整个过程不成功（甲未扣钱，乙未收钱）。
+ 一致性：甲给乙转的钱和乙收到的钱是一致的。整个过程是维持平衡的。
+  隔离性：事务之间是隔离的，即使不同事务处理相同的数据，也要有修改隔离。（即修改也是相互独立的）
+  持久性：事务一旦提交，将持久保存在数据库中。
+   事务高并发产生问题：    脏读(Dirty Read)：事务B读到了事务A已修改但未提交的数据。如果事务A提交失败，那么这B就读到了脏数据。
+  不可重复读(Unrepeatable Read)：一个事务多次查询同一数据，结果不一致。因为受到了其他事务的干扰。
+  幻读(Phantom Read)：例如事务A将1改成2，事务B插入了数据1，那么还是可以选出来值为1的数据
+三者区别
+① 脏读&amp;amp;不可重复读：脏读是因为修改未提交，但不可重复读是因为有别的事务插手，读取了其他事务提交的数据，所以数据不一致
+② 不可重复读&amp;amp;幻读：不可重复读针对同一数据项，幻读针对一批数据整体（比如数据条数）
+针对以上问题，隔离性就起了作用，如何使事务之间隔离起来，互不影响？因此产生了事务隔离级别。
+   事务隔离级别：  ×表示不会出现，√表示可能会出现
+   事务隔离级别 脏读 不可重复读 幻读     Read uncommitted √ √ √   Read committed × √ √   Repeatable read × × √   Serializable × × ×    ① Read uncommitted (读未提交)：最低的事务隔离级别，一个事务还没提交时，它做的变更就能被别的事务看到。</description>
+    </item>
+    
+    <item>
       <title>Comparable及Comparator对比</title>
-      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparale%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/</link>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparable%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/</link>
       <pubDate>Mon, 16 Nov 2020 18:21:50 +0800</pubDate>
       
-      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparale%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/</guid>
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparable%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/</guid>
       <description>comparable接口:
 public interface Comparable { int compareTo(Object other); } public interface Comparable&amp;lt;T&amp;gt; { int compareTo(&amp;lt;T&amp;gt; other); } 实现该接口的类必须要覆写compareTo方法
 comparator接口:
