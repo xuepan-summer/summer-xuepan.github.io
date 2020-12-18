@@ -6,10 +6,27 @@
     <description>Recent content on Summer&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-Hans</language>
-    <lastBuildDate>Fri, 18 Dec 2020 10:10:34 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 18 Dec 2020 10:30:14 +0800</lastBuildDate>
     
 	<atom:link href="https://xuepan-summer.github.io/summer-xuepan.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Oracle数据库函数总结</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Fri, 18 Dec 2020 10:30:14 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</guid>
+      <description>将平时SQL中遇到的oracle数据函数总结一下，便于遗忘时翻阅
+1.lpad &amp;amp; rpad
+lpad(string,n,[pad&amp;hellip;string]) 给定字符左侧添加指定字符至长度n. rpad(string,n,[pad..string]) 给定字符右侧添加指定字符至长度n.
+2.substr
+substr(string, int a, int b) 给定字符串从位置 a(a为0或1时表示从第一个字符开始截取)开始 截取b长度个字符 substr(string,int a) 从位置a开始，一直截取给定字符串到串尾
+3.decode
+decode(条件，值1，返回值1，值2，返回值2，..值 n，返回值n，缺省值)&amp;rdquo; IF条件=值1 THEN RETURN 返回值1 ELSE IF条件=值2 THEN RETURN返回值2 &amp;hellip; ELSE IF条件=值n then RETURN返回值n ELSE RETURN 缺省值
+4.nvl
+nvl(string1, replace_with) 如果string1为null，则返回replace_with，否则返回string1</description>
+    </item>
     
     <item>
       <title>命令查看oracle事务隔离级别</title>
