@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/" />
-<meta property="og:updated_time" content="2020-12-18T10:30:14+08:00" />
+<meta property="og:updated_time" content="2020-12-31T16:35:56+08:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -96,6 +96,62 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84%E6%84%9F%E6%83%B3%E6%80%BB%E7%BB%93/" class="link black dim">
+        代码重构感想总结
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      做项目的过程中自己负责的模块传参很多，sonar也会不断报错参数超过七个，提示最好缩减到七个以内，所以在写代码的时候就稍微注意一些，争取在写代码的过程中就重构一下，使代码更加通俗易懂。
+以下是总结出来的代码重构需要注意的问题，后续再多多补充：
+1.命名参数和方法名时，争取一看到就知道参数是什么含义，方法到底做了什么
+2.争取一个方法只做一件事情
+eg:整个流程分为 判断是否符合前置条件&ndash;插入到中间表&ndash;处理符合条件的票
+所以分成三步
+具体实现中：
+①所有对前置条件的处理放在一个方法里，里面可以再细分
+可以复用方法，减少代码，如果还需后续处理，那么可以采用lambda表达式
+②插入数据至中间表放在一个方法里
+可以采用CollectionUtils.isEmpty()/isNotEmpty()等工具类里的方法
+整个流程不要有大块的分支，if每多一层，复杂度就越高。例如不推荐一个很大的if块，可以采用反面，不符合条件就直接return
+if (CollectionUtils.isEmpty(effectiveTax)) { return; } 不推荐使用非!，特别不方便理解，而且带非的和&amp;&amp; || 这些一结合，还有执行先后顺序的问题
+将带非的逻辑转换一下就行，实在不行将这部分抽取成一个方法
+③处理符合条件的票放在一个方法里
+3.双层for循环或者更多层的for循环，最好减少循环次数
+当时双层for循环在debug的时候发现了问题，生成了两条TDS记录，是因为第一次for循环是对中间表中所有符合条件的数据进行循环，第二次循环是根据seq进行判断，有两个seq，所以循环了两次，所以生成了两条 双层for循环最好修改成for+for
+4.最好不要使用匿名内部类，因为一旦出现问题，不方便查找
+5.传递参数过多时：
+看看每个参数都是在方法里面哪部分用的，然后分类放在一起，看看能不能根据参数把方法再抽取一下；还可以采用provider、entity、vo等来简化参数
+6.复用已有方法，需要进行部分修改的时候，一定要查看该方法的调用，避免因为自己的修改导致其他功能受到影响
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/object%E8%BD%ACstring%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" class="link black dim">
+        Object转String的三种方法总结
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      在项目里遇到了将Object数组里的内容分别转换成所需类型的问题，发现Object转String可没有想象的那么简单，还需要考虑到null的情况，所以好好总结了一下。
+ Object.toString()  Object类里的toString()方法是每个继承了Object的类都有的，可以覆写，使得每个类有自己的toString实现
+如果对象为null，会抛出NullPointerException，因为null不能再去调用方法或者变量了
+(String)Object  强制类型转换
+这个object对象必须能够转换成String类型，否则会抛异常ClassCastException
+String.valueOf(Object)  即使object为null，也不会有问题
+public static String valueOf(Object obj) { return (obj == null) ? &quot;null&quot; : obj.toString(); } 注意：如果真的是空对象，会返回“null”而不是null
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -267,76 +323,6 @@ class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition not
 Condition也是接口，主要是await()方法和signal()/signalAll()方法。signal()方法会唤醒一个正在等待该Condition的线程，而signalAll()方法会唤醒所有正在等待该Condition的线程。
 JDK文档的注释中有相关使用范例代码，如下所示：
 class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.lock(); try { while (count == items.length) notFull.await(); items[putptr] = x; if (++putptr == items.length) putptr = 0; ++count; notEmpty.signal(); } finally { lock.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/" class="link black dim">
-        实现生产者消费者(一)：wait() &amp; notify()
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
-现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
-采用Object.wait() &amp; notify()/notifyAll()方法  wait()表示让该线程等待
-notify()/notifyAll()
-Wakes up a single thread that is waiting on this object's monitor. If any threads are waiting on this object, one of them is chosen to be awakened. The choice is arbitrary and occurs at the discretion of the implementation. A thread waits on an object's monitor by calling one of the {@code wait} methods. notify()会随机唤醒一个等待该资源的线程
-Wakes up all threads that are waiting on this object's monitor.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/stream%E6%80%BB%E7%BB%93%E5%8F%8Acollections.sort%E6%96%B9%E6%B3%95%E5%BA%94%E7%94%A8/" class="link black dim">
-        Stream总结 &amp; Collections.sort()应用
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      学习了Stream之后，打算把Stream如何使用总结一下，便于下次翻阅。
-一、Stream的创建操作、中间操作和终结操作 创建操作产生Stream
-①某collection.stream()
-②某stream.of()
-③某string.chars()
-④IntStream.range() 左闭右开
-中间操作仍返回Stream
-①filter() 过滤
-②map() 映射
-eg:map(User::getName)【方法引用】
-③sorted()
-eg:sorted(Comparator.comparing(某字段).thenComparing(某字段))
-终结操作返回非Stream，包括void
-①forEach()
-②count()/max()/min()
-③findFirst()/findAny
-④anyMatch()/noneMatch()
-collect()※ 是最常用的
-Collectors.toList/toSet/toCollection
-eg:Collectors.toCollection(TreeSet::new)
-Collectors.groupingBy() 分组
-eg:Collectors.groupingBy(Employee::getDepartment)
-Collectors.joining() 连接
-eg:Collectors.joining(&quot;, &ldquo;)
-Collectors.summingInt() 累加求和
-eg:Collectors.summingInt(Employee::getSalary)
-二、Collections.sort()应用 1.包含两种传参方法
-Collections.sort(list)
-Collections.sort(list,Comparator)
-2.java8新特性结合Collections.sort()
-根据User的name对users(User类型的List)进行排序
-有以下三种方法：
-1.Comparator可以写成匿名内部类，实现compare方法
-//1. Collections.sort(users, new Comparator&lt;User&gt;() { @Override public int compare(User user1, User user2) { return user1.getName().compareTo(user2.getName()); } }); 2.Comparator可以写成lambda表达式，如果写return的话需要加分号！
-2.1是加上了参数类型的，参数表的参数类型可以忽略，如2.2所示
-//2.1 复杂 Collections.sort(users, (User user1, User user2) -&gt; { return user1.
     </div>
   </div>
 </div>

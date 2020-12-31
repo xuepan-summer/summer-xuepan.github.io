@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/" />
-<meta property="og:updated_time" content="2020-12-18T10:30:14+08:00" />
+<meta property="og:updated_time" content="2020-12-31T16:35:56+08:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -96,6 +96,76 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%80/" class="link black dim">
+        实现生产者消费者(一)：wait() &amp; notify()
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
+现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
+采用Object.wait() &amp; notify()/notifyAll()方法  wait()表示让该线程等待
+notify()/notifyAll()
+Wakes up a single thread that is waiting on this object's monitor. If any threads are waiting on this object, one of them is chosen to be awakened. The choice is arbitrary and occurs at the discretion of the implementation. A thread waits on an object's monitor by calling one of the {@code wait} methods. notify()会随机唤醒一个等待该资源的线程
+Wakes up all threads that are waiting on this object's monitor.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/stream%E6%80%BB%E7%BB%93%E5%8F%8Acollections.sort%E6%96%B9%E6%B3%95%E5%BA%94%E7%94%A8/" class="link black dim">
+        Stream总结 &amp; Collections.sort()应用
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      学习了Stream之后，打算把Stream如何使用总结一下，便于下次翻阅。
+一、Stream的创建操作、中间操作和终结操作 创建操作产生Stream
+①某collection.stream()
+②某stream.of()
+③某string.chars()
+④IntStream.range() 左闭右开
+中间操作仍返回Stream
+①filter() 过滤
+②map() 映射
+eg:map(User::getName)【方法引用】
+③sorted()
+eg:sorted(Comparator.comparing(某字段).thenComparing(某字段))
+终结操作返回非Stream，包括void
+①forEach()
+②count()/max()/min()
+③findFirst()/findAny
+④anyMatch()/noneMatch()
+collect()※ 是最常用的
+Collectors.toList/toSet/toCollection
+eg:Collectors.toCollection(TreeSet::new)
+Collectors.groupingBy() 分组
+eg:Collectors.groupingBy(Employee::getDepartment)
+Collectors.joining() 连接
+eg:Collectors.joining(&quot;, &ldquo;)
+Collectors.summingInt() 累加求和
+eg:Collectors.summingInt(Employee::getSalary)
+二、Collections.sort()应用 1.包含两种传参方法
+Collections.sort(list)
+Collections.sort(list,Comparator)
+2.java8新特性结合Collections.sort()
+根据User的name对users(User类型的List)进行排序
+有以下三种方法：
+1.Comparator可以写成匿名内部类，实现compare方法
+//1. Collections.sort(users, new Comparator&lt;User&gt;() { @Override public int compare(User user1, User user2) { return user1.getName().compareTo(user2.getName()); } }); 2.Comparator可以写成lambda表达式，如果写return的话需要加分号！
+2.1是加上了参数类型的，参数表的参数类型可以忽略，如2.2所示
+//2.1 复杂 Collections.sort(users, (User user1, User user2) -&gt; { return user1.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
