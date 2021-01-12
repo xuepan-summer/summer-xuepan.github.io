@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/" />
-<meta property="og:updated_time" content="2020-12-31T16:35:56+08:00" />
+<meta property="og:updated_time" content="2021-01-12T11:16:15+08:00" />
 <meta itemprop="name" content="Summer&#39;s Blog">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Summer&#39;s Blog"/>
@@ -127,6 +127,54 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Cstring%E5%B8%B8%E7%94%A8api%E7%9A%84%E7%A2%B0%E6%92%9E/" class="color-inherit dim link">
+            正则表达式和String常用API的碰撞
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          最近工作上有遇到一个需要截取想要的字符串的情况，第一时间想到了正则表达式，后来用着用着，发现String的API真是太好用了，还比正则简单一些，记录一下心得。
+当时的场景是需要截取全限定类名，大概格式是这样的：
+AuthController可以认为是类名，login()是方法名
+原结果 public java.lang.String org.XXX.XXX.web.xxx.AuthController.login()
+所需结果 org.XXX.XXX.web.xxx.AuthController
+也就是要从org开始取，取到类名结束
+这个时候String的API就开始大显神通了，主要用到了split(char ch)、substring(startIndex , endIndex)、lastIndexOf(String str)
+先用空格截取成三部分，最后一部分就是全限定类名加方法，通过左括号进行截取，再通过.进行截取，这样就得到最终结果了。
+String[] strArray = str.split(&#34; &#34;); String methodName = strArray[strArray.length -1]; String bracketLeft = methodName.substring(0, methodName.lastIndexOf(&#39;(&#39;)); //此处为单引号！ String fullQualClassName = bracketLeft.substring(0, bracketLeft.lastIndexOf(&#39;.&#39;)); PS：split方法如果传参为“|” “.”等特殊字符的时候，一定要记得//转义这个地方就有踩坑，可以跑一个main方法检验一下，节省时间，这样就不会发布之后才发现有问题常用的String API总结在这，有遗忘再翻阅
+字符数组相关：
+index从0开始
+字节数组相关：
+字符串比较：
+字符串查找：
+字符串替换：
+字符串截取：
+endIndex不包含该位，不可以是负数
+字符串拆分：
+如果用&rdquo;&quot;(空字符串)拆分，则按照每个字符进行拆分
+如果敏感字符拆不了，则用转义字符
+其他方法：
+用户进行数据输入时可能有无用的空格内容&ndash;trim
+某些情况下要求用户输入的数据长度有限制，用此方式判断&ndash;length
+注：数组对象.length; String 对象.length(); 一个有括号，一个没有如果isEmpty()不方便，可以使用&rdquo;&quot;.equals(str)
+String类少了一个重要方法initcap()功能，首字母大写，其余字母小写
+        </div>
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Cstring%E5%B8%B8%E7%94%A8api%E7%9A%84%E7%A2%B0%E6%92%9E/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84%E6%84%9F%E6%83%B3%E6%80%BB%E7%BB%93/" class="color-inherit dim link">
             代码重构感想总结
             </a>
@@ -193,44 +241,18 @@ public static String valueOf(Object obj) { return (obj == null) ? &quot;null&quo
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/" class="color-inherit dim link">
-            Oracle数据库函数总结
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          将平时SQL中遇到的oracle数据函数总结一下，便于遗忘时翻阅
-1.lpad &amp; rpad
-lpad(string,n,[pad&hellip;string]) 给定字符左侧添加指定字符至长度n. rpad(string,n,[pad..string]) 给定字符右侧添加指定字符至长度n.
-2.substr
-substr(string, int a, int b) 给定字符串从位置 a(a为0或1时表示从第一个字符开始截取)开始 截取b长度个字符 substr(string,int a) 从位置a开始，一直截取给定字符串到串尾
-3.decode
-decode(条件，值1，返回值1，值2，返回值2，..值 n，返回值n，缺省值)&rdquo; IF条件=值1 THEN RETURN 返回值1 ELSE IF条件=值2 THEN RETURN返回值2 &hellip; ELSE IF条件=值n then RETURN返回值n ELSE RETURN 缺省值
-4.nvl
-nvl(string1, replace_with) 如果string1为null，则返回replace_with，否则返回string1
-        </div>
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/" class="link black dim">
+              Oracle数据库函数总结
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8Boracle%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" class="link black dim">
@@ -250,12 +272,6 @@ nvl(string1, replace_with) 如果string1为null，则返回replace_with，否则
             </a>
           </h2>
         
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/arraylist%E6%89%A9%E5%AE%B9/" class="link black dim">
-              ArrayList扩容
-            </a>
-          </h2>
-        
 
         
         
@@ -271,7 +287,7 @@ nvl(string1, replace_with) 如果string1为null，则返回replace_with，否则
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://xuepan-summer.github.io/summer-xuepan.github.io/" >
-    &copy;  Summer's Blog 2020 
+    &copy;  Summer's Blog 2021 
   </a>
     <div>
 

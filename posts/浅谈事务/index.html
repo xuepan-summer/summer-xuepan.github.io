@@ -62,7 +62,7 @@
    事务隔离级别 脏读 不可重复读 幻读     Read uncommitted √ √ √   Read committed × √ √   Repeatable read × × √   Serializable × × ×    ① Read uncommitted (读未提交)：最低的事务隔离级别，一个事务还没提交时，它做的变更就能被别的事务看到。">
 <meta itemprop="datePublished" content="2020-11-17T14:43:30&#43;08:00" />
 <meta itemprop="dateModified" content="2020-11-17T14:43:30&#43;08:00" />
-<meta itemprop="wordCount" content="70">
+<meta itemprop="wordCount" content="90">
 
 
 
@@ -263,6 +263,21 @@
 <p>大多数数据库的默认级别就是 Read committed，比如 Sql Server , Oracle。</p>
 <p>③ Repeatable read（可重复读，默认级别）：多次读取同一范围的数据会返回第一次查询的快照，即使其他事务对该数据做了更新修改。事务在执行期间看到的数据前后必须是一致的。</p>
 <p>④ Serializable（串行化）：花费最高代价但最可靠的事务隔离级别。“写”会加“写锁”，“读”会加“读锁”。当出现读写锁冲突的时候，后访问的事务必须等前一个事务执行完成，才能继续执行。</p>
+<ul>
+<li>事务的传播机制</li>
+</ul>
+<p>以Spring为例，Spring事务机制主要包括<!-- raw HTML omitted -->声明式事务<!-- raw HTML omitted -->和<!-- raw HTML omitted -->编程式事务<!-- raw HTML omitted -->，声明式事务更广泛使用一些，因此以此为例。</p>
+<p>Spring声明式事务让我们不需要再去处理获得连接、关闭连接、事务提交、事务回滚等繁琐的操作。其中一个重要的概念是事务属性，事务属性通常由事务的传播行为，事务的隔离级别，事务的超时值和事务只读标志组成。</p>
+<p>Spring在TransactionDefinition接口中定义了七个事务传播行为：</p>
+<p>① <strong>propagation_requierd</strong>：如果当前没有事务，就新建一个事务，如果已存在一个事务中，加入到这个事务中，这是最常见的选择。</p>
+<p>② <strong>propagation_supports</strong>：支持当前事务，如果没有当前事务，就以非事务方法执行。</p>
+<p>③ <strong>propagation_mandatory</strong>：使用当前事务，如果没有当前事务，就抛出异常。</p>
+<p>④ <strong>propagation_required_new</strong>：新建事务，如果当前存在事务，把当前事务挂起。</p>
+<p>⑤ <strong>propagation_not_supported</strong>：以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。</p>
+<p>⑥ <strong>propagation_never</strong>：以非事务方式执行操作，如果当前事务存在则抛出异常。</p>
+<p>⑦ <strong>propagation_nested</strong>：如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与propagation_required类似的操作</p>
+<p>具体实现可参照博客https://www.cnblogs.com/myseries/p/10800430.html</p>
+<p>对于不同的传播行为讲的很清楚，着重看第4、7种情况</p>
 <ul class="pa0">
   
 </ul>
@@ -285,7 +300,7 @@
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://xuepan-summer.github.io/summer-xuepan.github.io/" >
-    &copy;  Summer's Blog 2020 
+    &copy;  Summer's Blog 2021 
   </a>
     <div>
 

@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/" />
-<meta property="og:updated_time" content="2020-12-31T16:35:56+08:00" />
+<meta property="og:updated_time" content="2021-01-12T11:16:15+08:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -96,6 +96,26 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%BA%8C/" class="link black dim">
+        实现生产者消费者(二)：Lock &amp; Condition
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
+现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
+采用Lock &amp; Condition方法  Lock是接口，里面有lock()方法和unlock()方法，除此之外，还有tryLock()方法、newCondition()方法等。相比于synchronized更加灵活，因为synchronized默认在出作用域的时候释放资源，相当于解锁。所以Lock可以更加灵活地控制何时上锁，何时解锁。
+Condition也是接口，主要是await()方法和signal()/signalAll()方法。signal()方法会唤醒一个正在等待该Condition的线程，而signalAll()方法会唤醒所有正在等待该Condition的线程。
+JDK文档的注释中有相关使用范例代码，如下所示：
+class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.lock(); try { while (count == items.length) notFull.await(); items[putptr] = x; if (++putptr == items.length) putptr = 0; ++count; notEmpty.signal(); } finally { lock.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -162,6 +182,37 @@ Collections.sort(list,Comparator)
 //1. Collections.sort(users, new Comparator&lt;User&gt;() { @Override public int compare(User user1, User user2) { return user1.getName().compareTo(user2.getName()); } }); 2.Comparator可以写成lambda表达式，如果写return的话需要加分号！
 2.1是加上了参数类型的，参数表的参数类型可以忽略，如2.2所示
 //2.1 复杂 Collections.sort(users, (User user1, User user2) -&gt; { return user1.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%B8%B8%E7%94%A8jvm%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/" class="link black dim">
+        常用JVM分析工具
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      项目里出现了full GC问题之后，当时使用了Visual VM这种可视化工具发现了问题所在，但是日常开发也不能拘泥于这一种工具，还是应该多看看其他的工具，结合着使用，毕竟工具各有利弊。所以把这些工具和作用总结一下，便于使用时查阅。
+常见jdk工具（命令行）  jps（JVM Process Status Tool）获取java进程的ID
+  jstat（JVM Statistics Monitoring Tool）监视java进程的运行状态信息
+  jinfo（Configuration Info for Java）获取java进程的配置信息，包括JVM的配置信息和系统属性
+  jmap（Memory Map for Java）查看堆的使用情况且完成堆到文件的一个转储
+  jhat（JVM Heap Dump Broswer）分析用jmap转储的二进制文件，通过浏览器可以查看jhat分析的结果
+  jstack（Stack Trace for Java）查看应用程序的堆栈信息
+  常见jdk工具（可视化）其实就是将上述的这个工具组合起来，以图形化页面展示出来
+  JConsole
+  Visual VM（1.5之后jdk已经自带了，可以直接使用，又名jVisual VM [java visual VM] ）
+  使用工具是为了帮助我们发现问题，而在解决问题的时候，主要分析以下两点：内存分析和线程分析，分析具体又包括这四个方面&ndash;监视、转储、快照和性能分析
+监视：看CPU使用情况、内存使用情况、线程状态及其他信息，例如JConsole、Visual VM、JStack都可以
+转储：从内存中获取当前状态数据并转储到文件，用于进行静态的性能分析
+包括系统转储、Java转储、堆转储
+  系统转储：又称核心转储，一般使用相关工具，例如Windows的windbg和Linux的gdb
+  Java转储：JVM内部生成的格式化的数据，包括线程信息，类的加载信息，堆的统计数据等，通常用于检测死锁
+  堆转储：所有对象的堆内容
     </div>
   </div>
 </div>
@@ -302,15 +353,16 @@ TreeMap是基于红黑树实现的
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/java%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8Emaven/" class="link black dim">
-        Java的包管理与Maven
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E8%A7%A3%E5%86%B3maven%E5%8C%85%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98/" class="link black dim">
+        解决Maven包冲突问题
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       1.JVM（java虚拟机）的作用：
 只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
 2.传递性依赖：类依赖其他类
-maven的包管理解决了传递性依赖和包冲突： 实现生产者-消费者(一)：Object.wait() &amp; notify()notifyAll() 1）传递性依赖的解决：
+maven的包管理解决了传递性依赖和包冲突：
+1）传递性依赖的解决：
 maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
 2）包冲突的解决：
 【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包
@@ -354,55 +406,6 @@ NoSuchMethodError
 </div>
 </div>
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="link black dim">
-        Hugo搭建个人博客
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      1.安装hugo
-Windows:
- 下载windows相应版本的压缩包（对应32位/64位）并解压 将hugo.exe放到D:\softwares\hugo\hugo.exe 将D:\softwares\hugo加到PATH中 重启终端，运行hugo version查看版本验证安装成功  Mac:
-  brew install hugo
-  hugo version 验证安装成功
-执行这两行代码即可
-  2.参照文档搭建博客
-  进入hugo官网 https://gohugo.io/ ，点击 Quick Start，则有搭建的全部步骤
-在搭建之前，先打开一个目录，例如进入到D盘，然后cmder(即：在此处打开命令窗口)
-  直接从官网步骤的第二步开始抄代码，一直到第七步
-【2】create new site
-hugo new site xxx.github.io-generator
-xxx要小写，是自己的github用户名，则会在当前目录创建这个网站
-  code xxx.github.io-generator/
-则会在VSCode里打开该目录
-  【3】add a theme 打开终端，继续照抄代码
-  【4】add some content 创建文章，自己命名即可
-  可以找到该md文件，直接写博客了，修改draft:true为draft:false
-  【5】Start the Hugo server 可以看到网站地址了，ctrl+鼠标左键点进去就可以看到自己写的博客
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="link black dim">
-        我的第一篇博客
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      # 大家好
-这是我的第一篇博客，希望可以将工作和学习中的内容多多总结，记录下来，也需要对别人有所帮助。
-    </div>
-  </div>
-</div>
-</div>
-      
     </section>
 
 <ul class="pagination">
@@ -439,12 +442,23 @@ xxx要小写，是自己的github用户名，则会在当前目录创建这个�
     <li class="page-item active"><a class="page-link" href="/summer-xuepan.github.io/posts/page/2/">2</a></li>
     
     
-    <li class="page-item disabled">
-    <a  class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/summer-xuepan.github.io/posts/page/3/">3</a></li>
+    
+    
+    <li class="page-item">
+    <a href="/summer-xuepan.github.io/posts/page/3/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
     </li>
     
     <li class="page-item">
-        <a href="/summer-xuepan.github.io/posts/page/2/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/summer-xuepan.github.io/posts/page/3/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
     </li>
     
 </ul>
@@ -455,7 +469,7 @@ xxx要小写，是自己的github用户名，则会在当前目录创建这个�
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://xuepan-summer.github.io/summer-xuepan.github.io/" >
-    &copy;  Summer's Blog 2020 
+    &copy;  Summer's Blog 2021 
   </a>
     <div>
 

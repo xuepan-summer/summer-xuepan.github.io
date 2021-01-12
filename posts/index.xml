@@ -6,10 +6,43 @@
     <description>Recent content in Posts on Summer&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-Hans</language>
-    <lastBuildDate>Thu, 31 Dec 2020 16:35:56 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 12 Jan 2021 11:16:15 +0800</lastBuildDate>
     
 	<atom:link href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>正则表达式和String常用API的碰撞</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Cstring%E5%B8%B8%E7%94%A8api%E7%9A%84%E7%A2%B0%E6%92%9E/</link>
+      <pubDate>Tue, 12 Jan 2021 11:16:15 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Cstring%E5%B8%B8%E7%94%A8api%E7%9A%84%E7%A2%B0%E6%92%9E/</guid>
+      <description>最近工作上有遇到一个需要截取想要的字符串的情况，第一时间想到了正则表达式，后来用着用着，发现String的API真是太好用了，还比正则简单一些，记录一下心得。
+当时的场景是需要截取全限定类名，大概格式是这样的：
+AuthController可以认为是类名，login()是方法名
+原结果 public java.lang.String org.XXX.XXX.web.xxx.AuthController.login()
+所需结果 org.XXX.XXX.web.xxx.AuthController
+也就是要从org开始取，取到类名结束
+这个时候String的API就开始大显神通了，主要用到了split(char ch)、substring(startIndex , endIndex)、lastIndexOf(String str)
+先用空格截取成三部分，最后一部分就是全限定类名加方法，通过左括号进行截取，再通过.进行截取，这样就得到最终结果了。
+String[] strArray = str.split(&amp;#34; &amp;#34;); String methodName = strArray[strArray.length -1]; String bracketLeft = methodName.substring(0, methodName.lastIndexOf(&amp;#39;(&amp;#39;)); //此处为单引号！ String fullQualClassName = bracketLeft.substring(0, bracketLeft.lastIndexOf(&amp;#39;.&amp;#39;)); PS：split方法如果传参为“|” “.”等特殊字符的时候，一定要记得//转义这个地方就有踩坑，可以跑一个main方法检验一下，节省时间，这样就不会发布之后才发现有问题常用的String API总结在这，有遗忘再翻阅
+字符数组相关：
+index从0开始
+字节数组相关：
+字符串比较：
+字符串查找：
+字符串替换：
+字符串截取：
+endIndex不包含该位，不可以是负数
+字符串拆分：
+如果用&amp;rdquo;&amp;quot;(空字符串)拆分，则按照每个字符进行拆分
+如果敏感字符拆不了，则用转义字符
+其他方法：
+用户进行数据输入时可能有无用的空格内容&amp;ndash;trim
+某些情况下要求用户输入的数据长度有限制，用此方式判断&amp;ndash;length
+注：数组对象.length; String 对象.length(); 一个有括号，一个没有如果isEmpty()不方便，可以使用&amp;rdquo;&amp;quot;.equals(str)
+String类少了一个重要方法initcap()功能，首字母大写，其余字母小写</description>
+    </item>
     
     <item>
       <title>代码重构感想总结</title>
@@ -120,11 +153,11 @@ Collections.sort(userList, (user1, user2) -&amp;gt; Integer.</description>
     </item>
     
     <item>
-      <title>ArrayList扩容</title>
-      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/arraylist%E6%89%A9%E5%AE%B9/</link>
+      <title>ArrayList扩容之源码剖析</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/arraylist%E6%89%A9%E5%AE%B9%E4%B9%8B%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</link>
       <pubDate>Mon, 16 Nov 2020 18:17:35 +0800</pubDate>
       
-      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/arraylist%E6%89%A9%E5%AE%B9/</guid>
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/arraylist%E6%89%A9%E5%AE%B9%E4%B9%8B%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</guid>
       <description>总结： ArrayList的底层是Object数组，默认容量为10，当往ArrayList里添加数据的时候，才会进行扩容。扩容主要由grow方法实现，扩容为之前的1.5倍左右，然后将之前的数据放到新数组里。
 private static final int DEFAULT_CAPACITY = 10; private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {}; transient Object[] elementData; // non-private to simplify nested class access 一、3种构造方法：
 1.无参构造
@@ -241,6 +274,31 @@ Collections.sort(list,Comparator)
     </item>
     
     <item>
+      <title>常用JVM分析工具</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%B8%B8%E7%94%A8jvm%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Sat, 10 Oct 2020 16:25:12 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%B8%B8%E7%94%A8jvm%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/</guid>
+      <description>项目里出现了full GC问题之后，当时使用了Visual VM这种可视化工具发现了问题所在，但是日常开发也不能拘泥于这一种工具，还是应该多看看其他的工具，结合着使用，毕竟工具各有利弊。所以把这些工具和作用总结一下，便于使用时查阅。
+常见jdk工具（命令行）  jps（JVM Process Status Tool）获取java进程的ID
+  jstat（JVM Statistics Monitoring Tool）监视java进程的运行状态信息
+  jinfo（Configuration Info for Java）获取java进程的配置信息，包括JVM的配置信息和系统属性
+  jmap（Memory Map for Java）查看堆的使用情况且完成堆到文件的一个转储
+  jhat（JVM Heap Dump Broswer）分析用jmap转储的二进制文件，通过浏览器可以查看jhat分析的结果
+  jstack（Stack Trace for Java）查看应用程序的堆栈信息
+  常见jdk工具（可视化）其实就是将上述的这个工具组合起来，以图形化页面展示出来
+  JConsole
+  Visual VM（1.5之后jdk已经自带了，可以直接使用，又名jVisual VM [java visual VM] ）
+  使用工具是为了帮助我们发现问题，而在解决问题的时候，主要分析以下两点：内存分析和线程分析，分析具体又包括这四个方面&amp;ndash;监视、转储、快照和性能分析
+监视：看CPU使用情况、内存使用情况、线程状态及其他信息，例如JConsole、Visual VM、JStack都可以
+转储：从内存中获取当前状态数据并转储到文件，用于进行静态的性能分析
+包括系统转储、Java转储、堆转储
+  系统转储：又称核心转储，一般使用相关工具，例如Windows的windbg和Linux的gdb
+  Java转储：JVM内部生成的格式化的数据，包括线程信息，类的加载信息，堆的统计数据等，通常用于检测死锁
+  堆转储：所有对象的堆内容</description>
+    </item>
+    
+    <item>
       <title>Linux常用命令总结</title>
       <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/</link>
       <pubDate>Wed, 30 Sep 2020 16:23:51 +0800</pubDate>
@@ -348,15 +406,16 @@ TreeMap是基于红黑树实现的</description>
     </item>
     
     <item>
-      <title>Java的包管理与Maven</title>
-      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/java%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8Emaven/</link>
+      <title>解决Maven包冲突问题</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E8%A7%A3%E5%86%B3maven%E5%8C%85%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98/</link>
       <pubDate>Fri, 26 Jun 2020 17:52:27 +0800</pubDate>
       
-      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/java%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8Emaven/</guid>
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E8%A7%A3%E5%86%B3maven%E5%8C%85%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98/</guid>
       <description>1.JVM（java虚拟机）的作用：
 只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
 2.传递性依赖：类依赖其他类
-maven的包管理解决了传递性依赖和包冲突： 实现生产者-消费者(一)：Object.wait() &amp;amp; notify()notifyAll() 1）传递性依赖的解决：
+maven的包管理解决了传递性依赖和包冲突：
+1）传递性依赖的解决：
 maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
 2）包冲突的解决：
 【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包

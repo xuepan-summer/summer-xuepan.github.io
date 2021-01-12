@@ -206,7 +206,7 @@ if (CollectionUtils.isEmpty(effectiveTax)) { return; } 不推荐使用非!，特
 <p>所以分成三步</p>
 <p>具体实现中：</p>
 <p>①所有对前置条件的处理放在一个方法里，里面可以再细分</p>
-<p>可以复用方法，减少代码，如果还需后续处理，那么可以采用lambda表达式</p>
+<p>可以复用方法，减少代码，如果还需后续处理，那么可以采用<strong>lambda表达式</strong></p>
 <p>②插入数据至中间表放在一个方法里</p>
 <p>可以采用CollectionUtils.isEmpty()/isNotEmpty()等工具类里的方法</p>
 <p>整个流程不要有大块的分支，if每多一层，复杂度就越高。例如不推荐一个很大的if块，可以采用反面，不符合条件就直接return</p>
@@ -219,10 +219,10 @@ if (CollectionUtils.isEmpty(effectiveTax)) { return; } 不推荐使用非!，特
 <p>3.双层for循环或者更多层的for循环，最好减少循环次数</p>
 <p>当时双层for循环在debug的时候发现了问题，生成了两条TDS记录，是因为第一次for循环是对中间表中所有符合条件的数据进行循环，第二次循环是根据seq进行判断，有两个seq，所以循环了两次，所以生成了两条
 双层for循环最好修改成for+for</p>
-<p>4.最好不要使用匿名内部类，因为一旦出现问题，不方便查找</p>
+<p>4.<strong>最好不要使用匿名内部类</strong>，因为一旦出现问题，不方便查找</p>
 <p>5.传递参数过多时：</p>
-<p>看看每个参数都是在方法里面哪部分用的，然后分类放在一起，看看能不能根据参数把方法再抽取一下；还可以采用provider、entity、vo等来简化参数</p>
-<p>6.复用已有方法，需要进行部分修改的时候，一定要查看该方法的调用，避免因为自己的修改导致其他功能受到影响</p>
+<p>看看每个参数都是在方法里面哪部分用的，然后<strong>分类放在一起</strong>，看看能不能根据参数把方法再抽取一下；还可以采用provider、entity、vo等来简化参数</p>
+<p>6.复用已有方法，需要进行部分修改的时候，<strong>一定要查看该方法的调用</strong>，避免因为自己的修改导致其他功能受到影响</p>
 <ul class="pa0">
   
 </ul>
@@ -245,7 +245,7 @@ if (CollectionUtils.isEmpty(effectiveTax)) { return; } 不推荐使用非!，特
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://xuepan-summer.github.io/summer-xuepan.github.io/" >
-    &copy;  Summer's Blog 2020 
+    &copy;  Summer's Blog 2021 
   </a>
     <div>
 
