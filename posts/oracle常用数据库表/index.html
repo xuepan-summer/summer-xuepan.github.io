@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Oracle常用数据库表 | Summer&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.69.2" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/summer-xuepan.github.io/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="Oracle常用数据库表" />
+<meta property="og:description" content="oracle 数据库表
+dba_indexes 索引的统计信息
+dba_tables 数据库中的所有表
+dba_tab_columns 查询表的列属性
+分区相关的数据库表：
+dba_part_indexes 数据库中所有分区索引的对象级分区信息，其列与ALL_PART_INDEXES中的列相同
+user_ind_subpartitons USER_IND_SUBPARTITIONS为当前用户拥有的每个索引子分区描述分区级别的分区信息，该子分区的存储参数以及ANALYZE语句收集的各种分区统计信息。 其列与“ ALL_IND_SUBPARTITIONS”中的列相同。
+dba_indexs：
+   字段 说明     OWNER 索引拥有者   INDEX_NAME 索引名字   INDEX_TYPE 索引类型   TABLE_OWNER 表的拥有者   TABLE_NAME 表名   TABLE_TYPE 表类型   UNIQUENESS 是否唯一   COMPRESSION 是否压缩   PREFIX_LENGTH 压缩键上前缀的列数量   TABLESPACE_NAME 属于哪个表空间   INI_TRANS 事务表的初始大小由对象的INI_TRANS设置指定，默认2   MAX_TRANS 最大的MAX_TRANS条目，默认255   INITIAL_EXTENT 初始化区大小65536   NEXT_EXTENT 第二个区大小1048576   MIN_EXTENTS 段中允许的最小区大小   MAX_EXTENTS 段中允许的最大区大小，默认2g   PCT_INCREASE 后面区是前面区的增长百分比   PCT_THRESHOLD 每个块中允许索引入口的百分比阀值   INCLUDE_COLUMN 索引组织表主键索引中包含最后一列的列ID   FREELISTS 分配到这个段的进程自由列表数量   FREELIST_GROUPS 分配到这个段的进程自由列表组的数量   PCT_FREE 一个块中最小自由空间的百分比   LOGGING 索引改变是否记录到日志   BLEVEL B树索引等级（从根块到叶子块的深度）   LEAF_BLOCKS 索引中叶子块的数量   DISTINCT_KEYS 不同索引值的数量   AVG_LEAF_BLOCKS_PER_KEY 索引中的每个值平均在多少个叶子块中，如果是唯一或者主键，那么值恒等于1   AVG_DATA_BLOCKS_PER_KEY 通过索引中的一个值指向表中的数据块，该数据块数量的平均值   CLUSTERING_FACTOR 聚集因子，表示表中行基于索引排序程度   STATUS 表示一个未分区的索引是合法的还是不可用的   SAMPLE_SIZE 分析索引的参样大小   LAST_ANALYZED 最近分析索引统计信息的日期   DEGREE 每个实例扫描索引的线程数   INSTANCES 索引被多少实例扫描   PARTITIONED 索引是否分区   TEMPORARY 索引是否在临时表中   GENERATED 索引名字是否是系统产生   SECONDARY 索引是否通过ODCIndexCreate方法创建   BUFFER_POOL 用于索引块的缓冲池   FLASH_CACHE 数据库 smart flash cache 的 hint用于索引块   CELL_FLASH_CACHE CELL_FLASH_CACHE的hint用于索引块   USER_STATS 静态统计是否直接被用户使用   DURATION 临时表空间的持续时间   PCT_DIRECT_ACCESS 对于索引组织表上的secondary index ,行百分比的合理猜测   ITYP_OWNER 对于域索引，索引类型的拥有者   ITYP_NAME 对于域索引，索引类型名字   PARAMETERS 对于域索引，参数字符串   GLOBAL_STATS 索引的统计是否收集齐了   DOMIDX_STATUS 域索引的状态   DOMIDX_OPSTATUS 域索引的操作状态   FUNCIDX_STATUS 基于函数索引的状态   JOIN_INDEX 索引是否是结合的   IOT_REDUNDANT_PKEY_ELIM 在索引组织表中，冗余的主键列是否从从索引中删除   DROPPED 索引是否已经被删除，并在recycle中   VISIBILITY 索引是否可见   DOMIDX_MANAGEMENT 如果是域索引，主索引是系统管理还是用户管理   SEGMENT_CREATED 索引段是否已经创建    dba_tables：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8/" />
+<meta property="article:published_time" content="2021-01-26T16:35:55+08:00" />
+<meta property="article:modified_time" content="2021-01-26T16:35:55+08:00" />
+<meta itemprop="name" content="Oracle常用数据库表">
+<meta itemprop="description" content="oracle 数据库表
+dba_indexes 索引的统计信息
+dba_tables 数据库中的所有表
+dba_tab_columns 查询表的列属性
+分区相关的数据库表：
+dba_part_indexes 数据库中所有分区索引的对象级分区信息，其列与ALL_PART_INDEXES中的列相同
+user_ind_subpartitons USER_IND_SUBPARTITIONS为当前用户拥有的每个索引子分区描述分区级别的分区信息，该子分区的存储参数以及ANALYZE语句收集的各种分区统计信息。 其列与“ ALL_IND_SUBPARTITIONS”中的列相同。
+dba_indexs：
+   字段 说明     OWNER 索引拥有者   INDEX_NAME 索引名字   INDEX_TYPE 索引类型   TABLE_OWNER 表的拥有者   TABLE_NAME 表名   TABLE_TYPE 表类型   UNIQUENESS 是否唯一   COMPRESSION 是否压缩   PREFIX_LENGTH 压缩键上前缀的列数量   TABLESPACE_NAME 属于哪个表空间   INI_TRANS 事务表的初始大小由对象的INI_TRANS设置指定，默认2   MAX_TRANS 最大的MAX_TRANS条目，默认255   INITIAL_EXTENT 初始化区大小65536   NEXT_EXTENT 第二个区大小1048576   MIN_EXTENTS 段中允许的最小区大小   MAX_EXTENTS 段中允许的最大区大小，默认2g   PCT_INCREASE 后面区是前面区的增长百分比   PCT_THRESHOLD 每个块中允许索引入口的百分比阀值   INCLUDE_COLUMN 索引组织表主键索引中包含最后一列的列ID   FREELISTS 分配到这个段的进程自由列表数量   FREELIST_GROUPS 分配到这个段的进程自由列表组的数量   PCT_FREE 一个块中最小自由空间的百分比   LOGGING 索引改变是否记录到日志   BLEVEL B树索引等级（从根块到叶子块的深度）   LEAF_BLOCKS 索引中叶子块的数量   DISTINCT_KEYS 不同索引值的数量   AVG_LEAF_BLOCKS_PER_KEY 索引中的每个值平均在多少个叶子块中，如果是唯一或者主键，那么值恒等于1   AVG_DATA_BLOCKS_PER_KEY 通过索引中的一个值指向表中的数据块，该数据块数量的平均值   CLUSTERING_FACTOR 聚集因子，表示表中行基于索引排序程度   STATUS 表示一个未分区的索引是合法的还是不可用的   SAMPLE_SIZE 分析索引的参样大小   LAST_ANALYZED 最近分析索引统计信息的日期   DEGREE 每个实例扫描索引的线程数   INSTANCES 索引被多少实例扫描   PARTITIONED 索引是否分区   TEMPORARY 索引是否在临时表中   GENERATED 索引名字是否是系统产生   SECONDARY 索引是否通过ODCIndexCreate方法创建   BUFFER_POOL 用于索引块的缓冲池   FLASH_CACHE 数据库 smart flash cache 的 hint用于索引块   CELL_FLASH_CACHE CELL_FLASH_CACHE的hint用于索引块   USER_STATS 静态统计是否直接被用户使用   DURATION 临时表空间的持续时间   PCT_DIRECT_ACCESS 对于索引组织表上的secondary index ,行百分比的合理猜测   ITYP_OWNER 对于域索引，索引类型的拥有者   ITYP_NAME 对于域索引，索引类型名字   PARAMETERS 对于域索引，参数字符串   GLOBAL_STATS 索引的统计是否收集齐了   DOMIDX_STATUS 域索引的状态   DOMIDX_OPSTATUS 域索引的操作状态   FUNCIDX_STATUS 基于函数索引的状态   JOIN_INDEX 索引是否是结合的   IOT_REDUNDANT_PKEY_ELIM 在索引组织表中，冗余的主键列是否从从索引中删除   DROPPED 索引是否已经被删除，并在recycle中   VISIBILITY 索引是否可见   DOMIDX_MANAGEMENT 如果是域索引，主索引是系统管理还是用户管理   SEGMENT_CREATED 索引段是否已经创建    dba_tables：">
+<meta itemprop="datePublished" content="2021-01-26T16:35:55&#43;08:00" />
+<meta itemprop="dateModified" content="2021-01-26T16:35:55&#43;08:00" />
+<meta itemprop="wordCount" content="352">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Oracle常用数据库表"/>
+<meta name="twitter:description" content="oracle 数据库表
+dba_indexes 索引的统计信息
+dba_tables 数据库中的所有表
+dba_tab_columns 查询表的列属性
+分区相关的数据库表：
+dba_part_indexes 数据库中所有分区索引的对象级分区信息，其列与ALL_PART_INDEXES中的列相同
+user_ind_subpartitons USER_IND_SUBPARTITIONS为当前用户拥有的每个索引子分区描述分区级别的分区信息，该子分区的存储参数以及ANALYZE语句收集的各种分区统计信息。 其列与“ ALL_IND_SUBPARTITIONS”中的列相同。
+dba_indexs：
+   字段 说明     OWNER 索引拥有者   INDEX_NAME 索引名字   INDEX_TYPE 索引类型   TABLE_OWNER 表的拥有者   TABLE_NAME 表名   TABLE_TYPE 表类型   UNIQUENESS 是否唯一   COMPRESSION 是否压缩   PREFIX_LENGTH 压缩键上前缀的列数量   TABLESPACE_NAME 属于哪个表空间   INI_TRANS 事务表的初始大小由对象的INI_TRANS设置指定，默认2   MAX_TRANS 最大的MAX_TRANS条目，默认255   INITIAL_EXTENT 初始化区大小65536   NEXT_EXTENT 第二个区大小1048576   MIN_EXTENTS 段中允许的最小区大小   MAX_EXTENTS 段中允许的最大区大小，默认2g   PCT_INCREASE 后面区是前面区的增长百分比   PCT_THRESHOLD 每个块中允许索引入口的百分比阀值   INCLUDE_COLUMN 索引组织表主键索引中包含最后一列的列ID   FREELISTS 分配到这个段的进程自由列表数量   FREELIST_GROUPS 分配到这个段的进程自由列表组的数量   PCT_FREE 一个块中最小自由空间的百分比   LOGGING 索引改变是否记录到日志   BLEVEL B树索引等级（从根块到叶子块的深度）   LEAF_BLOCKS 索引中叶子块的数量   DISTINCT_KEYS 不同索引值的数量   AVG_LEAF_BLOCKS_PER_KEY 索引中的每个值平均在多少个叶子块中，如果是唯一或者主键，那么值恒等于1   AVG_DATA_BLOCKS_PER_KEY 通过索引中的一个值指向表中的数据块，该数据块数量的平均值   CLUSTERING_FACTOR 聚集因子，表示表中行基于索引排序程度   STATUS 表示一个未分区的索引是合法的还是不可用的   SAMPLE_SIZE 分析索引的参样大小   LAST_ANALYZED 最近分析索引统计信息的日期   DEGREE 每个实例扫描索引的线程数   INSTANCES 索引被多少实例扫描   PARTITIONED 索引是否分区   TEMPORARY 索引是否在临时表中   GENERATED 索引名字是否是系统产生   SECONDARY 索引是否通过ODCIndexCreate方法创建   BUFFER_POOL 用于索引块的缓冲池   FLASH_CACHE 数据库 smart flash cache 的 hint用于索引块   CELL_FLASH_CACHE CELL_FLASH_CACHE的hint用于索引块   USER_STATS 静态统计是否直接被用户使用   DURATION 临时表空间的持续时间   PCT_DIRECT_ACCESS 对于索引组织表上的secondary index ,行百分比的合理猜测   ITYP_OWNER 对于域索引，索引类型的拥有者   ITYP_NAME 对于域索引，索引类型名字   PARAMETERS 对于域索引，参数字符串   GLOBAL_STATS 索引的统计是否收集齐了   DOMIDX_STATUS 域索引的状态   DOMIDX_OPSTATUS 域索引的操作状态   FUNCIDX_STATUS 基于函数索引的状态   JOIN_INDEX 索引是否是结合的   IOT_REDUNDANT_PKEY_ELIM 在索引组织表中，冗余的主键列是否从从索引中删除   DROPPED 索引是否已经被删除，并在recycle中   VISIBILITY 索引是否可见   DOMIDX_MANAGEMENT 如果是域索引，主索引是系统管理还是用户管理   SEGMENT_CREATED 索引段是否已经创建    dba_tables："/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/summer-xuepan.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        Summer&#39;s Blog
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8/&amp;text=Oracle%e5%b8%b8%e7%94%a8%e6%95%b0%e6%8d%ae%e5%ba%93%e8%a1%a8" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8/&amp;title=Oracle%e5%b8%b8%e7%94%a8%e6%95%b0%e6%8d%ae%e5%ba%93%e8%a1%a8" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Oracle常用数据库表</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2021-01-26T16:35:55&#43;08:00">January 26, 2021</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><strong>oracle 数据库表</strong></p>
+<p>dba_indexes  索引的统计信息</p>
+<p>dba_tables     数据库中的所有表</p>
+<p>dba_tab_columns  查询表的列属性</p>
+<p>分区相关的数据库表：</p>
+<p>dba_part_indexes  数据库中所有分区索引的对象级分区信息，其列与ALL_PART_INDEXES中的列相同</p>
+<p>user_ind_subpartitons   USER_IND_SUBPARTITIONS为当前用户拥有的每个索引子分区描述分区级别的分区信息，该子分区的存储参数以及ANALYZE语句收集的各种分区统计信息。 其列与“ ALL_IND_SUBPARTITIONS”中的列相同。</p>
+<p>dba_indexs：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OWNER</td>
+<td>索引拥有者</td>
+</tr>
+<tr>
+<td>INDEX_NAME</td>
+<td>索引名字</td>
+</tr>
+<tr>
+<td>INDEX_TYPE</td>
+<td>索引类型</td>
+</tr>
+<tr>
+<td>TABLE_OWNER</td>
+<td>表的拥有者</td>
+</tr>
+<tr>
+<td>TABLE_NAME</td>
+<td>表名</td>
+</tr>
+<tr>
+<td>TABLE_TYPE</td>
+<td>表类型</td>
+</tr>
+<tr>
+<td>UNIQUENESS</td>
+<td>是否唯一</td>
+</tr>
+<tr>
+<td>COMPRESSION</td>
+<td>是否压缩</td>
+</tr>
+<tr>
+<td>PREFIX_LENGTH</td>
+<td>压缩键上前缀的列数量</td>
+</tr>
+<tr>
+<td>TABLESPACE_NAME</td>
+<td>属于哪个表空间</td>
+</tr>
+<tr>
+<td>INI_TRANS</td>
+<td>事务表的初始大小由对象的INI_TRANS设置指定，默认2</td>
+</tr>
+<tr>
+<td>MAX_TRANS</td>
+<td>最大的MAX_TRANS条目，默认255</td>
+</tr>
+<tr>
+<td>INITIAL_EXTENT</td>
+<td>初始化区大小65536</td>
+</tr>
+<tr>
+<td>NEXT_EXTENT</td>
+<td>第二个区大小1048576</td>
+</tr>
+<tr>
+<td>MIN_EXTENTS</td>
+<td>段中允许的最小区大小</td>
+</tr>
+<tr>
+<td>MAX_EXTENTS</td>
+<td>段中允许的最大区大小，默认2g</td>
+</tr>
+<tr>
+<td>PCT_INCREASE</td>
+<td>后面区是前面区的增长百分比</td>
+</tr>
+<tr>
+<td>PCT_THRESHOLD</td>
+<td>每个块中允许索引入口的百分比阀值</td>
+</tr>
+<tr>
+<td>INCLUDE_COLUMN</td>
+<td>索引组织表主键索引中包含最后一列的列ID</td>
+</tr>
+<tr>
+<td>FREELISTS</td>
+<td>分配到这个段的进程自由列表数量</td>
+</tr>
+<tr>
+<td>FREELIST_GROUPS</td>
+<td>分配到这个段的进程自由列表组的数量</td>
+</tr>
+<tr>
+<td>PCT_FREE</td>
+<td>一个块中最小自由空间的百分比</td>
+</tr>
+<tr>
+<td>LOGGING</td>
+<td>索引改变是否记录到日志</td>
+</tr>
+<tr>
+<td>BLEVEL</td>
+<td>B树索引等级（从根块到叶子块的深度）</td>
+</tr>
+<tr>
+<td>LEAF_BLOCKS</td>
+<td>索引中叶子块的数量</td>
+</tr>
+<tr>
+<td>DISTINCT_KEYS</td>
+<td>不同索引值的数量</td>
+</tr>
+<tr>
+<td>AVG_LEAF_BLOCKS_PER_KEY</td>
+<td>索引中的每个值平均在多少个叶子块中，如果是唯一或者主键，那么值恒等于1</td>
+</tr>
+<tr>
+<td>AVG_DATA_BLOCKS_PER_KEY</td>
+<td>通过索引中的一个值指向表中的数据块，该数据块数量的平均值</td>
+</tr>
+<tr>
+<td>CLUSTERING_FACTOR</td>
+<td>聚集因子，表示表中行基于索引排序程度</td>
+</tr>
+<tr>
+<td>STATUS</td>
+<td>表示一个未分区的索引是合法的还是不可用的</td>
+</tr>
+<tr>
+<td>SAMPLE_SIZE</td>
+<td>分析索引的参样大小</td>
+</tr>
+<tr>
+<td>LAST_ANALYZED</td>
+<td>最近分析索引统计信息的日期</td>
+</tr>
+<tr>
+<td>DEGREE</td>
+<td>每个实例扫描索引的线程数</td>
+</tr>
+<tr>
+<td>INSTANCES</td>
+<td>索引被多少实例扫描</td>
+</tr>
+<tr>
+<td>PARTITIONED</td>
+<td>索引是否分区</td>
+</tr>
+<tr>
+<td>TEMPORARY</td>
+<td>索引是否在临时表中</td>
+</tr>
+<tr>
+<td>GENERATED</td>
+<td>索引名字是否是系统产生</td>
+</tr>
+<tr>
+<td>SECONDARY</td>
+<td>索引是否通过ODCIndexCreate方法创建</td>
+</tr>
+<tr>
+<td>BUFFER_POOL</td>
+<td>用于索引块的缓冲池</td>
+</tr>
+<tr>
+<td>FLASH_CACHE</td>
+<td>数据库 smart flash cache 的 hint用于索引块</td>
+</tr>
+<tr>
+<td>CELL_FLASH_CACHE</td>
+<td>CELL_FLASH_CACHE的hint用于索引块</td>
+</tr>
+<tr>
+<td>USER_STATS</td>
+<td>静态统计是否直接被用户使用</td>
+</tr>
+<tr>
+<td>DURATION</td>
+<td>临时表空间的持续时间</td>
+</tr>
+<tr>
+<td>PCT_DIRECT_ACCESS</td>
+<td>对于索引组织表上的secondary index ,行百分比的合理猜测</td>
+</tr>
+<tr>
+<td>ITYP_OWNER</td>
+<td>对于域索引，索引类型的拥有者</td>
+</tr>
+<tr>
+<td>ITYP_NAME</td>
+<td>对于域索引，索引类型名字</td>
+</tr>
+<tr>
+<td>PARAMETERS</td>
+<td>对于域索引，参数字符串</td>
+</tr>
+<tr>
+<td>GLOBAL_STATS</td>
+<td>索引的统计是否收集齐了</td>
+</tr>
+<tr>
+<td>DOMIDX_STATUS</td>
+<td>域索引的状态</td>
+</tr>
+<tr>
+<td>DOMIDX_OPSTATUS</td>
+<td>域索引的操作状态</td>
+</tr>
+<tr>
+<td>FUNCIDX_STATUS</td>
+<td>基于函数索引的状态</td>
+</tr>
+<tr>
+<td>JOIN_INDEX</td>
+<td>索引是否是结合的</td>
+</tr>
+<tr>
+<td>IOT_REDUNDANT_PKEY_ELIM</td>
+<td>在索引组织表中，冗余的主键列是否从从索引中删除</td>
+</tr>
+<tr>
+<td>DROPPED</td>
+<td>索引是否已经被删除，并在recycle中</td>
+</tr>
+<tr>
+<td>VISIBILITY</td>
+<td>索引是否可见</td>
+</tr>
+<tr>
+<td>DOMIDX_MANAGEMENT</td>
+<td>如果是域索引，主索引是系统管理还是用户管理</td>
+</tr>
+<tr>
+<td>SEGMENT_CREATED</td>
+<td>索引段是否已经创建</td>
+</tr>
+</tbody>
+</table>
+<p>dba_tables：</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Datatype</th>
+<th>NULL</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OWNER</td>
+<td>VARCHAR2(30)</td>
+<td>NOT NULL</td>
+<td>属主</td>
+</tr>
+<tr>
+<td>TABLE_NAME</td>
+<td>VARCHAR2(30)</td>
+<td>NOT NULL</td>
+<td>表名</td>
+</tr>
+<tr>
+<td>TABLESPACE_NAME</td>
+<td>VARCHAR2(30)</td>
+<td></td>
+<td>表空间，分区、临时和索引组织表的值为空</td>
+</tr>
+<tr>
+<td>CLUSTER_NAME</td>
+<td>VARCHAR2(30)</td>
+<td></td>
+<td>集群</td>
+</tr>
+<tr>
+<td>IOT_NAME</td>
+<td>VARCHAR2(30)</td>
+<td></td>
+<td>索引组织表的名称（如果有的话），属于溢出或映射表项。如果 iot_type 列不为空，则此列包含基表名称</td>
+</tr>
+<tr>
+<td>STATUS</td>
+<td>VARCHAR2(8)</td>
+<td></td>
+<td>如果先前的删除表操作失败，则指示表是否不能使用（无效）或有效（有效）。</td>
+</tr>
+<tr>
+<td>PCT_FREE</td>
+<td>NUMBER</td>
+<td></td>
+<td>块中空闲空间的最小百分比；分区表值为空</td>
+</tr>
+<tr>
+<td>PCT_USED</td>
+<td>NUMBER</td>
+<td></td>
+<td>块中使用空间的最小百分比；分区表值为空</td>
+</tr>
+<tr>
+<td>INI_TRANS</td>
+<td>NUMBER</td>
+<td></td>
+<td>初始事务数；分区表值为空</td>
+</tr>
+<tr>
+<td>MAX_TRANS</td>
+<td>NUMBER</td>
+<td></td>
+<td>事务的最大数量；分区表值为空</td>
+</tr>
+<tr>
+<td>INITIAL_EXTENT</td>
+<td>NUMBER</td>
+<td></td>
+<td>初始区域的大小（以字节为单位）；分区表值为空</td>
+</tr>
+<tr>
+<td>NEXT_EXTENT</td>
+<td>NUMBER</td>
+<td></td>
+<td>二级范围的大小（以字节为单位）；分区表值为空</td>
+</tr>
+<tr>
+<td>MIN_EXTENTS</td>
+<td>NUMBER</td>
+<td></td>
+<td>段中允许的最小区段数；分区表值为空</td>
+</tr>
+<tr>
+<td>MAX_EXTENTS</td>
+<td>NUMBER</td>
+<td></td>
+<td>区段中允许的最大区段数；分区表值为空</td>
+</tr>
+<tr>
+<td>PCT_INCREASE</td>
+<td>NUMBER</td>
+<td></td>
+<td>范围大小的百分比增加；分区表值为空</td>
+</tr>
+<tr>
+<td>FREELISTS</td>
+<td>NUMBER</td>
+<td></td>
+<td>用于insert操作的数据块的列表，分区表值为空</td>
+</tr>
+<tr>
+<td>FREELIST_GROUPS</td>
+<td>NUMBER</td>
+<td></td>
+<td>用于insert操作的数据块的列表组，分区表值为空</td>
+</tr>
+<tr>
+<td>LOGGING</td>
+<td>VARCHAR2(3)</td>
+<td></td>
+<td>日志表属性，分区表值为空</td>
+</tr>
+<tr>
+<td>BACKED_UP</td>
+<td>VARCHAR2(1)</td>
+<td></td>
+<td>上次更改后表是否已备份</td>
+</tr>
+<tr>
+<td>NUM_ROWS*</td>
+<td>NUMBER</td>
+<td></td>
+<td>表中的行数</td>
+</tr>
+<tr>
+<td>BLOCKS*</td>
+<td>NUMBER</td>
+<td></td>
+<td>表中使用的数据块的个数</td>
+</tr>
+<tr>
+<td>EMPTY_BLOCKS*</td>
+<td>NUMBER</td>
+<td></td>
+<td>表中空闲的数据块的个数</td>
+</tr>
+<tr>
+<td>AVG_SPACE*</td>
+<td>NUMBER</td>
+<td></td>
+<td>分配给表的数据块中的平均空闲空间（以字节为单位）</td>
+</tr>
+<tr>
+<td>CHAIN_CNT*</td>
+<td>NUMBER</td>
+<td></td>
+<td>在被从一个数据块到另一个表中的行数，或迁移到一个新块，需要保留一部分旧的rowid</td>
+</tr>
+<tr>
+<td>AVG_ROW_LEN*</td>
+<td>NUMBER</td>
+<td></td>
+<td>表中一行的平均长度（以字节为单位）</td>
+</tr>
+<tr>
+<td>AVG_SPACE_FREELIST _BLOCKS</td>
+<td>NUMBER</td>
+<td></td>
+<td>freelist的所有块的平均空间</td>
+</tr>
+<tr>
+<td>NUM_FREELIST_BLOCKS</td>
+<td>NUMBER</td>
+<td></td>
+<td>freelist 的块的个数</td>
+</tr>
+<tr>
+<td>DEGREE</td>
+<td>VARCHAR2(10)</td>
+<td></td>
+<td>扫描表的每个实例的线程数</td>
+</tr>
+<tr>
+<td>INSTANCES</td>
+<td>VARCHAR2(10)</td>
+<td></td>
+<td>要扫描该表的实例数。</td>
+</tr>
+<tr>
+<td>CACHE</td>
+<td>VARCHAR2(5)</td>
+<td></td>
+<td>指示表是否要缓存在缓冲区缓存（y）或不（n）中。</td>
+</tr>
+<tr>
+<td>TABLE_LOCK</td>
+<td>VARCHAR2(8)</td>
+<td></td>
+<td>指示是否已启用表锁（启用）或禁用（禁用）。</td>
+</tr>
+<tr>
+<td>SAMPLE_SIZE</td>
+<td>NUMBER</td>
+<td></td>
+<td>用于分析此表的样本大小</td>
+</tr>
+<tr>
+<td>LAST_ANALYZED</td>
+<td>DATE</td>
+<td></td>
+<td>最近分析这张表的日期</td>
+</tr>
+<tr>
+<td>PARTITIONED</td>
+<td>VARCHAR2(3)</td>
+<td></td>
+<td>指示此表是否分区。设置 是 如果是分区。</td>
+</tr>
+<tr>
+<td>IOT_TYPE</td>
+<td>VARCHAR2(12)</td>
+<td></td>
+<td>如果这是一个索引组织表，值为 IOT, IOT_OVERFLOW, 或者 IOT_MAPPING，否则为NULL</td>
+</tr>
+<tr>
+<td>TEMPORARY</td>
+<td>VARCHAR2(1)</td>
+<td></td>
+<td>当前会话只能看到它放在这个对象本身中的数据吗？</td>
+</tr>
+<tr>
+<td>SECONDARY</td>
+<td>VARCHAR2(1)</td>
+<td></td>
+<td>是否被ODCIIndexCreate 触发创建</td>
+</tr>
+<tr>
+<td>NESTED</td>
+<td>VARCHAR2(3)</td>
+<td></td>
+<td>指示表是否是嵌套表（yes）或否（NO）。</td>
+</tr>
+<tr>
+<td>BUFFER_POOL</td>
+<td>VARCHAR2(7)</td>
+<td></td>
+<td>该对象的默认缓冲池。 分区表为空</td>
+</tr>
+<tr>
+<td>ROW_MOVEMENT</td>
+<td>VARCHAR2(8)</td>
+<td></td>
+<td>是否已启用或禁用分区行移动</td>
+</tr>
+<tr>
+<td>GLOBAL_STATS</td>
+<td>VARCHAR2(3)</td>
+<td></td>
+<td>对于分区表，指示数据收集表作为一个整体（是）或来自潜在的分区和子分区统计估计（否）</td>
+</tr>
+<tr>
+<td>USER_STATS</td>
+<td>VARCHAR2(3)</td>
+<td></td>
+<td>指示用户是否直接输入统计数据（是）（否）</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>SKIP_CORRUPT</th>
+<th>VARCHAR2(8)</th>
+<th></th>
+<th>Oracle数据库是否忽略表和索引扫描中标记为已损坏的块（启用）或引发错误（禁用）。要启用此功能，运行 dbms_repair.skip_corrupt_blocksprocedure。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MONITORING</td>
+<td>VARCHAR2(3)</td>
+<td></td>
+<td>表是否有 监测 属性设置</td>
+</tr>
+<tr>
+<td>CLUSTER_OWNER</td>
+<td>VARCHAR2(30)</td>
+<td></td>
+<td>表所属的群集的所有者，如果有的话</td>
+</tr>
+<tr>
+<td>DEPENDENCIES</td>
+<td>VARCHAR2(8)</td>
+<td></td>
+<td>指示是否启用了行级依赖跟踪（启用）或禁用（禁用）。</td>
+</tr>
+<tr>
+<td>COMPRESSION</td>
+<td>VARCHAR2(8)</td>
+<td></td>
+<td>指示是否启用表压缩（启用）或禁用（已禁用）；分区表为空值。</td>
+</tr>
+<tr>
+<td>DROPPED</td>
+<td>VARCHAR2(3)</td>
+<td></td>
+<td>指示表是否已被删除并处于回收站（是）或否（否）中；分区表为空值。</td>
+</tr>
+</tbody>
+</table>
+<p>dba_tab_columns：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>owner</td>
+<td>character varying(64)</td>
+<td>表的所有者</td>
+</tr>
+<tr>
+<td>table_name</td>
+<td>character varying(64)</td>
+<td>表名</td>
+</tr>
+<tr>
+<td>column_name</td>
+<td>character varying(64)</td>
+<td>列名</td>
+</tr>
+<tr>
+<td>data_type</td>
+<td>character varying(128)</td>
+<td>列的数据类型</td>
+</tr>
+<tr>
+<td>column_id</td>
+<td>integer</td>
+<td>创建表时列的序号</td>
+</tr>
+<tr>
+<td>data_length</td>
+<td>integer</td>
+<td>列的字节长度</td>
+</tr>
+<tr>
+<td>comments</td>
+<td>text</td>
+<td>注释</td>
+</tr>
+<tr>
+<td>avg_col_len</td>
+<td>numeric</td>
+<td>列的平均长度（单位字节）</td>
+</tr>
+<tr>
+<td>nullable</td>
+<td>bpchar</td>
+<td>该列是否允许为空，对于主键约束和非空约束，该值为n</td>
+</tr>
+<tr>
+<td>data_precision</td>
+<td>integer</td>
+<td>数据类型的精度，对于numeric数据类型有效，其他类型为NULL</td>
+</tr>
+<tr>
+<td>data_scale</td>
+<td>integer</td>
+<td>小数点右边的位数，对于numeric数据类型有效，其他类型为0</td>
+</tr>
+<tr>
+<td>char_length</td>
+<td>numeric</td>
+<td>列的长度（以字符计），只对varchar，nvarchar2， bpchar，char类型有效</td>
+</tr>
+</tbody>
+</table>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://xuepan-summer.github.io/summer-xuepan.github.io/" >
+    &copy;  Summer's Blog 2021 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/summer-xuepan.github.io/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

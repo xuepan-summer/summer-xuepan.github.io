@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/" />
-<meta property="og:updated_time" content="2021-01-12T11:16:15+08:00" />
+<meta property="og:updated_time" content="2021-01-26T16:59:56+08:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -96,6 +96,118 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/threadlocal%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="link black dim">
+        ThreadLocal源码解析
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      ThreadLocal是什么
+多个线程想使用共享变量的时候，容易出现问题，使用ThreadLocal的话，每个线程都会创建该共享变量的副本，使用这个副本的话每个线程互不影响
+  ThreadLocal的用途
+数据库连接
+每次连接，然后关闭，如果频繁连接关闭的话会给服务器很大的压力，使用ThreadLocal就不会严重影响程序执行性能
+  ThreadLocal源码解析
+当中几个比较重要的API是：
+  get()获取ThreadLocal的值
+  set(T value)设置ThreadLocal的值
+  remove()删除ThreadLocal
+  initialValue()初始化ThreadLocal的值
+  ThreadLocal里有一个静态内部类ThreadLocalMap，用Entry进行存储，ThreadLocalMap的key是threadLocal对象，value是传入的
+① set()：获取当前线程t，然后getMap获得t.threadLocals，threadLocals是ThreadLocalMap对象，如果之前有map，则直接修改map中key为当前threadLocal对象的值，否则新建一个map，修改其value值。
+/** * Sets the current thread&#39;s copy of this thread-local variable * to the specified value. Most subclasses will have no need to * override this method, relying solely on the {@link #initialValue} * method to set the values of thread-locals.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8/" class="link black dim">
+        Oracle常用数据库表
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      oracle 数据库表
+dba_indexes 索引的统计信息
+dba_tables 数据库中的所有表
+dba_tab_columns 查询表的列属性
+分区相关的数据库表：
+dba_part_indexes 数据库中所有分区索引的对象级分区信息，其列与ALL_PART_INDEXES中的列相同
+user_ind_subpartitons USER_IND_SUBPARTITIONS为当前用户拥有的每个索引子分区描述分区级别的分区信息，该子分区的存储参数以及ANALYZE语句收集的各种分区统计信息。 其列与“ ALL_IND_SUBPARTITIONS”中的列相同。
+dba_indexs：
+   字段 说明     OWNER 索引拥有者   INDEX_NAME 索引名字   INDEX_TYPE 索引类型   TABLE_OWNER 表的拥有者   TABLE_NAME 表名   TABLE_TYPE 表类型   UNIQUENESS 是否唯一   COMPRESSION 是否压缩   PREFIX_LENGTH 压缩键上前缀的列数量   TABLESPACE_NAME 属于哪个表空间   INI_TRANS 事务表的初始大小由对象的INI_TRANS设置指定，默认2   MAX_TRANS 最大的MAX_TRANS条目，默认255   INITIAL_EXTENT 初始化区大小65536   NEXT_EXTENT 第二个区大小1048576   MIN_EXTENTS 段中允许的最小区大小   MAX_EXTENTS 段中允许的最大区大小，默认2g   PCT_INCREASE 后面区是前面区的增长百分比   PCT_THRESHOLD 每个块中允许索引入口的百分比阀值   INCLUDE_COLUMN 索引组织表主键索引中包含最后一列的列ID   FREELISTS 分配到这个段的进程自由列表数量   FREELIST_GROUPS 分配到这个段的进程自由列表组的数量   PCT_FREE 一个块中最小自由空间的百分比   LOGGING 索引改变是否记录到日志   BLEVEL B树索引等级（从根块到叶子块的深度）   LEAF_BLOCKS 索引中叶子块的数量   DISTINCT_KEYS 不同索引值的数量   AVG_LEAF_BLOCKS_PER_KEY 索引中的每个值平均在多少个叶子块中，如果是唯一或者主键，那么值恒等于1   AVG_DATA_BLOCKS_PER_KEY 通过索引中的一个值指向表中的数据块，该数据块数量的平均值   CLUSTERING_FACTOR 聚集因子，表示表中行基于索引排序程度   STATUS 表示一个未分区的索引是合法的还是不可用的   SAMPLE_SIZE 分析索引的参样大小   LAST_ANALYZED 最近分析索引统计信息的日期   DEGREE 每个实例扫描索引的线程数   INSTANCES 索引被多少实例扫描   PARTITIONED 索引是否分区   TEMPORARY 索引是否在临时表中   GENERATED 索引名字是否是系统产生   SECONDARY 索引是否通过ODCIndexCreate方法创建   BUFFER_POOL 用于索引块的缓冲池   FLASH_CACHE 数据库 smart flash cache 的 hint用于索引块   CELL_FLASH_CACHE CELL_FLASH_CACHE的hint用于索引块   USER_STATS 静态统计是否直接被用户使用   DURATION 临时表空间的持续时间   PCT_DIRECT_ACCESS 对于索引组织表上的secondary index ,行百分比的合理猜测   ITYP_OWNER 对于域索引，索引类型的拥有者   ITYP_NAME 对于域索引，索引类型名字   PARAMETERS 对于域索引，参数字符串   GLOBAL_STATS 索引的统计是否收集齐了   DOMIDX_STATUS 域索引的状态   DOMIDX_OPSTATUS 域索引的操作状态   FUNCIDX_STATUS 基于函数索引的状态   JOIN_INDEX 索引是否是结合的   IOT_REDUNDANT_PKEY_ELIM 在索引组织表中，冗余的主键列是否从从索引中删除   DROPPED 索引是否已经被删除，并在recycle中   VISIBILITY 索引是否可见   DOMIDX_MANAGEMENT 如果是域索引，主索引是系统管理还是用户管理   SEGMENT_CREATED 索引段是否已经创建    dba_tables：
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/github%E7%9A%84ssh%E7%99%BB%E9%99%86%E5%A4%B1%E6%95%88%E4%BF%AE%E6%94%B9%E4%B8%BAhttps/" class="link black dim">
+        github的SSH登陆失效修改为HTTPS
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      向github push代码的时候，发现push报错
+kex_exchange_identification: read: Connection reset by peer
+尝试重新生成公钥密钥，然后更新github上的SSH Keys，发现不行
+上网查找之后尝试了好几种方法，有修改.ssh/config文件的，但是没有生效，也有可能是网络问题，所以决定暂时将SSH方式修改成HTTPS方式，先将代码提交上去
+实验过程中由于开了好几个终端，后来问题变成了这样：
+git push的时候显示： kex_exchange_identification: Connection closed by remote host fatal: Could not read from remote repository.
+参考这篇博客http://www.lao8.org/article_1319/ssh 发现产生原因是SSH连接数过多
+修改方法是改大/etc/ssh/sshd_config文件的MaxSessions或者每次正常退出SSH
+修改SSH-&gt;HTTPS方式步骤如下：
+  git remote -v
+查看使用的是哪种方式
+之前使用的是SSH，因此显示结果是
+origin git@github.com:XXX/XXX.github.io.git (fetch) origin git@github.com:XXX/XXX.github.io.git (push)
+XXX是人名，此处已略去
+  通过以下这个命令设置SSH为HTTPS
+git remote set-url origin https://github.com/XXX/XXX.github.io.git
+  首次push可以设置 git push -u origin master 我直接就git push了
+  push成功了，如图所示
+  
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/blockingqueue/" class="link black dim">
+        BlockingQueue
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      项目中遇到了使用阻塞队列，但是自己对API还不是很熟练，所以对照源码及注释，将API整理一下，方便翻阅。
+BlockingQueue是继承了Queue的一个接口，其实现类有ArrayBlockingQueue 、LinkedBlockingQueue 、LinkedBlockingDeque等，也遵照队列的先进先出原则。
+API大概分为以下四类：
+ 第一类  add(E e) 添加元素，超出长度则抛异常IllegalStateException
+remove() 取出并移除队首元素，队列为空则抛异常NoSuchElementException
+element() 返回队首元素，队列为空则抛异常NoSuchElementException
+第二类  使用容量受限的队列时，更推荐使用offer()
+offer(E e) 添加元素，成功返回true，超出长度返回false，不插入，不报错
+poll() 取出并移除队首元素，队列为空返回null
+peek() 返回队首元素，队列为空返回null
+第三类  put(E e) 添加元素，队列满则阻塞，直到有空位插入为止
+take() 取出并移除队首元素，队列空则阻塞，直到有元素
+第四类  offer(E e, long timeout, TimeUnit unit) 队列已满无法插入时，等待定义的单位时间数，如果还满则返回false
+poll(long timeout, TimeUnit unit) 队列无元素时，等待定义的单位时间数，无可取元素则返回null
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -254,94 +366,6 @@ nvl(string1, replace_with) 如果string1为null，则返回replace_with，否则
 针对以上问题，隔离性就起了作用，如何使事务之间隔离起来，互不影响？因此产生了事务隔离级别。
    事务隔离级别：  ×表示不会出现，√表示可能会出现
    事务隔离级别 脏读 不可重复读 幻读     Read uncommitted √ √ √   Read committed × √ √   Repeatable read × × √   Serializable × × ×    ① Read uncommitted (读未提交)：最低的事务隔离级别，一个事务还没提交时，它做的变更就能被别的事务看到。
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparable%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/" class="link black dim">
-        Comparable及Comparator对比
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      comparable接口:
-public interface Comparable { int compareTo(Object other); } public interface Comparable&lt;T&gt; { int compareTo(&lt;T&gt; other); } 实现该接口的类必须要覆写compareTo方法
-comparator接口:
-public interface Comparator&lt;T&gt;{ int compare(T first,T second) } 实现该接口的类必须要覆写compare方法
-if (user1.getAge() &gt; user2.getAge()) { return 1; } if (user1.getAge() &lt; user2.getAge()) { return -1; } return 0; 代码可以简化为：
-return Integer.compare(user1.getAge(), user2.getAge()); Collections.sort(userList, new Comparator&lt;User&gt;() { @Override public int compare(User user1, User user2) { return Integer.compare(user1.getAge(), user2.getAge()); } }); //声明一个匿名内部类，覆写了Comparator接口的compare方法，里面定义了比较的标准 可以简化为：
-Collections.sort(userList, (user1, user2) -&gt; Integer.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/arraylist%E6%89%A9%E5%AE%B9%E4%B9%8B%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/" class="link black dim">
-        ArrayList扩容之源码剖析
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      总结： ArrayList的底层是Object数组，默认容量为10，当往ArrayList里添加数据的时候，才会进行扩容。扩容主要由grow方法实现，扩容为之前的1.5倍左右，然后将之前的数据放到新数组里。
-private static final int DEFAULT_CAPACITY = 10; private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {}; transient Object[] elementData; // non-private to simplify nested class access 一、3种构造方法：
-1.无参构造
-public ArrayList() { this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA; } 默认是一个空Object数组
-2.集合作为参数的构造方法
-public ArrayList(Collection&lt;? extends E&gt; c) { elementData = c.toArray(); if ((size = elementData.length) != 0) { // c.toArray might (incorrectly) not return Object[] (see 6260652)  if (elementData.getClass() != Object[].class) elementData = Arrays.copyOf(elementData, size, Object[].
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/push%E5%A4%B1%E8%B4%A5/" class="link black dim">
-        IDEA push失败 Unable to access &#39;https://github.com/XXX/&#39;: Operation timed out ...
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-       出错原因  应该是网速太慢，所以push超时。
- 操作    （pull的命令行格式是：git pull ）
-在终端Terminal里输入git pull origin master &ndash;allow-unrelated-histories**（注意前面是两个‘-’，后面是一个‘-’）**
-  该命令表示从远程仓库的origin分支拉取到本地的master分支
-&ndash;allow-unrelated-histories的意思是允许合并不相关的历史，所以会进行强行合并
-之后再次push即可，可以使用VCS-&gt;Git-&gt;Push进行push  
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%89/" class="link black dim">
-        实现生产者消费者(三)：BlockingQueue
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
-现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
-采用BlockingQueue方法  BlockingQueue是接口，顾名思义，就是阻塞队列，队列中有空位才插入元素，队列中有元素才移除元素。
-offer() &amp; put()
-boolean offer(E e);若可以成功添加，返回true，否则返回false &ndash;&gt;非阻塞
-boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException;
-设定等待时间，如果指定时间内，还不能往队列中加入元素，则返回false &ndash;&gt;阻塞
-void put(E e) throws InterruptedException;是阻塞的，如果队列内无空位，则一直等待，直到有空位才往队列中插入元素 &ndash;&gt;阻塞
-poll() &amp; take()
-E poll(long timeout, TimeUnit unit) throws InterruptedException;取出队首元素，可取出就直接返回，否则等待，超时还未取出则失败
-E take() throws InterruptedException;取出队首元素，阻塞等待直到可取出
-JDK文档的注释中有相关使用范例代码，如下所示：
-class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.
     </div>
   </div>
 </div>

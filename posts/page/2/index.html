@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/" />
-<meta property="og:updated_time" content="2021-01-12T11:16:15+08:00" />
+<meta property="og:updated_time" content="2021-01-26T16:59:56+08:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -96,6 +96,94 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparable%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/" class="link black dim">
+        Comparable及Comparator对比
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      comparable接口:
+public interface Comparable { int compareTo(Object other); } public interface Comparable&lt;T&gt; { int compareTo(&lt;T&gt; other); } 实现该接口的类必须要覆写compareTo方法
+comparator接口:
+public interface Comparator&lt;T&gt;{ int compare(T first,T second) } 实现该接口的类必须要覆写compare方法
+if (user1.getAge() &gt; user2.getAge()) { return 1; } if (user1.getAge() &lt; user2.getAge()) { return -1; } return 0; 代码可以简化为：
+return Integer.compare(user1.getAge(), user2.getAge()); Collections.sort(userList, new Comparator&lt;User&gt;() { @Override public int compare(User user1, User user2) { return Integer.compare(user1.getAge(), user2.getAge()); } }); //声明一个匿名内部类，覆写了Comparator接口的compare方法，里面定义了比较的标准 可以简化为：
+Collections.sort(userList, (user1, user2) -&gt; Integer.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/arraylist%E6%89%A9%E5%AE%B9%E4%B9%8B%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/" class="link black dim">
+        ArrayList扩容之源码剖析
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      总结： ArrayList的底层是Object数组，默认容量为10，当往ArrayList里添加数据的时候，才会进行扩容。扩容主要由grow方法实现，扩容为之前的1.5倍左右，然后将之前的数据放到新数组里。
+private static final int DEFAULT_CAPACITY = 10; private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {}; transient Object[] elementData; // non-private to simplify nested class access 一、3种构造方法：
+1.无参构造
+public ArrayList() { this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA; } 默认是一个空Object数组
+2.集合作为参数的构造方法
+public ArrayList(Collection&lt;? extends E&gt; c) { elementData = c.toArray(); if ((size = elementData.length) != 0) { // c.toArray might (incorrectly) not return Object[] (see 6260652)  if (elementData.getClass() != Object[].class) elementData = Arrays.copyOf(elementData, size, Object[].
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/push%E5%A4%B1%E8%B4%A5/" class="link black dim">
+        IDEA push失败 Unable to access &#39;https://github.com/XXX/&#39;: Operation timed out ...
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+       出错原因  应该是网速太慢，所以push超时。
+ 操作    （pull的命令行格式是：git pull ）
+在终端Terminal里输入git pull origin master &ndash;allow-unrelated-histories**（注意前面是两个‘-’，后面是一个‘-’）**
+  该命令表示从远程仓库的origin分支拉取到本地的master分支
+&ndash;allow-unrelated-histories的意思是允许合并不相关的历史，所以会进行强行合并
+之后再次push即可，可以使用VCS-&gt;Git-&gt;Push进行push  
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%AE%9E%E7%8E%B0%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%89/" class="link black dim">
+        实现生产者消费者(三)：BlockingQueue
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      生产者-消费者模型介绍  生产者和消费者同一时间使用同一存储空间，生产者往空间里放东西，消费者从空间里拿东西
+现在要实现的是：生产者生产十个随机数供消费者使用，消费者依次消耗十个随机数，相当于生产者生产一个随机数，就放在盘子里，然后消费者消费。生产者再生产，消费者再消费，直至十个随机数被消耗完，整个过程结束。
+采用BlockingQueue方法  BlockingQueue是接口，顾名思义，就是阻塞队列，队列中有空位才插入元素，队列中有元素才移除元素。
+offer() &amp; put()
+boolean offer(E e);若可以成功添加，返回true，否则返回false &ndash;&gt;非阻塞
+boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException;
+设定等待时间，如果指定时间内，还不能往队列中加入元素，则返回false &ndash;&gt;阻塞
+void put(E e) throws InterruptedException;是阻塞的，如果队列内无空位，则一直等待，直到有空位才往队列中插入元素 &ndash;&gt;阻塞
+poll() &amp; take()
+E poll(long timeout, TimeUnit unit) throws InterruptedException;取出队首元素，可取出就直接返回，否则等待，超时还未取出则失败
+E take() throws InterruptedException;取出队首元素，阻塞等待直到可取出
+JDK文档的注释中有相关使用范例代码，如下所示：
+class BoundedBuffer { final Lock lock = new ReentrantLock(); final Condition notFull = lock.newCondition(); final Condition notEmpty = lock.newCondition(); final Object[] items = new Object[100]; int putptr, takeptr, count; public void put(Object x) throws InterruptedException { lock.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -191,6 +279,25 @@ Collections.sort(list,Comparator)
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/treeset%E8%B8%A9%E5%9D%91/" class="link black dim">
+        TreeSet踩坑
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      1.Set &amp; TreeSet
+ Set：通过HashSet()及equals()达到无序去重的目的 TreeSet：通过实现Comparable接口的CompareTo()方法达到有序去重的目的  2.TreeSet可能遇到的问题
+eg:User有两个属性，id和name，
+如果只针对于name进行判断，将User存到list中。那么ComapreTo()方法如果重名的User，即使id不同，TreeSet也不会区分出来，仍然认为是同一个User所以使用TreeSet的时候，必须把去重条件写清楚！！！
+public class User implements Comparable&lt;User&gt; { /** * 用户ID，数据库主键，全局唯一 */ private final Integer id; /** * 用户名 */ private final String name; public User(Integer id, String name) { this.id = id; this.name = name; } public Integer getId() { return id; } public String getName() { return name; } @Override public boolean equals(Object o) { if (this == o) { return true; } if (o == null || getClass() !
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%B8%B8%E7%94%A8jvm%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/" class="link black dim">
         常用JVM分析工具
       </a>
@@ -230,177 +337,16 @@ Collections.sort(list,Comparator)
       平时工作中有时候会用到一些常用的Linux命令，所以打算整理一下，便于翻阅，后续再补充
   目录切换命令
  pwd 查看当前路径    cd 目录名 切换到指定目录下
-【cd命令系列】  cd ../ 切换到上级目录
+【cd命令系列】  cd .当前目录
+  cd ../ 切换到上级目录
   cd / 切换到根目录（所有用户共享的目录）
   cd ~ 切换到用户主目录，root用户相当于cd /root；普通用户相当于cd /home/当前用户名
   cd - 切换到上一个所在目录（此目录之前所在目录）
       目录或文件操作命令
   ls 显示不隐藏的文件或文件夹
-  ls -a 显示当前目录下所有文件及文件夹，包括隐藏的.和..
-  ls -l 显示不隐藏的文件与文件夹的详细信息 =&gt;即 ll
-  mkdir 目录名 创建目录
-  touch 文件名 新建文件
-【mv命令系列】  mv 旧文件 新文件 对文件重命名
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="link black dim">
-        多线程
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      为什么需要多线程？    硬件需要：
-CPU与其他设备的速度不同步，CPU很快，等执行完之后就进行等待，而且现在CPU大多是多核的，速度更快了。希望可以让CPU使用更加充分。
-  程序需要：
-java的执行模型是同步/阻塞的：默认是单线程，在执行的过程中，执行完第一行再执行第二行，一步一步来。假如第一行是执行一个很慢的方法，那么就会等这个方法执行结束再继续，这样就需要等待很久。
-    多线程的过程
-默认执行main线程，假如新开了线程a并start，那么就增加了一个执行流，main线程和线程a都有其私有的方法栈。
-  start &amp; run 的区别
-  start相当于main线程（老板）给新线程（工人）分配完了之后就让工人自己去干活了，自己继续去做自己的事情。
-  run相当于main线程（老板）给新线程（工人）分配了活并进行监工，等工人干完活之后再去做自己的事情。
-如果让新线程执行run方法的话，和没有分多线程是一样的效果！！！只有start才可以并发执行！
-    多线程会产生什么问题？
-同一份代码，不同人乱序运行，如果不是原子操作（某一时刻只能被一个线程操作），那么就会时好时坏，有时就会出错
-例子：i 初始值为0，线程a和线程b都执行同一方法中的i++操作
-理想正确场景：线程a执行时 i 加1，变成1；线程b执行时 i 再加1，变成2（即使顺序调换，先线程b再线程a，结果也还是2）
-实际报错场景：i++分为三步：
-(1) 取出 i 的值
-(2) i 的值加 1
-(3) 将叠加之后的值给 i
-假设线程a先占用了CPU，取出 i 的初始值0，然后 i 加1变成了1。但是！此时线程a占用CPU的时间到了，所以轮到了线程b，由于线程a还没将数据赋值给 i ，所以 i 的值还是0，线程2成功在其基础上加1并赋值给 i ，那么 i 就变成了1。接下来又轮到了线程a，线程a直接将刚刚叠加之后的结果1赋值给 i 。最终结果就变成了 1 而不是2。 如下图所示。
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/" class="link black dim">
-        深拷贝与浅拷贝
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Home里定义了Cat
-public class Home { public Cat cat; public Home(Cat cat) { this.cat = cat; } } Cat有其名字
-public class Cat { public String name; public Cat(String name) { this.name = name; } } 在Main方法中定义一个Home类型的对象，对其进行拷贝
-Home home = new Home(new Cat(&#34;Tom&#34;)); 相当于将名为Tom的猫放在Home里
-在这个具体的例子中，
-浅拷贝：将这只名为Tom的猫也放到新房子里
-深拷贝：重新定义一只名为Tom的猫，将其放到新房子里
-public static Home shallowCopy(Home home) { Home newHome = new Home(home.cat); return newHome; //此处只为方便理解，建议直接return new Home(home.cat); } home.cat就是刚开始home对象里的猫，然后通过构造器将其直接放到新建的newHome里面。
-public static Home deepCopy(Home home) { Cat newCat = new Cat(home.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/collection%E4%BD%93%E7%B3%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E7%B1%BB%E5%8F%8A%E5%85%B6%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="link black dim">
-        Collection体系的常用类及其背后的数据结构
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      集合有两个基本接口：Collection和Map
-List是一个有序集合，Set里不包含重复元素，Queue是队列，遵循FIFO原则（First In First Out）
-List
-常用方法：
-add()：增加元素
-retainAll()：保留参数里的所有元素
-containsAll()：是否包含参数这个集合里的所有元素
-toArray()：转换成数组
-1.ArrayList
-2.LinkedList
-3.Vector&amp;Stack
-现已不使用
-ArrayList &amp; LinkedList：1.实现方式：ArrayList 基于数组来实现，LinkedList基于双向链表来实现
-2.内存占用：LinkedList比ArrayList 更占内存，因为还需要存储两个引用（指向前面的元素和后面的元素）
-3.随机访问速度：ArrayList 更快
-Set
-1.EnumSet
-该Set里的元素必须都是指定枚举类型的枚举值
-2.HashSet
-3.TreeSet
-HashSet &amp; TreeSetHashSet是二叉树实现的，加入的元素不一定和加入的顺序保持一致，这一点就和ArrayList不一样
-TreeSet是SortedSet接口的唯一实现，元素是有序的，可以采用默认的排序方法，也可以自定义排序方法
-Queue
-1.Deque
-双端队列，两端均可增加可减少元素
-2.PriorityQueue
-有优先级的队列，按关键字进行排序，插入元素的时候会自动找到合适位置插入
-Map
-1.HashMap
-HashMap的实现没有被同步，所以它是线程不安全的，ConcurrentHashMap是线程安全的
-HashMap在resize扩容的时候会造成死循环
-2.TreeMap
-TreeMap是基于红黑树实现的
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E8%A7%A3%E5%86%B3maven%E5%8C%85%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98/" class="link black dim">
-        解决Maven包冲突问题
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      1.JVM（java虚拟机）的作用：
-只执行class文件，也就是字节码文件，如果遇到了新类就会去相应类路径classPath里找。各个类的字节码文件一般都打包在jar包里。
-2.传递性依赖：类依赖其他类
-maven的包管理解决了传递性依赖和包冲突：
-1）传递性依赖的解决：
-maven会告诉jvm到底去哪找，根据groupId/artifactId/version去中央仓库可以找到自己想要的jar包，对应的jar包还有其pom文件，文件里会说明它又依赖了什么jar包，所以整棵依赖树都会被下载下来
-2）包冲突的解决：
-【1】包冲突是什么？版本号不同的包名同时出现在classPath里，则jvm不知道到底采用哪个包
-【2】包冲突的表现：
-AbstractMethodError
-NoClassDefFoundError
-ClassNotFoundException
-LinkageError
-NoSuchMethodError
-【3】看包依赖的方法
-法1：看右侧maven的dependencies
-法2：命令行里执行mvn dependency:tree 看到的是maven解决冲突之后的结构
-【4】 解决冲突的原则：
-选择距离项目最近的jar包
-当距离项目一样近时，选前者
-【5】实例：
-因为此时既依赖了0.1版本的C包，又依赖了0.2版本的C包，所以产生了包冲突
-所以maven在解决包冲突的时候，选择了较近的0.1版本的C包，而舍弃了高版本
-当高版本的jar包里有我们需要的方法时，此时就会报错，要想采用高版本的jar包，有以下几种方式：
-① 直接依赖0.2版本的C包，修改pom.xml文件的dependencies
-&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;version&gt;0.2&lt;/version&gt; &lt;/dependency&gt; ② 排除掉0.1版本的C包
-&lt;dependency&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-d&lt;/artifactId&gt; &lt;version&gt;0.1&lt;/version&gt; &lt;exclusions&gt; &lt;exclusion&gt; &lt;groupId&gt;com.github.hcsp&lt;/groupId&gt; &lt;artifactId&gt;test-library-c&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;/exclusions&gt; &lt;/dependency&gt; ③ 采用IDEA的Maven Helper插件
-打开pom，命令行上方有dependency Analyzer 点Reimport按钮，则显示了maven冲突的地方，选中要排除的那个,然后右键exclude
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E7%B1%BB%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E7%AC%A6publicprotecteddefaultprivate/" class="link black dim">
-        类的访问控制符public、protected、default、private
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      private仅本类可用 package private包级私有（默认不写修饰符）仅本包及本类可用 protected 本类、本包、其子类均可用 public没有限制  具体如下图所示：
+  ls -a 显示当前目录下所有文件及文件夹，包括隐藏的.和.. a表示all
+  ls -l 显示不隐藏的文件与文件夹的详细信息 =&gt;即 ll l表示list
+  ls -h 以方便阅读的形式展示，不再以字节显示，以大小，例如kb显示 h代表human
     </div>
   </div>
 </div>

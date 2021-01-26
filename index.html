@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/" />
-<meta property="og:updated_time" content="2021-01-12T11:16:15+08:00" />
+<meta property="og:updated_time" content="2021-01-26T16:59:56+08:00" />
 <meta itemprop="name" content="Summer&#39;s Blog">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Summer&#39;s Blog"/>
@@ -127,38 +127,27 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Cstring%E5%B8%B8%E7%94%A8api%E7%9A%84%E7%A2%B0%E6%92%9E/" class="color-inherit dim link">
-            正则表达式和String常用API的碰撞
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/threadlocal%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="color-inherit dim link">
+            ThreadLocal源码解析
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          最近工作上有遇到一个需要截取想要的字符串的情况，第一时间想到了正则表达式，后来用着用着，发现String的API真是太好用了，还比正则简单一些，记录一下心得。
-当时的场景是需要截取全限定类名，大概格式是这样的：
-AuthController可以认为是类名，login()是方法名
-原结果 public java.lang.String org.XXX.XXX.web.xxx.AuthController.login()
-所需结果 org.XXX.XXX.web.xxx.AuthController
-也就是要从org开始取，取到类名结束
-这个时候String的API就开始大显神通了，主要用到了split(char ch)、substring(startIndex , endIndex)、lastIndexOf(String str)
-先用空格截取成三部分，最后一部分就是全限定类名加方法，通过左括号进行截取，再通过.进行截取，这样就得到最终结果了。
-String[] strArray = str.split(&#34; &#34;); String methodName = strArray[strArray.length -1]; String bracketLeft = methodName.substring(0, methodName.lastIndexOf(&#39;(&#39;)); //此处为单引号！ String fullQualClassName = bracketLeft.substring(0, bracketLeft.lastIndexOf(&#39;.&#39;)); PS：split方法如果传参为“|” “.”等特殊字符的时候，一定要记得//转义这个地方就有踩坑，可以跑一个main方法检验一下，节省时间，这样就不会发布之后才发现有问题常用的String API总结在这，有遗忘再翻阅
-字符数组相关：
-index从0开始
-字节数组相关：
-字符串比较：
-字符串查找：
-字符串替换：
-字符串截取：
-endIndex不包含该位，不可以是负数
-字符串拆分：
-如果用&rdquo;&quot;(空字符串)拆分，则按照每个字符进行拆分
-如果敏感字符拆不了，则用转义字符
-其他方法：
-用户进行数据输入时可能有无用的空格内容&ndash;trim
-某些情况下要求用户输入的数据长度有限制，用此方式判断&ndash;length
-注：数组对象.length; String 对象.length(); 一个有括号，一个没有如果isEmpty()不方便，可以使用&rdquo;&quot;.equals(str)
-String类少了一个重要方法initcap()功能，首字母大写，其余字母小写
+          ThreadLocal是什么
+多个线程想使用共享变量的时候，容易出现问题，使用ThreadLocal的话，每个线程都会创建该共享变量的副本，使用这个副本的话每个线程互不影响
+  ThreadLocal的用途
+数据库连接
+每次连接，然后关闭，如果频繁连接关闭的话会给服务器很大的压力，使用ThreadLocal就不会严重影响程序执行性能
+  ThreadLocal源码解析
+当中几个比较重要的API是：
+  get()获取ThreadLocal的值
+  set(T value)设置ThreadLocal的值
+  remove()删除ThreadLocal
+  initialValue()初始化ThreadLocal的值
+  ThreadLocal里有一个静态内部类ThreadLocalMap，用Entry进行存储，ThreadLocalMap的key是threadLocal对象，value是传入的
+① set()：获取当前线程t，然后getMap获得t.threadLocals，threadLocals是ThreadLocalMap对象，如果之前有map，则直接修改map中key为当前threadLocal对象的值，否则新建一个map，修改其value值。
+/** * Sets the current thread&#39;s copy of this thread-local variable * to the specified value. Most subclasses will have no need to * override this method, relying solely on the {@link #initialValue} * method to set the values of thread-locals.
         </div>
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Cstring%E5%B8%B8%E7%94%A8api%E7%9A%84%E7%A2%B0%E6%92%9E/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/threadlocal%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
         
       </div>
     </div>
@@ -175,34 +164,22 @@ String类少了一个重要方法initcap()功能，首字母大写，其余字�
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84%E6%84%9F%E6%83%B3%E6%80%BB%E7%BB%93/" class="color-inherit dim link">
-            代码重构感想总结
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8/" class="color-inherit dim link">
+            Oracle常用数据库表
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          做项目的过程中自己负责的模块传参很多，sonar也会不断报错参数超过七个，提示最好缩减到七个以内，所以在写代码的时候就稍微注意一些，争取在写代码的过程中就重构一下，使代码更加通俗易懂。
-以下是总结出来的代码重构需要注意的问题，后续再多多补充：
-1.命名参数和方法名时，争取一看到就知道参数是什么含义，方法到底做了什么
-2.争取一个方法只做一件事情
-eg:整个流程分为 判断是否符合前置条件&ndash;插入到中间表&ndash;处理符合条件的票
-所以分成三步
-具体实现中：
-①所有对前置条件的处理放在一个方法里，里面可以再细分
-可以复用方法，减少代码，如果还需后续处理，那么可以采用lambda表达式
-②插入数据至中间表放在一个方法里
-可以采用CollectionUtils.isEmpty()/isNotEmpty()等工具类里的方法
-整个流程不要有大块的分支，if每多一层，复杂度就越高。例如不推荐一个很大的if块，可以采用反面，不符合条件就直接return
-if (CollectionUtils.isEmpty(effectiveTax)) { return; } 不推荐使用非!，特别不方便理解，而且带非的和&amp;&amp; || 这些一结合，还有执行先后顺序的问题
-将带非的逻辑转换一下就行，实在不行将这部分抽取成一个方法
-③处理符合条件的票放在一个方法里
-3.双层for循环或者更多层的for循环，最好减少循环次数
-当时双层for循环在debug的时候发现了问题，生成了两条TDS记录，是因为第一次for循环是对中间表中所有符合条件的数据进行循环，第二次循环是根据seq进行判断，有两个seq，所以循环了两次，所以生成了两条 双层for循环最好修改成for+for
-4.最好不要使用匿名内部类，因为一旦出现问题，不方便查找
-5.传递参数过多时：
-看看每个参数都是在方法里面哪部分用的，然后分类放在一起，看看能不能根据参数把方法再抽取一下；还可以采用provider、entity、vo等来简化参数
-6.复用已有方法，需要进行部分修改的时候，一定要查看该方法的调用，避免因为自己的修改导致其他功能受到影响
+          oracle 数据库表
+dba_indexes 索引的统计信息
+dba_tables 数据库中的所有表
+dba_tab_columns 查询表的列属性
+分区相关的数据库表：
+dba_part_indexes 数据库中所有分区索引的对象级分区信息，其列与ALL_PART_INDEXES中的列相同
+user_ind_subpartitons USER_IND_SUBPARTITIONS为当前用户拥有的每个索引子分区描述分区级别的分区信息，该子分区的存储参数以及ANALYZE语句收集的各种分区统计信息。 其列与“ ALL_IND_SUBPARTITIONS”中的列相同。
+dba_indexs：
+   字段 说明     OWNER 索引拥有者   INDEX_NAME 索引名字   INDEX_TYPE 索引类型   TABLE_OWNER 表的拥有者   TABLE_NAME 表名   TABLE_TYPE 表类型   UNIQUENESS 是否唯一   COMPRESSION 是否压缩   PREFIX_LENGTH 压缩键上前缀的列数量   TABLESPACE_NAME 属于哪个表空间   INI_TRANS 事务表的初始大小由对象的INI_TRANS设置指定，默认2   MAX_TRANS 最大的MAX_TRANS条目，默认255   INITIAL_EXTENT 初始化区大小65536   NEXT_EXTENT 第二个区大小1048576   MIN_EXTENTS 段中允许的最小区大小   MAX_EXTENTS 段中允许的最大区大小，默认2g   PCT_INCREASE 后面区是前面区的增长百分比   PCT_THRESHOLD 每个块中允许索引入口的百分比阀值   INCLUDE_COLUMN 索引组织表主键索引中包含最后一列的列ID   FREELISTS 分配到这个段的进程自由列表数量   FREELIST_GROUPS 分配到这个段的进程自由列表组的数量   PCT_FREE 一个块中最小自由空间的百分比   LOGGING 索引改变是否记录到日志   BLEVEL B树索引等级（从根块到叶子块的深度）   LEAF_BLOCKS 索引中叶子块的数量   DISTINCT_KEYS 不同索引值的数量   AVG_LEAF_BLOCKS_PER_KEY 索引中的每个值平均在多少个叶子块中，如果是唯一或者主键，那么值恒等于1   AVG_DATA_BLOCKS_PER_KEY 通过索引中的一个值指向表中的数据块，该数据块数量的平均值   CLUSTERING_FACTOR 聚集因子，表示表中行基于索引排序程度   STATUS 表示一个未分区的索引是合法的还是不可用的   SAMPLE_SIZE 分析索引的参样大小   LAST_ANALYZED 最近分析索引统计信息的日期   DEGREE 每个实例扫描索引的线程数   INSTANCES 索引被多少实例扫描   PARTITIONED 索引是否分区   TEMPORARY 索引是否在临时表中   GENERATED 索引名字是否是系统产生   SECONDARY 索引是否通过ODCIndexCreate方法创建   BUFFER_POOL 用于索引块的缓冲池   FLASH_CACHE 数据库 smart flash cache 的 hint用于索引块   CELL_FLASH_CACHE CELL_FLASH_CACHE的hint用于索引块   USER_STATS 静态统计是否直接被用户使用   DURATION 临时表空间的持续时间   PCT_DIRECT_ACCESS 对于索引组织表上的secondary index ,行百分比的合理猜测   ITYP_OWNER 对于域索引，索引类型的拥有者   ITYP_NAME 对于域索引，索引类型名字   PARAMETERS 对于域索引，参数字符串   GLOBAL_STATS 索引的统计是否收集齐了   DOMIDX_STATUS 域索引的状态   DOMIDX_OPSTATUS 域索引的操作状态   FUNCIDX_STATUS 基于函数索引的状态   JOIN_INDEX 索引是否是结合的   IOT_REDUNDANT_PKEY_ELIM 在索引组织表中，冗余的主键列是否从从索引中删除   DROPPED 索引是否已经被删除，并在recycle中   VISIBILITY 索引是否可见   DOMIDX_MANAGEMENT 如果是域索引，主索引是系统管理还是用户管理   SEGMENT_CREATED 索引段是否已经创建    dba_tables：
         </div>
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84%E6%84%9F%E6%83%B3%E6%80%BB%E7%BB%93/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
         
       </div>
     </div>
@@ -219,20 +196,32 @@ if (CollectionUtils.isEmpty(effectiveTax)) { return; } 不推荐使用非!，特
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/object%E8%BD%ACstring%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" class="color-inherit dim link">
-            Object转String的三种方法总结
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/github%E7%9A%84ssh%E7%99%BB%E9%99%86%E5%A4%B1%E6%95%88%E4%BF%AE%E6%94%B9%E4%B8%BAhttps/" class="color-inherit dim link">
+            github的SSH登陆失效修改为HTTPS
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          在项目里遇到了将Object数组里的内容分别转换成所需类型的问题，发现Object转String可没有想象的那么简单，还需要考虑到null的情况，所以好好总结了一下。
- Object.toString()  Object类里的toString()方法是每个继承了Object的类都有的，可以覆写，使得每个类有自己的toString实现
-如果对象为null，会抛出NullPointerException，因为null不能再去调用方法或者变量了
-(String)Object  强制类型转换
-这个object对象必须能够转换成String类型，否则会抛异常ClassCastException
-String.valueOf(Object)  即使object为null，也不会有问题
-public static String valueOf(Object obj) { return (obj == null) ? &quot;null&quot; : obj.toString(); } 注意：如果真的是空对象，会返回“null”而不是null
+          向github push代码的时候，发现push报错
+kex_exchange_identification: read: Connection reset by peer
+尝试重新生成公钥密钥，然后更新github上的SSH Keys，发现不行
+上网查找之后尝试了好几种方法，有修改.ssh/config文件的，但是没有生效，也有可能是网络问题，所以决定暂时将SSH方式修改成HTTPS方式，先将代码提交上去
+实验过程中由于开了好几个终端，后来问题变成了这样：
+git push的时候显示： kex_exchange_identification: Connection closed by remote host fatal: Could not read from remote repository.
+参考这篇博客http://www.lao8.org/article_1319/ssh 发现产生原因是SSH连接数过多
+修改方法是改大/etc/ssh/sshd_config文件的MaxSessions或者每次正常退出SSH
+修改SSH-&gt;HTTPS方式步骤如下：
+  git remote -v
+查看使用的是哪种方式
+之前使用的是SSH，因此显示结果是
+origin git@github.com:XXX/XXX.github.io.git (fetch) origin git@github.com:XXX/XXX.github.io.git (push)
+XXX是人名，此处已略去
+  通过以下这个命令设置SSH为HTTPS
+git remote set-url origin https://github.com/XXX/XXX.github.io.git
+  首次push可以设置 git push -u origin master 我直接就git push了
+  push成功了，如图所示
+  
         </div>
-          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/object%E8%BD%ACstring%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+          <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/github%E7%9A%84ssh%E7%99%BB%E9%99%86%E5%A4%B1%E6%95%88%E4%BF%AE%E6%94%B9%E4%B8%BAhttps/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
         
       </div>
     </div>
@@ -249,26 +238,26 @@ public static String valueOf(Object obj) { return (obj == null) ? &quot;null&quo
         
         
           <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/" class="link black dim">
-              Oracle数据库函数总结
+            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/blockingqueue/" class="link black dim">
+              BlockingQueue
             </a>
           </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8Boracle%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" class="link black dim">
-              命令查看oracle事务隔离级别
+            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8Cstring%E5%B8%B8%E7%94%A8api%E7%9A%84%E7%A2%B0%E6%92%9E/" class="link black dim">
+              正则表达式和String常用API的碰撞
             </a>
           </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%B5%85%E8%B0%88%E4%BA%8B%E5%8A%A1/" class="link black dim">
-              浅谈事务
+            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84%E6%84%9F%E6%83%B3%E6%80%BB%E7%BB%93/" class="link black dim">
+              代码重构感想总结
             </a>
           </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/comparable%E5%8F%8Acomparator%E5%AF%B9%E6%AF%94/" class="link black dim">
-              Comparable及Comparator对比
+            <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/object%E8%BD%ACstring%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" class="link black dim">
+              Object转String的三种方法总结
             </a>
           </h2>
         

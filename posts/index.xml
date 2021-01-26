@@ -6,10 +6,98 @@
     <description>Recent content in Posts on Summer&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-Hans</language>
-    <lastBuildDate>Tue, 12 Jan 2021 11:16:15 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 26 Jan 2021 16:59:56 +0800</lastBuildDate>
     
 	<atom:link href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ThreadLocal源码解析</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/threadlocal%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Tue, 26 Jan 2021 16:59:56 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/threadlocal%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</guid>
+      <description>ThreadLocal是什么
+多个线程想使用共享变量的时候，容易出现问题，使用ThreadLocal的话，每个线程都会创建该共享变量的副本，使用这个副本的话每个线程互不影响
+  ThreadLocal的用途
+数据库连接
+每次连接，然后关闭，如果频繁连接关闭的话会给服务器很大的压力，使用ThreadLocal就不会严重影响程序执行性能
+  ThreadLocal源码解析
+当中几个比较重要的API是：
+  get()获取ThreadLocal的值
+  set(T value)设置ThreadLocal的值
+  remove()删除ThreadLocal
+  initialValue()初始化ThreadLocal的值
+  ThreadLocal里有一个静态内部类ThreadLocalMap，用Entry进行存储，ThreadLocalMap的key是threadLocal对象，value是传入的
+① set()：获取当前线程t，然后getMap获得t.threadLocals，threadLocals是ThreadLocalMap对象，如果之前有map，则直接修改map中key为当前threadLocal对象的值，否则新建一个map，修改其value值。
+/** * Sets the current thread&amp;#39;s copy of this thread-local variable * to the specified value. Most subclasses will have no need to * override this method, relying solely on the {@link #initialValue} * method to set the values of thread-locals.</description>
+    </item>
+    
+    <item>
+      <title>Oracle常用数据库表</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8/</link>
+      <pubDate>Tue, 26 Jan 2021 16:35:55 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/oracle%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8/</guid>
+      <description>oracle 数据库表
+dba_indexes 索引的统计信息
+dba_tables 数据库中的所有表
+dba_tab_columns 查询表的列属性
+分区相关的数据库表：
+dba_part_indexes 数据库中所有分区索引的对象级分区信息，其列与ALL_PART_INDEXES中的列相同
+user_ind_subpartitons USER_IND_SUBPARTITIONS为当前用户拥有的每个索引子分区描述分区级别的分区信息，该子分区的存储参数以及ANALYZE语句收集的各种分区统计信息。 其列与“ ALL_IND_SUBPARTITIONS”中的列相同。
+dba_indexs：
+   字段 说明     OWNER 索引拥有者   INDEX_NAME 索引名字   INDEX_TYPE 索引类型   TABLE_OWNER 表的拥有者   TABLE_NAME 表名   TABLE_TYPE 表类型   UNIQUENESS 是否唯一   COMPRESSION 是否压缩   PREFIX_LENGTH 压缩键上前缀的列数量   TABLESPACE_NAME 属于哪个表空间   INI_TRANS 事务表的初始大小由对象的INI_TRANS设置指定，默认2   MAX_TRANS 最大的MAX_TRANS条目，默认255   INITIAL_EXTENT 初始化区大小65536   NEXT_EXTENT 第二个区大小1048576   MIN_EXTENTS 段中允许的最小区大小   MAX_EXTENTS 段中允许的最大区大小，默认2g   PCT_INCREASE 后面区是前面区的增长百分比   PCT_THRESHOLD 每个块中允许索引入口的百分比阀值   INCLUDE_COLUMN 索引组织表主键索引中包含最后一列的列ID   FREELISTS 分配到这个段的进程自由列表数量   FREELIST_GROUPS 分配到这个段的进程自由列表组的数量   PCT_FREE 一个块中最小自由空间的百分比   LOGGING 索引改变是否记录到日志   BLEVEL B树索引等级（从根块到叶子块的深度）   LEAF_BLOCKS 索引中叶子块的数量   DISTINCT_KEYS 不同索引值的数量   AVG_LEAF_BLOCKS_PER_KEY 索引中的每个值平均在多少个叶子块中，如果是唯一或者主键，那么值恒等于1   AVG_DATA_BLOCKS_PER_KEY 通过索引中的一个值指向表中的数据块，该数据块数量的平均值   CLUSTERING_FACTOR 聚集因子，表示表中行基于索引排序程度   STATUS 表示一个未分区的索引是合法的还是不可用的   SAMPLE_SIZE 分析索引的参样大小   LAST_ANALYZED 最近分析索引统计信息的日期   DEGREE 每个实例扫描索引的线程数   INSTANCES 索引被多少实例扫描   PARTITIONED 索引是否分区   TEMPORARY 索引是否在临时表中   GENERATED 索引名字是否是系统产生   SECONDARY 索引是否通过ODCIndexCreate方法创建   BUFFER_POOL 用于索引块的缓冲池   FLASH_CACHE 数据库 smart flash cache 的 hint用于索引块   CELL_FLASH_CACHE CELL_FLASH_CACHE的hint用于索引块   USER_STATS 静态统计是否直接被用户使用   DURATION 临时表空间的持续时间   PCT_DIRECT_ACCESS 对于索引组织表上的secondary index ,行百分比的合理猜测   ITYP_OWNER 对于域索引，索引类型的拥有者   ITYP_NAME 对于域索引，索引类型名字   PARAMETERS 对于域索引，参数字符串   GLOBAL_STATS 索引的统计是否收集齐了   DOMIDX_STATUS 域索引的状态   DOMIDX_OPSTATUS 域索引的操作状态   FUNCIDX_STATUS 基于函数索引的状态   JOIN_INDEX 索引是否是结合的   IOT_REDUNDANT_PKEY_ELIM 在索引组织表中，冗余的主键列是否从从索引中删除   DROPPED 索引是否已经被删除，并在recycle中   VISIBILITY 索引是否可见   DOMIDX_MANAGEMENT 如果是域索引，主索引是系统管理还是用户管理   SEGMENT_CREATED 索引段是否已经创建    dba_tables：</description>
+    </item>
+    
+    <item>
+      <title>github的SSH登陆失效修改为HTTPS</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/github%E7%9A%84ssh%E7%99%BB%E9%99%86%E5%A4%B1%E6%95%88%E4%BF%AE%E6%94%B9%E4%B8%BAhttps/</link>
+      <pubDate>Tue, 26 Jan 2021 16:15:39 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/github%E7%9A%84ssh%E7%99%BB%E9%99%86%E5%A4%B1%E6%95%88%E4%BF%AE%E6%94%B9%E4%B8%BAhttps/</guid>
+      <description>向github push代码的时候，发现push报错
+kex_exchange_identification: read: Connection reset by peer
+尝试重新生成公钥密钥，然后更新github上的SSH Keys，发现不行
+上网查找之后尝试了好几种方法，有修改.ssh/config文件的，但是没有生效，也有可能是网络问题，所以决定暂时将SSH方式修改成HTTPS方式，先将代码提交上去
+实验过程中由于开了好几个终端，后来问题变成了这样：
+git push的时候显示： kex_exchange_identification: Connection closed by remote host fatal: Could not read from remote repository.
+参考这篇博客http://www.lao8.org/article_1319/ssh 发现产生原因是SSH连接数过多
+修改方法是改大/etc/ssh/sshd_config文件的MaxSessions或者每次正常退出SSH
+修改SSH-&amp;gt;HTTPS方式步骤如下：
+  git remote -v
+查看使用的是哪种方式
+之前使用的是SSH，因此显示结果是
+origin git@github.com:XXX/XXX.github.io.git (fetch) origin git@github.com:XXX/XXX.github.io.git (push)
+XXX是人名，此处已略去
+  通过以下这个命令设置SSH为HTTPS
+git remote set-url origin https://github.com/XXX/XXX.github.io.git
+  首次push可以设置 git push -u origin master 我直接就git push了
+  push成功了，如图所示
+  </description>
+    </item>
+    
+    <item>
+      <title>BlockingQueue</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/blockingqueue/</link>
+      <pubDate>Tue, 26 Jan 2021 16:12:22 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/blockingqueue/</guid>
+      <description>项目中遇到了使用阻塞队列，但是自己对API还不是很熟练，所以对照源码及注释，将API整理一下，方便翻阅。
+BlockingQueue是继承了Queue的一个接口，其实现类有ArrayBlockingQueue 、LinkedBlockingQueue 、LinkedBlockingDeque等，也遵照队列的先进先出原则。
+API大概分为以下四类：
+ 第一类  add(E e) 添加元素，超出长度则抛异常IllegalStateException
+remove() 取出并移除队首元素，队列为空则抛异常NoSuchElementException
+element() 返回队首元素，队列为空则抛异常NoSuchElementException
+第二类  使用容量受限的队列时，更推荐使用offer()
+offer(E e) 添加元素，成功返回true，超出长度返回false，不插入，不报错
+poll() 取出并移除队首元素，队列为空返回null
+peek() 返回队首元素，队列为空返回null
+第三类  put(E e) 添加元素，队列满则阻塞，直到有空位插入为止
+take() 取出并移除队首元素，队列空则阻塞，直到有元素
+第四类  offer(E e, long timeout, TimeUnit unit) 队列已满无法插入时，等待定义的单位时间数，如果还满则返回false
+poll(long timeout, TimeUnit unit) 队列无元素时，等待定义的单位时间数，无可取元素则返回null</description>
+    </item>
     
     <item>
       <title>正则表达式和String常用API的碰撞</title>
@@ -274,6 +362,19 @@ Collections.sort(list,Comparator)
     </item>
     
     <item>
+      <title>TreeSet踩坑</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/treeset%E8%B8%A9%E5%9D%91/</link>
+      <pubDate>Mon, 12 Oct 2020 17:09:04 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/treeset%E8%B8%A9%E5%9D%91/</guid>
+      <description>1.Set &amp;amp; TreeSet
+ Set：通过HashSet()及equals()达到无序去重的目的 TreeSet：通过实现Comparable接口的CompareTo()方法达到有序去重的目的  2.TreeSet可能遇到的问题
+eg:User有两个属性，id和name，
+如果只针对于name进行判断，将User存到list中。那么ComapreTo()方法如果重名的User，即使id不同，TreeSet也不会区分出来，仍然认为是同一个User所以使用TreeSet的时候，必须把去重条件写清楚！！！
+public class User implements Comparable&amp;lt;User&amp;gt; { /** * 用户ID，数据库主键，全局唯一 */ private final Integer id; /** * 用户名 */ private final String name; public User(Integer id, String name) { this.id = id; this.name = name; } public Integer getId() { return id; } public String getName() { return name; } @Override public boolean equals(Object o) { if (this == o) { return true; } if (o == null || getClass() !</description>
+    </item>
+    
+    <item>
       <title>常用JVM分析工具</title>
       <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E5%B8%B8%E7%94%A8jvm%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/</link>
       <pubDate>Sat, 10 Oct 2020 16:25:12 +0800</pubDate>
@@ -307,17 +408,33 @@ Collections.sort(list,Comparator)
       <description>平时工作中有时候会用到一些常用的Linux命令，所以打算整理一下，便于翻阅，后续再补充
   目录切换命令
  pwd 查看当前路径    cd 目录名 切换到指定目录下
-【cd命令系列】  cd ../ 切换到上级目录
+【cd命令系列】  cd .当前目录
+  cd ../ 切换到上级目录
   cd / 切换到根目录（所有用户共享的目录）
   cd ~ 切换到用户主目录，root用户相当于cd /root；普通用户相当于cd /home/当前用户名
   cd - 切换到上一个所在目录（此目录之前所在目录）
       目录或文件操作命令
   ls 显示不隐藏的文件或文件夹
-  ls -a 显示当前目录下所有文件及文件夹，包括隐藏的.和..
-  ls -l 显示不隐藏的文件与文件夹的详细信息 =&amp;gt;即 ll
-  mkdir 目录名 创建目录
-  touch 文件名 新建文件
-【mv命令系列】  mv 旧文件 新文件 对文件重命名</description>
+  ls -a 显示当前目录下所有文件及文件夹，包括隐藏的.和.. a表示all
+  ls -l 显示不隐藏的文件与文件夹的详细信息 =&amp;gt;即 ll l表示list
+  ls -h 以方便阅读的形式展示，不再以字节显示，以大小，例如kb显示 h代表human</description>
+    </item>
+    
+    <item>
+      <title>静态static</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E9%9D%99%E6%80%81static/</link>
+      <pubDate>Sat, 15 Aug 2020 17:12:17 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E9%9D%99%E6%80%81static/</guid>
+      <description>  静态域&amp;amp;实例域
+区别：静态域是共享的，实例域是每个对象独有的。如果User有1000个实例，那么都会共享这一个nextId，每个user的实例都有自己的id。即使没有实例，也仍然存在nextId。
+  public class User{ private static int nextId = 1; //静态域  private int id; //实例域 }  静态常量
+使用静态常量之后可以直接调用System.out，不需要先得到一个System类型的对象，然后再调用out
+public final class System { ... public final static PrintStream out = null; ... }   静态方法
+ 不能直接访问非静态属性、非静态方法，只能调用静态属性、方法。  public static int getNextId(){ return nextId; //只能访问静态变量，不能访问id }  可以这样调用：  法1：User.getNextId();
+法2：得到User的一个对象user，调用user.getNextId();
+ 什么时候使用static?  当一个类中没有属性，只有方法，可以将所有方法定义成静态方法，这样在调用方法的时候不需要实例化对象，可以直接调用。
+  </description>
     </item>
     
     <item>
@@ -345,6 +462,34 @@ java的执行模型是同步/阻塞的：默认是单线程，在执行的过程
 (2) i 的值加 1
 (3) 将叠加之后的值给 i
 假设线程a先占用了CPU，取出 i 的初始值0，然后 i 加1变成了1。但是！此时线程a占用CPU的时间到了，所以轮到了线程b，由于线程a还没将数据赋值给 i ，所以 i 的值还是0，线程2成功在其基础上加1并赋值给 i ，那么 i 就变成了1。接下来又轮到了线程a，线程a直接将刚刚叠加之后的结果1赋值给 i 。最终结果就变成了 1 而不是2。 如下图所示。</description>
+    </item>
+    
+    <item>
+      <title>this和super</title>
+      <link>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/this%E5%92%8Csuper/</link>
+      <pubDate>Sun, 26 Jul 2020 16:38:59 +0800</pubDate>
+      
+      <guid>https://xuepan-summer.github.io/summer-xuepan.github.io/posts/this%E5%92%8Csuper/</guid>
+      <description> 实例域 &amp;amp; 隐式参数 &amp;amp; 显式参数 介绍  实例域：对象中的数据
+emp.raiseSalary(5);
+在该栗子中，emp是隐式参数，5是显式参数
+隐式参数：不出现在方法声明中，是方法调用的目标或接收者
+显式参数：出现在方法声明中
+this:
+  调用隐式参数 eg: this.age;
+  调用该类的其他构造器 eg:单参构造调用无参构造，减少重复代码
+  super:
+  调用超类的方法 eg:super.update();
+  调用超类的构造器 构造子类的时候先调用父类的构造器
+  在构造子类的时候（写子类构造器的时候），必须先构造父类（调用父类构造器）。如果父类是有参构造，则先在子类构造器的首行super(参数1，参数2，&amp;hellip;)
+只有当父类只有无参构造的时候，首行的super()才能忽略不写
+Question：构造器中调用其他构造器，无论是super还是this，都需要写在首行，如果子类构造器首行没有写调用超类的无参构造（可以忽略不写），而写了this()，那么会怎么操作呢？
+Answer：super和this不能同时出现，但是构造子类的前提必须是先构造父类
+具体看代码时：
+  出现super()或者this()时，这是在调用父类的构造方法或者本类的其他构造方法
+  出现super.某方法名时，就是调用超类（当前类的父类）里的该方法
+  出现this.变量名、this.方法名时，就是在调用本类的变量或者方法，当方法中的变量与类中的变量名字重复的时候，需要用this来区分到底用的是方法中的局部变量还是类中的变量
+  </description>
     </item>
     
     <item>
