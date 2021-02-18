@@ -35,7 +35,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/" />
-<meta property="og:updated_time" content="2021-01-26T16:59:56+08:00" />
+<meta property="og:updated_time" content="2021-02-10T13:31:20+08:00" />
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content=""><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -96,6 +96,34 @@
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/%E6%B5%85%E8%B0%88%E4%BA%8B%E5%8A%A1/" class="link black dim">
+        浅谈事务
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      浅谈事务(transaction)  事务的概念：  事务是DBMS（可靠数据库管理系统）中最基本的单位，通俗来讲就是要做的事情。包括四大特性（ACID）：Atomicity 原子性、Consistency 一致性、Isolation 隔离性、Durability持久性。
+ 事务四大特性：   原子性：事务是不可分割的整体，事务里的操作要么都实现要么都不实现，体现了原子性。  eg：甲给乙转钱，乙收钱，要么整个过程成功（甲扣钱，乙收钱），要么整个过程不成功（甲未扣钱，乙未收钱）。
+ 一致性：甲给乙转的钱和乙收到的钱是一致的。整个过程是维持平衡的。
+  隔离性：事务之间是隔离的，即使不同事务处理相同的数据，也要有修改隔离。（即修改也是相互独立的）
+  持久性：事务一旦提交，将持久保存在数据库中。
+   事务高并发产生问题：    脏读(Dirty Read)：事务B读到了事务A已修改但未提交的数据。如果事务A提交失败，那么这B就读到了脏数据。
+  不可重复读(Unrepeatable Read)：一个事务多次查询同一数据，结果不一致。因为受到了其他事务的干扰。
+  幻读(Phantom Read)：例如事务A将1改成2，事务B插入了数据1，那么还是可以选出来值为1的数据
+三者区别
+① 脏读&amp;不可重复读：脏读是因为修改未提交，但不可重复读是因为有别的事务插手，读取了其他事务提交的数据，所以数据不一致
+② 不可重复读&amp;幻读：不可重复读针对同一数据项，幻读针对一批数据整体（比如数据条数）
+针对以上问题，隔离性就起了作用，如何使事务之间隔离起来，互不影响？因此产生了事务隔离级别。
+   事务隔离级别：  ×表示不会出现，√表示可能会出现
+   事务隔离级别 脏读 不可重复读 幻读     Read uncommitted √ √ √   Read committed × √ √   Repeatable read × × √   Serializable × × ×    ① Read uncommitted (读未提交)：最低的事务隔离级别，一个事务还没提交时，它做的变更就能被别的事务看到。
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -320,33 +348,6 @@ public class User implements Comparable&lt;User&gt; { /** * 用户ID，数据库
   系统转储：又称核心转储，一般使用相关工具，例如Windows的windbg和Linux的gdb
   Java转储：JVM内部生成的格式化的数据，包括线程信息，类的加载信息，堆的统计数据等，通常用于检测死锁
   堆转储：所有对象的堆内容
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="https://xuepan-summer.github.io/summer-xuepan.github.io/posts/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/" class="link black dim">
-        Linux常用命令总结
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      平时工作中有时候会用到一些常用的Linux命令，所以打算整理一下，便于翻阅，后续再补充
-  目录切换命令
- pwd 查看当前路径    cd 目录名 切换到指定目录下
-【cd命令系列】  cd .当前目录
-  cd ../ 切换到上级目录
-  cd / 切换到根目录（所有用户共享的目录）
-  cd ~ 切换到用户主目录，root用户相当于cd /root；普通用户相当于cd /home/当前用户名
-  cd - 切换到上一个所在目录（此目录之前所在目录）
-      目录或文件操作命令
-  ls 显示不隐藏的文件或文件夹
-  ls -a 显示当前目录下所有文件及文件夹，包括隐藏的.和.. a表示all
-  ls -l 显示不隐藏的文件与文件夹的详细信息 =&gt;即 ll l表示list
-  ls -h 以方便阅读的形式展示，不再以字节显示，以大小，例如kb显示 h代表human
     </div>
   </div>
 </div>
